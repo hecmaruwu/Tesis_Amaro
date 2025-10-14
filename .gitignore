@@ -1,0 +1,56 @@
+# =============================
+#  Tesis Amaro - Git Ignore v2
+# =============================
+
+# 🧠 Archivos grandes de datasets y modelos
+data/
+datasets/
+results/
+models/
+checkpoints/
+*.npz
+*.npy
+*.pt
+*.pth
+*.stl
+*.ply
+*.obj
+*.zip
+*.tar
+*.gz
+
+# 🧩 Archivos temporales de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+*.tmp
+*.egg-info/
+
+# ⚙️ Entornos virtuales (no subirlos, solo guardar sus definiciones .yml)
+env/
+envs/
+.venv/
+.env/
+.enviroment/
+.enviroment_backup/
+conda-meta/
+bin/
+lib/
+include/
+
+# ✅ Pero sí guardar archivos de especificación de entornos
+!environment*.yml
+!enviroment*.yml
+!requirements*.txt
+
+# 🧭 Archivos del sistema o IDE
+.DS_Store
+Thumbs.db
+.ipynb_checkpoints/
+.vscode/
+.idea/
+
+
+
