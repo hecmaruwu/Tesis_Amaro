@@ -1,0 +1,7 @@
+{
+  "source_mesh": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_7/lower/QSS7S0G2/QSS7S0G2_lower.obj",
+  "source_json": null,
+  "n_points": 8192,
+  "mode": "SURF_SAMPLE_NO_LABELS",
+  "sample_mode": "stratified"
+}

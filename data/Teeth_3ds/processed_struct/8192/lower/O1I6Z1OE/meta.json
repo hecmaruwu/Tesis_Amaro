@@ -1,0 +1,7 @@
+{
+  "source_mesh": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_7/lower/O1I6Z1OE/O1I6Z1OE_lower.obj",
+  "source_json": null,
+  "n_points": 8192,
+  "mode": "SURF_SAMPLE_NO_LABELS",
+  "sample_mode": "stratified"
+}

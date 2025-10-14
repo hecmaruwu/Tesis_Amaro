@@ -1,13 +1,4 @@
-# =============================
-#  Tesis Amaro - Git Ignore v2
-# =============================
-
-# 🧠 Archivos grandes de datasets y modelos
-data/
-datasets/
-results/
-models/
-checkpoints/
+# --- Archivos y carpetas grandes ---
 *.npz
 *.npy
 *.pt
@@ -18,39 +9,48 @@ checkpoints/
 *.zip
 *.tar
 *.gz
+*.bz2
+*.h5
+*.ckpt
+*.bin
+*.onnx
+*.pkl
+*.log
 
-# 🧩 Archivos temporales de Python
+# --- Archivos temporales o compilados ---
 __pycache__/
 *.pyc
 *.pyo
-*.pyd
-*.log
-*.tmp
-*.egg-info/
+*.so
+.DS_Store
 
-# ⚙️ Entornos virtuales (no subirlos, solo guardar sus definiciones .yml)
+# --- Resultados de entrenamiento o salida ---
+results/
+runs/
+runs_grid/
+weights/
+logs/
+out/
+models/
+
+# --- Entornos y configuraciones locales ---
+.env/
+.envs/
+venv/
 env/
 envs/
-.venv/
-.env/
-.enviroment/
-.enviroment_backup/
-conda-meta/
-bin/
-lib/
-include/
-
-# ✅ Pero sí guardar archivos de especificación de entornos
-!environment*.yml
-!enviroment*.yml
-!requirements*.txt
-
-# 🧭 Archivos del sistema o IDE
-.DS_Store
-Thumbs.db
-.ipynb_checkpoints/
-.vscode/
+*.lock
+*.egg-info
+*.sqlite3
 .idea/
+.vscode/
 
-
+# --- Archivos específicos a mantener manualmente ---
+!scripts/**/*.py
+!scripts_v2/**/*.py
+!docs/
+!envs/
+!analysis_refine_report/
+!configs/
+!training/
 

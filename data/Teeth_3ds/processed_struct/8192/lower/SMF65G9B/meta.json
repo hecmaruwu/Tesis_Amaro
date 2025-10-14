@@ -1,0 +1,7 @@
+{
+  "source_mesh": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_5/lower/SMF65G9B/SMF65G9B_lower.obj",
+  "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_5/lower/SMF65G9B/SMF65G9B_lower.json",
+  "n_points": 8192,
+  "mode": "STRATIFIED_SAMPLE_VERT_LABELS",
+  "sample_mode": "stratified"
+}

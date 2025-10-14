@@ -1,0 +1,7 @@
+{
+  "source_mesh": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_1/upper/IFVHVDFO/IFVHVDFO_upper.obj",
+  "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_1/upper/IFVHVDFO/IFVHVDFO_upper.json",
+  "n_points": 8192,
+  "mode": "STRATIFIED_SAMPLE_VERT_LABELS",
+  "sample_mode": "stratified"
+}

@@ -1,0 +1,7 @@
+{
+  "source_mesh": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_3/upper/015DTXR8/015DTXR8_upper.obj",
+  "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_3/upper/015DTXR8/015DTXR8_upper.json",
+  "n_points": 8192,
+  "mode": "STRATIFIED_SAMPLE_VERT_LABELS",
+  "sample_mode": "stratified"
+}
