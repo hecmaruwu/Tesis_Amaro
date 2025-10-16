@@ -1,0 +1,39 @@
+{
+  "train": {
+    "num_samples": 2163,
+    "num_points": 8192,
+    "unique_labels": 27,
+    "missing_labels": [],
+    "bg_percentage": 0.4096720321168516
+  },
+  "val": {
+    "num_samples": 89,
+    "num_points": 8192,
+    "unique_labels": 20,
+    "missing_labels": [
+      2,
+      3,
+      13,
+      18,
+      19,
+      25,
+      26
+    ],
+    "bg_percentage": 0.44932847612359544
+  },
+  "test": {
+    "num_samples": 90,
+    "num_points": 8192,
+    "unique_labels": 20,
+    "missing_labels": [
+      2,
+      13,
+      17,
+      18,
+      19,
+      25,
+      26
+    ],
+    "bg_percentage": 0.052490234375
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "source_mesh": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_7/lower/9CBRA5FM/9CBRA5FM_lower.obj",
+  "source_json": null,
+  "n_points": 4096,
+  "mode": "FPS_VERTICES_BASE",
+  "sample_mode": "fps"
+}

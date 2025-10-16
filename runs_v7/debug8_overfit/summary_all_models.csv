@@ -1,0 +1,2 @@
+run_dir,model,timestamp,epochs,batch_size,lr,weight_decay,dropout,train_time_sec,best_epoch,best_val_loss,test_loss,test_acc,test_prec,test_rec,test_f1,test_iou,overall_accuracy_test,tooth_21_f1,tooth_21_iou
+/home/htaucare/Tesis_Amaro/runs_v7/debug8_overfit/pointnet_lr0.001_bs4_drop0.5_2025-10-15_21-19-02,pointnet,2025-10-15_21-19-02,80,4,0.001,0.0,0.5,60.42,13,2.81570057246996,2.764856763508009,0.08902858942747116,0.019120875746011734,0.040268994867801666,0.012408742681145668,0.006682527717202902,0.08902858942747116,0.0,0.0

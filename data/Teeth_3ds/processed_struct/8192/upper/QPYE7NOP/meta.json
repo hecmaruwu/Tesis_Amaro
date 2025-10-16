@@ -2,6 +2,6 @@
   "source_mesh": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_6/upper/QPYE7NOP/QPYE7NOP_upper.obj",
   "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_6/upper/QPYE7NOP/QPYE7NOP_upper.json",
   "n_points": 8192,
-  "mode": "STRATIFIED_SAMPLE_VERT_LABELS",
-  "sample_mode": "stratified"
+  "mode": "FPS_VERTICES_BASE",
+  "sample_mode": "fps"
 }

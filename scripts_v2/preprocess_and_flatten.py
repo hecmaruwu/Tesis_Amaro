@@ -7,7 +7,6 @@ import json
 import shutil
 import sys
 from pathlib import Path
-
 import numpy as np
 import trimesh as tm
 from scipy.spatial import cKDTree
@@ -42,6 +41,7 @@ def normalize(points: np.ndarray) -> np.ndarray:
     return points
 
 def sample_points(mesh: tm.Trimesh, n_points: int) -> np.ndarray:
+    """Muestreo uniforme en superficie"""
     if mesh.faces is not None and len(mesh.faces) > 0:
         pts, _ = tm.sample.sample_surface(mesh, n_points)
     else:
@@ -53,6 +53,7 @@ def sample_points(mesh: tm.Trimesh, n_points: int) -> np.ndarray:
     return np.asarray(pts, dtype=np.float32)
 
 def stratified_sample_points_with_labels(mesh, n_points, labels_by_vertex):
+    """Muestreo estratificado por etiqueta de vértice"""
     verts = np.array(mesh.vertices)
     unique_labels = np.unique(labels_by_vertex)
     n_labels = len(unique_labels)
@@ -78,6 +79,7 @@ def stratified_sample_points_with_labels(mesh, n_points, labels_by_vertex):
 def assign_by_vertex_nn(sampled_pts: np.ndarray,
                         vert_coords: np.ndarray,
                         labels_v: np.ndarray) -> np.ndarray:
+    """Asigna etiquetas a puntos muestreados usando NN"""
     tree = cKDTree(vert_coords.astype(np.float32))
     _, idx = tree.query(sampled_pts.astype(np.float32), k=1)
     return labels_v[idx]
@@ -94,20 +96,44 @@ def symlink_or_copy(src_dir: Path, dst_dir: Path, do_copy: bool):
         except OSError:
             shutil.copytree(src_dir, dst_dir)
 
+# -------------------- FPS --------------------
+
+def farthest_point_sampling(points: np.ndarray, n_samples: int) -> np.ndarray:
+    """
+    FPS en NumPy. Devuelve un subconjunto de puntos más lejanos entre sí.
+    """
+    N = points.shape[0]
+    if n_samples >= N:
+        return points
+
+    centroids = np.zeros((n_samples,), dtype=np.int32)
+    distances = np.ones((N,)) * 1e10
+    farthest = np.random.randint(0, N)
+
+    for i in range(n_samples):
+        centroids[i] = farthest
+        centroid = points[farthest, :]
+        dist = np.sum((points - centroid) ** 2, axis=1)
+        mask = dist < distances
+        distances[mask] = dist[mask]
+        farthest = np.argmax(distances)
+
+    return points[centroids, :]
+
 # -------------------- main --------------------
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument("--in_root", required=True, help="data/Teeth_3ds/raw")
-    p.add_argument("--out_struct_root", required=True, help="data/Teeth_3ds/processed_struct")
-    p.add_argument("--out_flat_root", required=True, help="data/Teeth_3ds/processed_flat")
-    p.add_argument("--parts", nargs="+", required=True, help="data_part_1 data_part_2 ...")
+    p.add_argument("--in_root", required=True)
+    p.add_argument("--out_struct_root", required=True)
+    p.add_argument("--out_flat_root", required=True)
+    p.add_argument("--parts", nargs="+", required=True)
     p.add_argument("--jaws", nargs="+", default=["upper", "lower"])
     p.add_argument("--n_points", type=int, default=8192)
     p.add_argument("--copy", action="store_true")
     p.add_argument("--seed", type=int, default=42)
-    p.add_argument("--sample_mode", choices=["global", "stratified"], default="global",
-                   help="Muestreo de superficie: global (default) o estratificado según etiqueta de vértice.")
+    p.add_argument("--sample_mode", choices=["global", "stratified", "fps"], default="global",
+                   help="Muestreo: global (uniforme), estratificado o fps (Farthest Point Sampling).")
     args = p.parse_args()
 
     seed_all(args.seed)
@@ -149,62 +175,62 @@ def main():
                     except Exception as e:
                         print(f"[WARN] JSON no legible {meta_file}: {e}", file=sys.stderr)
 
-                pts_json = None
-                for key in ("points", "point_cloud", "xyz"):
-                    if key in meta:
-                        arr = np.array(meta[key], dtype=np.float32)
-                        if arr.ndim == 2 and arr.shape[1] == 3:
-                            pts_json = arr
-                            break
-
                 labels_json = (np.array(meta.get("labels", []), dtype=np.int32)
                                if "labels" in meta else None)
                 inst_json = (np.array(meta.get("instances", []), dtype=np.int32)
                              if "instances" in meta else None)
 
                 try:
-                    if pts_json is not None and labels_json is not None and len(labels_json) == len(pts_json):
-                        pts = normalize(pts_json.astype(np.float32))
-                        lbs = labels_json.astype(np.int32)
-                        inst = (inst_json.astype(np.int32)
-                                if (inst_json is not None and len(inst_json) == len(pts_json)) else None)
-                        mode = "JSON_POINTS_ALIGNED"
-                    elif args.sample_mode == "stratified" and labels_json is not None and len(labels_json) == len(mesh.vertices):
+                    # ---------- MODOS DE MUESTREO ----------
+                    if args.sample_mode == "stratified" and labels_json is not None and len(labels_json) == len(mesh.vertices):
                         pts_surf, lbs = stratified_sample_points_with_labels(mesh, args.n_points, labels_json.astype(np.int32))
                         inst = None
                         pts = normalize(pts_surf)
                         mode = "STRATIFIED_SAMPLE_VERT_LABELS"
-                    else:
+
+                    elif args.sample_mode == "fps":
+                        verts = np.asarray(mesh.vertices, dtype=np.float32)
+                        if verts.shape[0] == 0:
+                            raise ValueError("Malla sin vértices.")
+                        pts_fps = farthest_point_sampling(verts, args.n_points)
+                        pts = normalize(pts_fps)
+                        # Si hay etiquetas de vértices, las reasignamos por NN
+                        if labels_json is not None and len(labels_json) == len(mesh.vertices):
+                            lbs = assign_by_vertex_nn(pts, verts, labels_json.astype(np.int32))
+                        else:
+                            lbs = None
+                        if inst_json is not None and len(inst_json) == len(mesh.vertices):
+                            inst = assign_by_vertex_nn(pts, verts, inst_json.astype(np.int32))
+                        else:
+                            inst = None
+                        mode = "FPS_VERTICES_BASE"
+
+                    else:  # modo global por defecto
                         pts_surf = sample_points(mesh, args.n_points)
+                        pts = normalize(pts_surf)
                         if labels_json is not None and len(labels_json) == len(mesh.vertices):
                             lbs = assign_by_vertex_nn(
                                 pts_surf,
                                 np.asarray(mesh.vertices, dtype=np.float32),
                                 labels_json.astype(np.int32)
                             )
-                            if inst_json is not None and len(inst_json) == len(mesh.vertices):
-                                inst = assign_by_vertex_nn(
-                                    pts_surf,
-                                    np.asarray(mesh.vertices, dtype=np.float32),
-                                    inst_json.astype(np.int32)
-                                )
-                            else:
-                                inst = None
-                            pts = normalize(pts_surf)
-                            if args.sample_mode == "stratified":
-                                mode = "STRATIFIED_FALLBACK_TO_NN"
-                            else:
-                                mode = "SURF_SAMPLE_NN_FROM_VERT_LABELS"
                         else:
-                            pts = normalize(pts_surf)
                             lbs = None
+                        if inst_json is not None and len(inst_json) == len(mesh.vertices):
+                            inst = assign_by_vertex_nn(
+                                pts_surf,
+                                np.asarray(mesh.vertices, dtype=np.float32),
+                                inst_json.astype(np.int32)
+                            )
+                        else:
                             inst = None
-                            mode = "SURF_SAMPLE_NO_LABELS"
+                        mode = "SURF_SAMPLE_GLOBAL"
+
                 except Exception as e:
                     print(f"[ERR] Preproc falló {mesh_file}: {e}", file=sys.stderr)
                     continue
 
-                # Guardado estructurado (por resolución)
+                # ---------- Guardado ----------
                 dst_struct = out_s / str(pts.shape[0]) / jaw / subj.name
                 dst_struct.mkdir(parents=True, exist_ok=True)
                 np.save(dst_struct / "point_cloud.npy", pts)
@@ -220,7 +246,7 @@ def main():
                     "sample_mode": args.sample_mode
                 }, open(dst_struct / "meta.json", "w"), indent=2)
 
-                # Vista "flat" con tipo de muestreo y jaw en el nombre de carpeta
+                # ---------- Flat ----------
                 sample_type = mode.lower().replace(" ", "_")
                 dst_flat = out_f / str(pts.shape[0]) / f"{sample_type}_{jaw}" / subj.name
                 symlink_or_copy(dst_struct, dst_flat, do_copy=args.copy)

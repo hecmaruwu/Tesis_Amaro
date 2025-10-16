@@ -1,0 +1,18 @@
+Model: dilated
+Timestamp: 2025-10-16_15-25-08
+Device: cuda:1
+Epochs: 300  Batch: 8
+LR: 0.001  WD: 0.0
+Dropout: 0.5
+Train time (s): 433.25
+Best epoch: 36  Best val_loss: 2.3114
+Test loss: 2.2387  Test F1: 0.0211  Test mIoU: 0.0127
+Diente 21: {"class_id": 9, "class_name": "Diente 21", "precision": 0.0, "recall": 0.0, "f1": 0.0, "iou": 0.0}
+
+Archivos:
+ - /home/htaucare/Tesis_Amaro/runs_v7/fps_aug_fixed_v4/fps8192_aug_v4/dilated_lr0.001_bs8_drop0.5_2025-10-16_15-25-08/checkpoints/best.pt
+ - /home/htaucare/Tesis_Amaro/runs_v7/fps_aug_fixed_v4/fps8192_aug_v4/dilated_lr0.001_bs8_drop0.5_2025-10-16_15-25-08/checkpoints/final_model.pt
+ - /home/htaucare/Tesis_Amaro/runs_v7/fps_aug_fixed_v4/fps8192_aug_v4/dilated_lr0.001_bs8_drop0.5_2025-10-16_15-25-08/metrics_val_test.json
+ - /home/htaucare/Tesis_Amaro/runs_v7/fps_aug_fixed_v4/fps8192_aug_v4/dilated_lr0.001_bs8_drop0.5_2025-10-16_15-25-08/metrics_detailed_test.json
+ - /home/htaucare/Tesis_Amaro/runs_v7/fps_aug_fixed_v4/fps8192_aug_v4/dilated_lr0.001_bs8_drop0.5_2025-10-16_15-25-08/history.json
+ - /home/htaucare/Tesis_Amaro/runs_v7/fps_aug_fixed_v4/fps8192_aug_v4/dilated_lr0.001_bs8_drop0.5_2025-10-16_15-25-08/plots
