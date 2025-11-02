@@ -1,0 +1,10 @@
+{
+  "N": 8192,
+  "cap_bg": 0.1,
+  "seed": 42,
+  "use_augmentation": true,
+  "augment_times": 1,
+  "pca_align": true,
+  "ensure_coverage": true,
+  "num_classes": 27
+}

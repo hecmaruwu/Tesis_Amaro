@@ -1,0 +1,7 @@
+{
+  "source_file": "/home/htaucare/Tesis_dientes_original/data/UFRN/extract/MODELOS PESQUISA/PACIENTE 19/Paciente_19_inf/paciente_19_inf_recortado.stl",
+  "patient_id": "paciente_19",
+  "jaw": "lower",
+  "n_points": 8192,
+  "mode": "SURF_SAMPLE_FULL_LOWER"
+}

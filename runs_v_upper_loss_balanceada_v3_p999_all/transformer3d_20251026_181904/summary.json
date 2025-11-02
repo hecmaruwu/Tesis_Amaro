@@ -1,0 +1,49 @@
+{
+  "args": {
+    "data_dir": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/merged_upper_arcadas_v1",
+    "out_dir": "/home/htaucare/Tesis_Amaro/runs_v_upper_loss_balanceada_v3_p999_all",
+    "model": "transformer3d",
+    "epochs": 180,
+    "batch_size": 16,
+    "lr": 0.0003,
+    "weight_decay": 5e-05,
+    "patience": 999,
+    "seed": 42,
+    "num_workers": 6,
+    "ignore_index": 0,
+    "d21_id": 1,
+    "dice_lambda": 0.3,
+    "use_cosine": true,
+    "eval_best": true,
+    "w_clip_min": 0.2,
+    "w_clip_max": 5.0
+  },
+  "num_classes": 14,
+  "params": 564878,
+  "best_val_loss": 1.7922996520996093,
+  "last_epoch": 180,
+  "test": {
+    "acc": 0.47185465693473816,
+    "f1": 0.093272365629673,
+    "iou": 0.06141451746225357,
+    "d21_acc": 0.8856030801932017,
+    "d21_f1": 0.014557571895545034,
+    "d21_iou": 0.007586105663600999
+  },
+  "history_keys": [
+    "train_loss",
+    "train_acc",
+    "train_f1",
+    "train_iou",
+    "train_d21_acc",
+    "train_d21_f1",
+    "train_d21_iou",
+    "val_loss",
+    "val_acc",
+    "val_f1",
+    "val_iou",
+    "val_d21_acc",
+    "val_d21_f1",
+    "val_d21_iou"
+  ]
+}

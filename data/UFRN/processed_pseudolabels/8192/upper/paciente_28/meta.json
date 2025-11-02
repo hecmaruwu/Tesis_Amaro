@@ -1,0 +1,8 @@
+{
+  "patient_id": "paciente_28",
+  "upper_full_file": "/home/htaucare/Tesis_Amaro/data/UFRN/extract/MODELOS PESQUISA/MODELOS PESQUISA/PACIENTE 28/Paciente_28_sup/Paciente_28_sup_11.stl",
+  "upper_rec21_file": "/home/htaucare/Tesis_Amaro/data/UFRN/extract/MODELOS PESQUISA/MODELOS PESQUISA/PACIENTE 28/Paciente_28_sup/Paciente_28_sup_recortado.stl",
+  "n_points": 8192,
+  "tau_mm": 0.8,
+  "pos_ratio": 0.089111328125
+}

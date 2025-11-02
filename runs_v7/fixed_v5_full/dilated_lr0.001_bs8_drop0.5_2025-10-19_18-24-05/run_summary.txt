@@ -1,0 +1,18 @@
+Model: dilated
+Timestamp: 2025-10-19_18-24-05
+Device: cuda:1
+Epochs: 300  Batch: 8
+LR: 0.001  WD: 0.0001
+Dropout: 0.5
+Train time (s): 663.5
+Best epoch: 24  Best val_loss: 2.4677
+Test loss: 2.5501  Test F1: 0.0294  Test mIoU: 0.0171
+Diente 21: {"class_id": 9, "class_name": "Diente 21", "precision": 0.0, "recall": 0.0, "f1": 0.0, "iou": 0.0}
+
+Archivos:
+ - /home/htaucare/Tesis_Amaro/runs_v7/fixed_v5_full/dilated_lr0.001_bs8_drop0.5_2025-10-19_18-24-05/checkpoints/best.pt
+ - /home/htaucare/Tesis_Amaro/runs_v7/fixed_v5_full/dilated_lr0.001_bs8_drop0.5_2025-10-19_18-24-05/checkpoints/final_model.pt
+ - /home/htaucare/Tesis_Amaro/runs_v7/fixed_v5_full/dilated_lr0.001_bs8_drop0.5_2025-10-19_18-24-05/metrics_val_test.json
+ - /home/htaucare/Tesis_Amaro/runs_v7/fixed_v5_full/dilated_lr0.001_bs8_drop0.5_2025-10-19_18-24-05/metrics_detailed_test.json
+ - /home/htaucare/Tesis_Amaro/runs_v7/fixed_v5_full/dilated_lr0.001_bs8_drop0.5_2025-10-19_18-24-05/history.json
+ - /home/htaucare/Tesis_Amaro/runs_v7/fixed_v5_full/dilated_lr0.001_bs8_drop0.5_2025-10-19_18-24-05/plots

@@ -1,0 +1,19 @@
+{
+  "best_epoch": 1,
+  "best_val_loss": 0.470254123210907,
+  "test_loss": 0.627949751340426,
+  "test_acc": 0.03549681976437569,
+  "test_prec": 0.06840068101882935,
+  "test_rec": 0.03549681976437569,
+  "test_f1": 0.03847534954547882,
+  "test_iou": 0.02212369255721569,
+  "overall_accuracy_test": 0.0789523646235466,
+  "tooth_21": {
+    "class_id": 9,
+    "class_name": "Diente 21",
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "iou": 0.0
+  }
+}

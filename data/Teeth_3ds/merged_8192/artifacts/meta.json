@@ -1,0 +1,6 @@
+{
+  "n_samples": 1900,
+  "n_points": 8192,
+  "n_classes": 27,
+  "seed": 42
+}

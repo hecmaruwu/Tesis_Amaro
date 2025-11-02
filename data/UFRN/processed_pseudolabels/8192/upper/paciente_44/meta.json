@@ -1,0 +1,8 @@
+{
+  "patient_id": "paciente_44",
+  "upper_full_file": "/home/htaucare/Tesis_Amaro/data/UFRN/extract/MODELOS PESQUISA/MODELOS PESQUISA/PACIENTE 44/Paciente_44_sup/Paciente_44_sup_11.stl",
+  "upper_rec21_file": "/home/htaucare/Tesis_Amaro/data/UFRN/extract/MODELOS PESQUISA/MODELOS PESQUISA/PACIENTE 44/Paciente_44_sup/Paciente_44_sup_recortado.stl",
+  "n_points": 8192,
+  "tau_mm": 0.8,
+  "pos_ratio": 0.0513916015625
+}

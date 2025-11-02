@@ -1,0 +1,7 @@
+{
+  "patient": "paciente_36",
+  "upper_full": "/home/htaucare/Tesis_Amaro/data/UFRN/targets_export/paciente_36/stl/upper_full.stl",
+  "upper_rec_21": "/home/htaucare/Tesis_Amaro/data/UFRN/targets_export/paciente_36/stl/upper_rec_21.stl",
+  "n_points": 8192,
+  "tau_mm": 0.8
+}

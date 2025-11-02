@@ -1,0 +1,12 @@
+{
+  "data_dir": "/home/htaucare/Tesis_Amaro/data/UFRN/processed_pseudolabels_icp/8192/upper",
+  "epochs": 200,
+  "batch_size": 6,
+  "lr": 0.0001,
+  "weight_decay": 0.0001,
+  "pos_weight": 6.0,
+  "run_name": "runs_pointnet2_binary_icp_v3",
+  "seed": 42,
+  "patience": 20,
+  "sanity_forward": false
+}

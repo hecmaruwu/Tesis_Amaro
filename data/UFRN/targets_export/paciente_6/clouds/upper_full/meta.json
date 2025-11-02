@@ -1,0 +1,7 @@
+{
+  "source_file": "/home/htaucare/Tesis_dientes_original/data/UFRN/extract/MODELOS PESQUISA/PACIENTE 6/Paciente_6_sup/Paciente_6_sup_recortado.stl",
+  "patient_id": "paciente_6",
+  "jaw": "upper",
+  "n_points": 8192,
+  "mode": "SURF_SAMPLE_FULL_UPPER"
+}

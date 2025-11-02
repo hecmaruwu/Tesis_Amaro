@@ -1,0 +1,52 @@
+{
+  "args": {
+    "data_dir": "../data/Teeth_3ds/fixed_split/8192/fps_aug_paperlike_v3",
+    "out_dir": "../runs_v11_sin_molares_weights",
+    "model": "pointnetpp",
+    "epochs": 200,
+    "batch_size": 16,
+    "lr": 0.0005,
+    "weight_decay": 0.0001,
+    "patience": 30,
+    "seed": 42,
+    "num_workers": 4,
+    "ignore_index": 0,
+    "d21_id": 1,
+    "use_cosine": false,
+    "eval_best": true
+  },
+  "num_classes": 26,
+  "params": 889114,
+  "best_val_loss": 2.308956354856491,
+  "last_epoch": 122,
+  "test": {
+    "acc": 0.1271638572216034,
+    "prec": 0.03106267936527729,
+    "rec": 0.11319397389888763,
+    "f1": 0.03873726353049278,
+    "iou": 0.022009437903761864,
+    "d21_acc": 0.952364057302475,
+    "d21_f1": 0.0,
+    "d21_iou": 0.0
+  },
+  "history_keys": [
+    "train_loss",
+    "train_acc",
+    "train_prec",
+    "train_rec",
+    "train_f1",
+    "train_iou",
+    "train_d21_acc",
+    "train_d21_f1",
+    "train_d21_iou",
+    "val_loss",
+    "val_acc",
+    "val_prec",
+    "val_rec",
+    "val_f1",
+    "val_iou",
+    "val_d21_acc",
+    "val_d21_f1",
+    "val_d21_iou"
+  ]
+}

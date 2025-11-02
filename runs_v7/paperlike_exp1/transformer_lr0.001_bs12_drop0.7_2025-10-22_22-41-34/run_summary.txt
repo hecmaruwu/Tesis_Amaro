@@ -1,0 +1,18 @@
+Model: transformer
+Timestamp: 2025-10-22_22-41-34
+Device: cuda:0
+Epochs: 200  Batch: 12
+LR: 0.001  WD: 0.0
+Dropout: 0.7
+Train time (s): 31957.07
+Best epoch: 20  Best val_loss: 2.4981
+Test loss: 2.3626  Test F1: 0.0202  Test mIoU: 0.0127
+Diente 21: {"class_id": 9, "class_name": "Diente 21", "precision": 0.0, "recall": 0.0, "f1": 0.0, "iou": 0.0}
+
+Archivos:
+ - /home/htaucare/Tesis_Amaro/runs_v7/paperlike_exp1/transformer_lr0.001_bs12_drop0.7_2025-10-22_22-41-34/checkpoints/best.pt
+ - /home/htaucare/Tesis_Amaro/runs_v7/paperlike_exp1/transformer_lr0.001_bs12_drop0.7_2025-10-22_22-41-34/checkpoints/final_model.pt
+ - /home/htaucare/Tesis_Amaro/runs_v7/paperlike_exp1/transformer_lr0.001_bs12_drop0.7_2025-10-22_22-41-34/metrics_val_test.json
+ - /home/htaucare/Tesis_Amaro/runs_v7/paperlike_exp1/transformer_lr0.001_bs12_drop0.7_2025-10-22_22-41-34/metrics_detailed_test.json
+ - /home/htaucare/Tesis_Amaro/runs_v7/paperlike_exp1/transformer_lr0.001_bs12_drop0.7_2025-10-22_22-41-34/history.json
+ - /home/htaucare/Tesis_Amaro/runs_v7/paperlike_exp1/transformer_lr0.001_bs12_drop0.7_2025-10-22_22-41-34/plots

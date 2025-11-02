@@ -1,0 +1,26 @@
+{
+  "train": {
+    "num_samples": 1428,
+    "num_points": 8192,
+    "min_label": 0,
+    "max_label": 25,
+    "unique_labels": 23,
+    "bg_percentage": 0.11201746323529412
+  },
+  "val": {
+    "num_samples": 95,
+    "num_points": 8192,
+    "min_label": 0,
+    "max_label": 26,
+    "unique_labels": 26,
+    "bg_percentage": 0.10523745888157895
+  },
+  "test": {
+    "num_samples": 97,
+    "num_points": 8192,
+    "min_label": 0,
+    "max_label": 26,
+    "unique_labels": 27,
+    "bg_percentage": 0.04870227931701031
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "patient_id": "paciente_5",
+  "upper_full_file": "/home/htaucare/Tesis_Amaro/data/UFRN/extract/MODELOS PESQUISA/MODELOS PESQUISA/PACIENTE 5/Paciente_5_sup/Paciente_5_sup_11.stl",
+  "upper_rec21_file": "/home/htaucare/Tesis_Amaro/data/UFRN/extract/MODELOS PESQUISA/MODELOS PESQUISA/PACIENTE 5/Paciente_5_sup/Paciente_5_sup_recortado.stl",
+  "n_points": 8192,
+  "tau_mm": 0.8,
+  "pos_ratio": 0.0389404296875
+}

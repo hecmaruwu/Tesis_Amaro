@@ -1,0 +1,18 @@
+Model: pointnetpp
+Timestamp: 2025-10-22_21-46-33
+Device: cuda:0
+Epochs: 200  Batch: 12
+LR: 0.001  WD: 0.0
+Dropout: 0.7
+Train time (s): 2893.49
+Best epoch: 22  Best val_loss: 2.3433
+Test loss: 2.1981  Test F1: 0.0288  Test mIoU: 0.0179
+Diente 21: {"class_id": 9, "class_name": "Diente 21", "precision": 0.0, "recall": 0.0, "f1": 0.0, "iou": 0.0}
+
+Archivos:
+ - /home/htaucare/Tesis_Amaro/runs_v7/paperlike_exp1/pointnetpp_lr0.001_bs12_drop0.7_2025-10-22_21-46-33/checkpoints/best.pt
+ - /home/htaucare/Tesis_Amaro/runs_v7/paperlike_exp1/pointnetpp_lr0.001_bs12_drop0.7_2025-10-22_21-46-33/checkpoints/final_model.pt
+ - /home/htaucare/Tesis_Amaro/runs_v7/paperlike_exp1/pointnetpp_lr0.001_bs12_drop0.7_2025-10-22_21-46-33/metrics_val_test.json
+ - /home/htaucare/Tesis_Amaro/runs_v7/paperlike_exp1/pointnetpp_lr0.001_bs12_drop0.7_2025-10-22_21-46-33/metrics_detailed_test.json
+ - /home/htaucare/Tesis_Amaro/runs_v7/paperlike_exp1/pointnetpp_lr0.001_bs12_drop0.7_2025-10-22_21-46-33/history.json
+ - /home/htaucare/Tesis_Amaro/runs_v7/paperlike_exp1/pointnetpp_lr0.001_bs12_drop0.7_2025-10-22_21-46-33/plots

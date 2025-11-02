@@ -1,0 +1,19 @@
+Model: pointnet
+Timestamp: 2025-10-20_23-00-44
+Device: cuda:0
+Epochs: 300  Batch: 8
+LR: 0.001  WD: 0.0
+Dropout: 0.5
+AMP: True  clip_grad: 1.0
+Train time (s): 229.66
+Best epoch: 2  Best val_loss: 3.1894
+Test loss: 3.8633  Test F1: 0.0300  Test mIoU: 0.0165
+Diente 21: {"class_id": 9, "class_name": "Diente 21", "precision": 0.1136745885014534, "recall": 0.22008350491523743, "f1": 0.1499163806438446, "iou": 0.08103221654891968}
+
+Archivos:
+ - /home/htaucare/Tesis_Amaro/runs_v8/fps8192_aug_v8_balanced/pointnet_lr0.001_bs8_drop0.5_2025-10-20_23-00-44/checkpoints/best.pt
+ - /home/htaucare/Tesis_Amaro/runs_v8/fps8192_aug_v8_balanced/pointnet_lr0.001_bs8_drop0.5_2025-10-20_23-00-44/checkpoints/final_model.pt
+ - /home/htaucare/Tesis_Amaro/runs_v8/fps8192_aug_v8_balanced/pointnet_lr0.001_bs8_drop0.5_2025-10-20_23-00-44/metrics_val_test.json
+ - /home/htaucare/Tesis_Amaro/runs_v8/fps8192_aug_v8_balanced/pointnet_lr0.001_bs8_drop0.5_2025-10-20_23-00-44/metrics_detailed_test.json
+ - /home/htaucare/Tesis_Amaro/runs_v8/fps8192_aug_v8_balanced/pointnet_lr0.001_bs8_drop0.5_2025-10-20_23-00-44/history.json
+ - /home/htaucare/Tesis_Amaro/runs_v8/fps8192_aug_v8_balanced/pointnet_lr0.001_bs8_drop0.5_2025-10-20_23-00-44/plots

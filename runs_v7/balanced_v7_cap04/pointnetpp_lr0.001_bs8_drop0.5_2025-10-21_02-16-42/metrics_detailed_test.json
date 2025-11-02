@@ -1,0 +1,220 @@
+{
+  "per_class_test": [
+    {
+      "class_id": 0,
+      "class_name": "Enc\u00eda",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "iou": 0.0
+    },
+    {
+      "class_id": 1,
+      "class_name": "Diente 11",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "iou": 0.0
+    },
+    {
+      "class_id": 2,
+      "class_name": "Diente 12",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "iou": 0.0
+    },
+    {
+      "class_id": 3,
+      "class_name": "Diente 13",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "iou": 0.0
+    },
+    {
+      "class_id": 4,
+      "class_name": "Diente 14",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "iou": 0.0
+    },
+    {
+      "class_id": 5,
+      "class_name": "Diente 15",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "iou": 0.0
+    },
+    {
+      "class_id": 6,
+      "class_name": "Diente 16",
+      "precision": 0.01437575463205576,
+      "recall": 0.5669957399368286,
+      "f1": 0.028040563687682152,
+      "iou": 0.014219643548130989
+    },
+    {
+      "class_id": 7,
+      "class_name": "Diente 17",
+      "precision": 0.29168960452079773,
+      "recall": 0.9770933389663696,
+      "f1": 0.44926199316978455,
+      "iou": 0.2897084951400757
+    },
+    {
+      "class_id": 8,
+      "class_name": "Diente 18",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "iou": 0.0
+    },
+    {
+      "class_id": 9,
+      "class_name": "Diente 21",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "iou": 0.0
+    },
+    {
+      "class_id": 10,
+      "class_name": "Diente 22",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "iou": 0.0
+    },
+    {
+      "class_id": 11,
+      "class_name": "Diente 23",
+      "precision": 0.38684719800949097,
+      "recall": 0.018269289284944534,
+      "f1": 0.03489081934094429,
+      "iou": 0.017755156382918358
+    },
+    {
+      "class_id": 12,
+      "class_name": "Diente 24",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "iou": 0.0
+    },
+    {
+      "class_id": 13,
+      "class_name": "Diente 25",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "iou": 0.0
+    },
+    {
+      "class_id": 14,
+      "class_name": "Diente 26",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "iou": 0.0
+    },
+    {
+      "class_id": 15,
+      "class_name": "Diente 27",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "iou": 0.0
+    },
+    {
+      "class_id": 16,
+      "class_name": "Diente 28",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "iou": 0.0
+    },
+    {
+      "class_id": 17,
+      "class_name": "Diente 31",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "iou": 0.0
+    },
+    {
+      "class_id": 18,
+      "class_name": "Diente 32",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "iou": 0.0
+    },
+    {
+      "class_id": 19,
+      "class_name": "Diente 33",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "iou": 0.0
+    },
+    {
+      "class_id": 20,
+      "class_name": "Diente 34",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "iou": 0.0
+    },
+    {
+      "class_id": 21,
+      "class_name": "Diente 35",
+      "precision": 0.1165909618139267,
+      "recall": 0.03002576343715191,
+      "f1": 0.04775351658463478,
+      "iou": 0.0244608074426651
+    },
+    {
+      "class_id": 22,
+      "class_name": "Diente 36",
+      "precision": 0.07927288860082626,
+      "recall": 0.037786830216646194,
+      "f1": 0.05117850750684738,
+      "iou": 0.026261262595653534
+    },
+    {
+      "class_id": 23,
+      "class_name": "Diente 37",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "iou": 0.0
+    },
+    {
+      "class_id": 24,
+      "class_name": "Diente 38",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "iou": 0.0
+    },
+    {
+      "class_id": 25,
+      "class_name": "Diente 41",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "iou": 0.0
+    },
+    {
+      "class_id": 26,
+      "class_name": "Diente 42",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "iou": 0.0
+    }
+  ]
+}

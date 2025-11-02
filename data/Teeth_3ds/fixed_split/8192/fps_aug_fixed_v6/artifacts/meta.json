@@ -1,0 +1,116 @@
+{
+  "N": 8192,
+  "cap_bg": 0.4,
+  "seed": 42,
+  "use_augmentation": true,
+  "augment_times": 2,
+  "rotate_deg": 15.0,
+  "jitter_sigma": 0.005,
+  "scale_min": 0.95,
+  "scale_max": 1.05,
+  "dropout_rate": 0.05,
+  "merge_aug": true,
+  "save_aug_separate": false,
+  "ensure_coverage": true,
+  "num_classes": 27,
+  "bg_idx": 0,
+  "coverage_info": {
+    "moves": [
+      {
+        "class": 18,
+        "from": "val",
+        "to": "train",
+        "donor_idx": 58
+      },
+      {
+        "class": 2,
+        "from": "train",
+        "to": "val",
+        "donor_idx": 53
+      },
+      {
+        "class": 3,
+        "from": "train",
+        "to": "val",
+        "donor_idx": 12
+      },
+      {
+        "class": 13,
+        "from": "train",
+        "to": "val",
+        "donor_idx": 649
+      },
+      {
+        "class": 18,
+        "from": "train",
+        "to": "val",
+        "donor_idx": 2157
+      },
+      {
+        "class": 19,
+        "from": "train",
+        "to": "val",
+        "donor_idx": 210
+      },
+      {
+        "class": 25,
+        "from": "train",
+        "to": "val",
+        "donor_idx": 281
+      },
+      {
+        "class": 26,
+        "from": "train",
+        "to": "val",
+        "donor_idx": 58
+      },
+      {
+        "class": 2,
+        "from": "train",
+        "to": "test",
+        "donor_idx": 330
+      },
+      {
+        "class": 13,
+        "from": "train",
+        "to": "test",
+        "donor_idx": 2015
+      },
+      {
+        "class": 17,
+        "from": "train",
+        "to": "test",
+        "donor_idx": 204
+      },
+      {
+        "class": 18,
+        "from": "val",
+        "to": "test",
+        "donor_idx": 92
+      },
+      {
+        "class": 19,
+        "from": "train",
+        "to": "test",
+        "donor_idx": 1136
+      },
+      {
+        "class": 25,
+        "from": "train",
+        "to": "test",
+        "donor_idx": 503
+      },
+      {
+        "class": 26,
+        "from": "train",
+        "to": "test",
+        "donor_idx": 831
+      }
+    ],
+    "final_counts": {
+      "train": 2148,
+      "val": 95,
+      "test": 97
+    }
+  }
+}

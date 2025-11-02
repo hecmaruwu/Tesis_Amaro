@@ -1,7 +1,6 @@
 {
   "source_mesh": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_7/lower/13GRE9RZ/13GRE9RZ_lower.obj",
-  "source_json": null,
   "n_points": 8192,
-  "mode": "FPS_VERTICES_BASE",
-  "sample_mode": "fps"
+  "mode": "FPS",
+  "pca_aligned": false
 }

@@ -1,0 +1,8 @@
+{
+  "patient_id": "paciente_2",
+  "file_full": "/home/htaucare/Tesis_Amaro/data/UFRN/targets_export/paciente_2/stl/upper_full.stl",
+  "file_rec": "/home/htaucare/Tesis_Amaro/data/UFRN/targets_export/paciente_2/stl/upper_rec_21.stl",
+  "n_points": 8192,
+  "tau_mm": 1.5,
+  "pos_ratio": 0.996826171875
+}

@@ -1,0 +1,7 @@
+{
+  "source_file": "/home/htaucare/Tesis_dientes_original/data/UFRN/extract/MODELOS PESQUISA/PACIENTE 46/Paciente_46_sup/Paciente_46_sup_21.stl",
+  "patient_id": "paciente_46",
+  "jaw": "upper",
+  "n_points": 8192,
+  "mode": "SURF_SAMPLE_REC_UPPER_21"
+}
