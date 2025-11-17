@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+# -- coding: utf-8 --
 """
 train_models_paperlike_v11_sin_molares.py
 --------------------------------------------------------------
@@ -106,14 +106,14 @@ def plot_curves(history: Dict[str, List[float]], out_dir: Path, model_name: str)
 
 class CloudDataset(Dataset):
     """Carga nubes de puntos y etiquetas desde archivos .npz."""
-    def __init__(self, X_path: Path, Y_path: Path):
+    def _init_(self, X_path: Path, Y_path: Path):
         self.X = np.load(X_path)["X"].astype(np.float32)
         self.Y = np.load(Y_path)["Y"].astype(np.int64)
         assert self.X.shape[0] == self.Y.shape[0], f"Inconsistencia entre {X_path.name} y {Y_path.name}"
 
-    def __len__(self): return self.X.shape[0]
+    def _len_(self): return self.X.shape[0]
 
-    def __getitem__(self, idx):
+    def _getitem_(self, idx):
         return torch.from_numpy(self.X[idx]), torch.from_numpy(self.Y[idx])
 
 
@@ -203,8 +203,8 @@ def batched_gather(points: torch.Tensor, idx: torch.Tensor) -> torch.Tensor:
 
 class STN3d(nn.Module):
     """Spatial Transformer 3D para alinear la nube de entrada."""
-    def __init__(self, k: int = 3):
-        super().__init__()
+    def _init_(self, k: int = 3):
+        super()._init_()
         self.k = k
         self.conv1, self.bn1 = nn.Conv1d(k, 64, 1), nn.BatchNorm1d(64)
         self.conv2, self.bn2 = nn.Conv1d(64, 128, 1), nn.BatchNorm1d(128)
@@ -228,8 +228,8 @@ class STN3d(nn.Module):
 
 class PointNetSeg(nn.Module):
     """Segmentación punto a punto con T-Net y convoluciones 1D."""
-    def __init__(self, num_classes: int = 26, dropout: float = 0.5):
-        super().__init__()
+    def _init_(self, num_classes: int = 26, dropout: float = 0.5):
+        super()._init_()
         self.input_tnet = STN3d(3)
         self.conv1, self.bn1 = nn.Conv1d(3, 64, 1), nn.BatchNorm1d(64)
         self.conv2, self.bn2 = nn.Conv1d(64, 128, 1), nn.BatchNorm1d(128)
@@ -261,8 +261,8 @@ class PointNetSeg(nn.Module):
 
 class MLP1d(nn.Module):
     """Bloque MLP 1D."""
-    def __init__(self, in_ch, mlp):
-        super().__init__()
+    def _init_(self, in_ch, mlp):
+        super()._init_()
         layers, c = [], in_ch
         for oc in mlp:
             layers += [nn.Conv1d(c, oc, 1), nn.BatchNorm1d(oc), nn.ReLU(True)]
@@ -273,8 +273,8 @@ class MLP1d(nn.Module):
 
 class SA_Layer(nn.Module):
     """Set Abstraction: submuestreo + kNN + MLP + max-pool."""
-    def __init__(self, nsample, in_ch, mlp):
-        super().__init__()
+    def _init_(self, nsample, in_ch, mlp):
+        super()._init_()
         self.nsample = nsample
         self.mlp = MLP1d(in_ch + 3, mlp)
         self.out_ch = mlp[-1]
@@ -301,8 +301,8 @@ class SA_Layer(nn.Module):
 
 class FP_Layer(nn.Module):
     """Feature Propagation coarse→fine."""
-    def __init__(self, in_ch, mlp):
-        super().__init__()
+    def _init_(self, in_ch, mlp):
+        super()._init_()
         self.mlp = MLP1d(in_ch, mlp)
         self.out_ch = mlp[-1]
 
@@ -323,8 +323,8 @@ class FP_Layer(nn.Module):
 
 class PointNet2Seg(nn.Module):
     """PointNet++ para segmentación (lite)."""
-    def __init__(self, num_classes=26, nsample=32):
-        super().__init__()
+    def _init_(self, num_classes=26, nsample=32):
+        super()._init_()
         self.sa1 = SA_Layer(nsample, 0, [64, 128, 256])
         self.sa2 = SA_Layer(nsample, 256, [256, 512, 512])
         self.fp1 = FP_Layer(512 + 256, [256, 256])
@@ -348,8 +348,8 @@ class PointNet2Seg(nn.Module):
 
 class DilatedBlock(nn.Module):
     """Bloque dilatado 1D."""
-    def __init__(self, in_ch, out_ch, dilation=1):
-        super().__init__()
+    def _init_(self, in_ch, out_ch, dilation=1):
+        super()._init_()
         self.net = nn.Sequential(
             nn.Conv1d(in_ch, out_ch, 1, dilation=dilation),
             nn.BatchNorm1d(out_ch), nn.ReLU(True),
@@ -361,8 +361,8 @@ class DilatedBlock(nn.Module):
 
 class DilatedToothSegNet(nn.Module):
     """Red 1D dilatada para segmentación."""
-    def __init__(self, num_classes=26):
-        super().__init__()
+    def _init_(self, num_classes=26):
+        super()._init_()
         self.backbone = nn.Sequential(
             DilatedBlock(3, 64, 1),
             DilatedBlock(64, 128, 2),
@@ -384,8 +384,8 @@ class DilatedToothSegNet(nn.Module):
 
 class FourierPE(nn.Module):
     """Positional Encoding tipo Fourier para coordenadas 3D."""
-    def __init__(self, num_feats: int = 32, scale: float = 10.0):
-        super().__init__()
+    def _init_(self, num_feats: int = 32, scale: float = 10.0):
+        super()._init_()
         self.num_feats = num_feats
         self.scale = scale
 
@@ -400,8 +400,8 @@ class FourierPE(nn.Module):
 
 class Transformer3D(nn.Module):
     """Transformer encoder sobre nubes de puntos con Fourier PE."""
-    def __init__(self, num_classes=26, d_model=128, nhead=4, depth=4, dim_ff=256):
-        super().__init__()
+    def _init_(self, num_classes=26, d_model=128, nhead=4, depth=4, dim_ff=256):
+        super()._init_()
         self.pe = FourierPE(num_feats=d_model // 6)
         in_dim = 3 + (3 * 2 * (d_model // 6))
         self.lin = nn.Linear(in_dim, d_model)
@@ -428,8 +428,8 @@ class Transformer3D(nn.Module):
 
 class PatchEmbed(nn.Module):
     """Extrae embeddings locales de patches mediante kNN."""
-    def __init__(self, in_ch=3, emb_dim=256):
-        super().__init__()
+    def _init_(self, in_ch=3, emb_dim=256):
+        super()._init_()
         self.mlp = nn.Sequential(
             nn.Conv2d(in_ch, 64, 1), nn.ReLU(True),
             nn.Conv2d(64, 128, 1), nn.ReLU(True),
@@ -447,8 +447,8 @@ class PatchEmbed(nn.Module):
 
 class LearnablePE(nn.Module):
     """Positional Encoding aprendible por patch."""
-    def __init__(self, dim, max_patches=256):
-        super().__init__()
+    def _init_(self, dim, max_patches=256):
+        super()._init_()
         self.pe = nn.Parameter(torch.randn(1, max_patches, dim) * 0.02)
     def forward(self, x):
         return x + self.pe[:, :x.size(1), :]
@@ -456,9 +456,9 @@ class LearnablePE(nn.Module):
 
 class ToothFormer(nn.Module):
     """Transformer jerárquico tipo ToothFormer académico."""
-    def __init__(self, num_classes=26, emb_dim=256, nhead=8, depth=6, dim_ff=512,
+    def _init_(self, num_classes=26, emb_dim=256, nhead=8, depth=6, dim_ff=512,
                  num_patches=64, k_per_patch=128):
-        super().__init__()
+        super()._init_()
         self.num_patches = num_patches
         self.k = k_per_patch
         self.patch_embed = PatchEmbed(3, emb_dim)
@@ -525,7 +525,7 @@ def build_model(name: str, num_classes: int) -> nn.Module:
 
 class EarlyStopping:
     """Detiene el entrenamiento si la pérdida de validación no mejora."""
-    def __init__(self, patience=20, delta=1e-4, ckpt_dir=None):
+    def _init_(self, patience=20, delta=1e-4, ckpt_dir=None):
         self.patience = patience
         self.delta = delta
         self.ckpt_dir = Path(ckpt_dir) if ckpt_dir else None
@@ -533,7 +533,7 @@ class EarlyStopping:
         self.best_loss = float("inf")
         self.early_stop = False
 
-    def __call__(self, val_loss, model, epoch):
+    def _call_(self, val_loss, model, epoch):
         if val_loss < self.best_loss - self.delta:
             self.best_loss = val_loss
             self.counter = 0
@@ -689,7 +689,7 @@ def main():
         description="Entrenamiento V11 (paper-like) sin terceros molares (IDs 0–25, 0=fondo)"
     )
     # Paths
-    parser.add_argument("--data_dir", required=True, help="Carpeta con X_*.npz / Y_*.npz (+ artifacts/)")
+    parser.add_argument("--data_dir", required=True, help="Carpeta con X_.npz / Y_.npz (+ artifacts/)")
     parser.add_argument("--out_dir", required=True, help="Carpeta base para runs")
     # Modelo
     parser.add_argument("--model", default="pointnetpp",
@@ -823,6 +823,5 @@ def main():
     print(f"[DONE] Resultados guardados en: {run_dir}")
 
 
-if __name__ == "__main__":
-    main()
-
+if __name__ == "_main_":
+     main()

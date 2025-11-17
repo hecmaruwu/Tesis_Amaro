@@ -70,8 +70,8 @@ def main():
 
     all_X, all_Y, all_names = [], [], []
 
-    for jaw in ("upper", "lower"):
-        jaw_dir = in_root / str(args.n_points) / jaw
+    for jaw in ("fps_vertices_base_upper", "fps_vertices_base_lower"):
+        jaw_dir = in_root / jaw
         if not jaw_dir.exists():
             continue
         for subj in sorted(jaw_dir.iterdir()):

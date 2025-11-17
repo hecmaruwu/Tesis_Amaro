@@ -1,0 +1,6 @@
+{
+  "source_mesh": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_4/lower/9S7DPB1Q/9S7DPB1Q_lower.obj",
+  "n_points": 8192,
+  "mode": "FPS",
+  "pca_aligned": true
+}

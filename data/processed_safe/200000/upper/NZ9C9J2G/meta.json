@@ -1,0 +1,7 @@
+{
+  "source_mesh": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_6/upper/NZ9C9J2G/NZ9C9J2G_upper.obj",
+  "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_6/upper/NZ9C9J2G/NZ9C9J2G_upper.json",
+  "n_points": 200000,
+  "mode": "SURF_SAMPLE_GLOBAL",
+  "sample_mode": "global"
+}

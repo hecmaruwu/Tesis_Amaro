@@ -1,0 +1,15 @@
+{
+  "source_mesh": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_3/upper/653MMYW8/653MMYW8_upper.obj",
+  "n_points": 8192,
+  "mode": "FPS_VERTICES_BASE",
+  "sample_mode": "fps",
+  "features": [
+    "x",
+    "y",
+    "z",
+    "nx",
+    "ny",
+    "nz",
+    "curv"
+  ]
+}

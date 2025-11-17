@@ -1,0 +1,9 @@
+{
+  "N": 8192,
+  "cap_bg": null,
+  "seed": 42,
+  "use_augmentation": true,
+  "augment_times": 1,
+  "ensure_coverage": true,
+  "num_classes": 27
+}

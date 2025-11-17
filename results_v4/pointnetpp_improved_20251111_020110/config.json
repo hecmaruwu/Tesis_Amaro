@@ -1,0 +1,26 @@
+{
+  "args": {
+    "data_dir": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/stratified_v4",
+    "out_dir": "/home/htaucare/Tesis_Amaro/results_v4",
+    "model": "pointnetpp_improved",
+    "epochs": 400,
+    "batch_size": 8,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "patience": 80,
+    "num_workers": 6,
+    "seed": 42,
+    "use_cosine": true,
+    "ce_weight": 1.0,
+    "dice_weight": 1.0,
+    "d21_id": 21,
+    "w_clip_min": 0.2,
+    "w_clip_max": 5.0,
+    "eval_best": false
+  },
+  "num_classes": 26,
+  "in_ch": 3,
+  "params": 889306,
+  "device": "cuda",
+  "timestamp": "20251111_020110"
+}

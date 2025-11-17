@@ -1,0 +1,17 @@
+[INFO] Centroide global μ=[-4.459 -6.307  7.432] σ=8.790
+
+
+[Train 1/200]:   0%|          | 0/5 [00:00<?, ?it/s]
+[Train 1/200]:   0%|          | 0/5 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/home/htaucare/Tesis_Amaro/scripts_v3/UFRN/models/train_pointnet2_binary_seg_v19g_prior_distance.py", line 309, in <module>
+    main()
+  File "/home/htaucare/Tesis_Amaro/scripts_v3/UFRN/models/train_pointnet2_binary_seg_v19g_prior_distance.py", line 273, in main
+    loss.backward(); opt.step()
+  File "/home/htaucare/miniconda3/envs/enviroment/lib/python3.10/site-packages/torch/_tensor.py", line 647, in backward
+    torch.autograd.backward(
+  File "/home/htaucare/miniconda3/envs/enviroment/lib/python3.10/site-packages/torch/autograd/__init__.py", line 354, in backward
+    _engine_run_backward(
+  File "/home/htaucare/miniconda3/envs/enviroment/lib/python3.10/site-packages/torch/autograd/graph.py", line 829, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 24.00 GiB. GPU 0 has a total capacity of 23.69 GiB of which 21.36 GiB is free. Including non-PyTorch memory, this process has 2.32 GiB memory in use. Of the allocated memory 1.62 GiB is allocated by PyTorch, and 404.62 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

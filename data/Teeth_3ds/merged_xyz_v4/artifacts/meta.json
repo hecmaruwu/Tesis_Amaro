@@ -1,0 +1,13 @@
+{
+  "n_samples": 1900,
+  "n_points": 8192,
+  "n_channels": 7,
+  "n_classes": 17,
+  "seed": 42,
+  "ratios": [
+    0.8,
+    0.1,
+    0.1
+  ],
+  "has_features": true
+}

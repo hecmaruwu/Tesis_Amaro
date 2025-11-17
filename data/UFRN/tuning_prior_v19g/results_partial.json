@@ -1,0 +1,164 @@
+[
+  {
+    "lr": 5e-05,
+    "dropout": 0.5,
+    "pos_weight": 10,
+    "acc": null,
+    "f1": null,
+    "rec": null,
+    "iou": null
+  },
+  {
+    "lr": 5e-05,
+    "dropout": 0.5,
+    "pos_weight": 15,
+    "acc": null,
+    "f1": null,
+    "rec": null,
+    "iou": null
+  },
+  {
+    "lr": 5e-05,
+    "dropout": 0.5,
+    "pos_weight": 20,
+    "acc": null,
+    "f1": null,
+    "rec": null,
+    "iou": null
+  },
+  {
+    "lr": 5e-05,
+    "dropout": 0.6,
+    "pos_weight": 10,
+    "acc": null,
+    "f1": null,
+    "rec": null,
+    "iou": null
+  },
+  {
+    "lr": 5e-05,
+    "dropout": 0.6,
+    "pos_weight": 15,
+    "acc": null,
+    "f1": null,
+    "rec": null,
+    "iou": null
+  },
+  {
+    "lr": 5e-05,
+    "dropout": 0.6,
+    "pos_weight": 20,
+    "acc": null,
+    "f1": null,
+    "rec": null,
+    "iou": null
+  },
+  {
+    "lr": 8e-05,
+    "dropout": 0.5,
+    "pos_weight": 10,
+    "acc": null,
+    "f1": null,
+    "rec": null,
+    "iou": null
+  },
+  {
+    "lr": 8e-05,
+    "dropout": 0.5,
+    "pos_weight": 15,
+    "acc": null,
+    "f1": null,
+    "rec": null,
+    "iou": null
+  },
+  {
+    "lr": 8e-05,
+    "dropout": 0.5,
+    "pos_weight": 20,
+    "acc": null,
+    "f1": null,
+    "rec": null,
+    "iou": null
+  },
+  {
+    "lr": 8e-05,
+    "dropout": 0.6,
+    "pos_weight": 10,
+    "acc": null,
+    "f1": null,
+    "rec": null,
+    "iou": null
+  },
+  {
+    "lr": 8e-05,
+    "dropout": 0.6,
+    "pos_weight": 15,
+    "acc": null,
+    "f1": null,
+    "rec": null,
+    "iou": null
+  },
+  {
+    "lr": 8e-05,
+    "dropout": 0.6,
+    "pos_weight": 20,
+    "acc": null,
+    "f1": null,
+    "rec": null,
+    "iou": null
+  },
+  {
+    "lr": 0.0001,
+    "dropout": 0.5,
+    "pos_weight": 10,
+    "acc": null,
+    "f1": null,
+    "rec": null,
+    "iou": null
+  },
+  {
+    "lr": 0.0001,
+    "dropout": 0.5,
+    "pos_weight": 15,
+    "acc": null,
+    "f1": null,
+    "rec": null,
+    "iou": null
+  },
+  {
+    "lr": 0.0001,
+    "dropout": 0.5,
+    "pos_weight": 20,
+    "acc": null,
+    "f1": null,
+    "rec": null,
+    "iou": null
+  },
+  {
+    "lr": 0.0001,
+    "dropout": 0.6,
+    "pos_weight": 10,
+    "acc": null,
+    "f1": null,
+    "rec": null,
+    "iou": null
+  },
+  {
+    "lr": 0.0001,
+    "dropout": 0.6,
+    "pos_weight": 15,
+    "acc": null,
+    "f1": null,
+    "rec": null,
+    "iou": null
+  },
+  {
+    "lr": 0.0001,
+    "dropout": 0.6,
+    "pos_weight": 20,
+    "acc": null,
+    "f1": null,
+    "rec": null,
+    "iou": null
+  }
+]
