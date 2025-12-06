@@ -884,6 +884,8 @@ class SPFE(nn.Module):
         parts = [xyz, xyz_c, normals]
         if extras is not None and extras.shape[-1] > 0:
             parts.append(extras)
+        else:
+            pass
 
         spfe_in = torch.cat(parts, dim=-1)  # (B,N,D)
         D = spfe_in.shape[-1]
@@ -1022,43 +1024,61 @@ class SA_WSLFA(nn.Module):
 
 class FP_Layer(nn.Module):
     """
-    Feature Propagation jerárquico:
-        * Interpola desde resolución alta → baja
-        * Concatena con features de nivel inferior
+    Feature Propagation (FP) de PointNet++ — versión corregida y estable.
+    Interpola características desde xyz_high -> xyz_low usando 3-NN.
     """
     def __init__(self, in_ch, out_ch):
         super().__init__()
         self.mlp = nn.Sequential(
             nn.Conv1d(in_ch, out_ch, 1),
             nn.BatchNorm1d(out_ch),
-            nn.ReLU(True),
+            nn.ReLU(True)
         )
 
     def forward(self, xyz_low, xyz_high, feat_low, feat_high):
+        """
+        xyz_low:  (B, Nl, 3)
+        xyz_high: (B, Nh, 3)
+        feat_low: (B, Cl, Nl)  o None
+        feat_high:(B, Ch, Nh)
+        """
         B, Nl, _ = xyz_low.shape
         Nh = xyz_high.shape[1]
+        Ch = feat_high.shape[1]
 
-        d = torch.cdist(xyz_low, xyz_high)     # (B,Nl,Nh)
-        idx  = d.topk(k=min(3, Nh), dim=-1, largest=False)[1]
-        dist = torch.gather(d, 2, idx).clamp_min(1e-8)
+        # ---------------- 1) Distancias + indices 3-NN ----------------
+        dist = torch.cdist(xyz_low, xyz_high)                   # (B, Nl, Nh)
+        idx = dist.topk(k=min(3, Nh), dim=-1, largest=False)[1] # (B, Nl, 3)
 
-        w = (1.0 / dist)
-        w = w / w.sum(dim=-1, keepdim=True)
+        # ---------------- 2) Ponderaciones ----------------
+        d3 = torch.gather(dist, 2, idx).clamp_min(1e-8)         # (B, Nl, 3)
+        w = 1.0 / d3
+        w = w / w.sum(dim=-1, keepdim=True)                     # (B, Nl, 3)
 
-        fT = feat_high.transpose(2, 1)  # (B,Nh,C_high)
-        neigh = torch.gather(
-            fT, 1,
-            idx[..., None].expand(-1, -1, -1, fT.shape[-1])
-        )  # (B,Nl,3,C_high)
+        # ---------------- 3) Gather features correctos ----------------
+        # feat_high: (B, Ch, Nh) -> (B, Nh, Ch)
+        fh = feat_high.transpose(2, 1)                          # (B, Nh, Ch)
 
-        f_interp = (w[..., None] * neigh).sum(dim=2).transpose(2, 1)
+        # Expandir idx → (B, Nl, 3, Ch)
+        idx_exp = idx.unsqueeze(-1).expand(-1, -1, -1, Ch)
 
+        # ---------------- ESTA ES LA LÍNEA CORREGIDA ----------------
+        neigh = torch.gather(fh.unsqueeze(1).expand(B, Nl, Nh, Ch), 2, idx_exp)
+        # neigh: (B, Nl, 3, Ch)
+
+        # ---------------- 4) Interpolación ----------------
+        f_interp = (w.unsqueeze(-1) * neigh).sum(dim=2)         # (B, Nl, Ch)
+        f_interp = f_interp.transpose(2, 1)                     # (B, Ch, Nl)
+
+        # ---------------- 5) Concatenación ----------------
         if feat_low is not None:
-            f_cat = torch.cat([f_interp, feat_low], dim=1)
+            f_cat = torch.cat([f_interp, feat_low], dim=1)      # (B, Ch+Cl, Nl)
         else:
             f_cat = f_interp
 
-        return self.mlp(f_cat)
+        # ---------------- 6) MLP final ----------------
+        return self.mlp(f_cat)                                  # (B, out_ch, Nl)
+
 
 
 # --------------------------------------------------------------
@@ -1084,7 +1104,7 @@ class PointNet2Seg_SPFE_WSLFA(nn.Module):
         self.in_ch_raw = in_ch
 
         # SA dinámicas
-        self.sa1 = SA_WSLFA(None, k_neighbors=k, in_ch=None, mlp_out=128)
+        self.sa1 = SA_WSLFA(0, k_neighbors=k, in_ch=0, mlp_out=128)
         self.sa2 = SA_WSLFA(None, k_neighbors=k, in_ch=None, mlp_out=256)
         self.sa3 = SA_WSLFA(None, k_neighbors=k, in_ch=None, mlp_out=512)
 
@@ -1103,7 +1123,7 @@ class PointNet2Seg_SPFE_WSLFA(nn.Module):
         )
 
         self.M1_frac = M1_frac
-        self.M२_frac = M2_frac
+        self.M2_frac = M2_frac
         self.M3_frac = M3_frac
 
     def _build_spfe_input(self, X):
@@ -1128,20 +1148,58 @@ class PointNet2Seg_SPFE_WSLFA(nn.Module):
         B, N, C = X.shape
         xyz = X[:, :, :3]
 
-        # -------- SPFE --------
-        spfe_in = self._build_spfe_input(X)
-        D = spfe_in.shape[-1]
+        # ------------------------------------------------------
+        # 1) Construir entrada SPFE (XYZ, XYZ centrado, normales, extras)
+        # ------------------------------------------------------
+        xyz_c = xyz - xyz.mean(dim=1, keepdim=True)
 
-        if (self.spfe is None or self.spfe.mlp is None or
-                self.spfe.mlp[0].in_channels != D):
-            print(f"[INIT] SPFE reconstruido con in_ch_spfe={D}")
+        if C >= 6:
+            normals = X[:, :, 3:6]
+            extras  = X[:, :, 6:] if C > 6 else None
+        else:
+            normals = torch.zeros_like(xyz)
+            extras  = X[:, :, 3:] if C > 3 else None
+
+        parts = [xyz, xyz_c, normals]
+        if extras is not None and extras.shape[-1] > 0:
+            parts.append(extras)
+
+        spfe_in = torch.cat(parts, dim=-1)              # (B,N,D)
+        D = spfe_in.shape[-1]                           # canales reales
+        spfe_in = spfe_in.transpose(2, 1).contiguous()  # (B,D,N)
+
+        # ------------------------------------------------------
+        # 2) Inicializar SPFE solo UNA VEZ
+        # ------------------------------------------------------
+        if self.spfe is None:
+            print(f"[INIT] SPFE creado con in_ch_spfe={D}")
             self.spfe = SPFE(in_ch_spfe=D).to(X.device)
 
-        f0 = self.spfe(spfe_in)  # (B,64,N)
+        # Si la MLP no coincide → reconstruir SOLO la MLP
+        elif (self.spfe.mlp is None or
+              list(self.spfe.mlp[0].weight.shape)[1] != D):
 
-        # -------- Encoder (SA1-SA2-SA3) --------
+            print(f"[INIT] SPFE.mlp reconstruida con in_ch_spfe={D}")
+
+            self.spfe.mlp = nn.Sequential(
+                nn.Conv1d(D, self.spfe.out_ch, 1),
+                nn.BatchNorm1d(self.spfe.out_ch),
+                    nn.ReLU(True),
+            nn.Conv1d(self.spfe.out_ch, self.spfe.out_ch, 1),
+            nn.BatchNorm1d(self.spfe.out_ch),
+            nn.ReLU(True)
+            ).to(X.device)
+
+    # ------------------------------------------------------
+    # 3) Forward SPFE
+    # ------------------------------------------------------
+        f0 = self.spfe.mlp(spfe_in)   # (B,64,N)
+
+    # ------------------------------------------------------
+    # 4) Encoder jerárquico (SA1-SA2-SA3)
+    # ------------------------------------------------------
         M1 = max(1, int(N * self.M1_frac))
-        M2 = max(1, int(N * self.M२_frac))
+        M2 = max(1, int(N * self.M2_frac))
         M3 = max(1, int(N * self.M3_frac))
 
         self.sa1.n_center = M1
@@ -1152,14 +1210,19 @@ class PointNet2Seg_SPFE_WSLFA(nn.Module):
         xyz2, f2 = self.sa2(xyz1, f1)
         xyz3, f3 = self.sa3(xyz2, f2)
 
-        # -------- Decoder (FP3-FP2-FP1) --------
+    # ------------------------------------------------------
+    # 5) Decoder (FP3 → FP2 → FP1)
+    # ------------------------------------------------------
         f_up2 = self.fp3(xyz2, xyz3, f2, f3)
         f_up1 = self.fp2(xyz1, xyz2, f1, f_up2)
         f_up0 = self.fp1(xyz,  xyz1, f0, f_up1)
 
-        # -------- Head --------
+    # ------------------------------------------------------
+    # 6) Head final
+    # ------------------------------------------------------
         logits = self.head(f_up0).transpose(2, 1)
         return logits
+
 
 # ==============================================================
 # === DILATED TOOTH SEG NET (Conv1D Dilatadas) =================
@@ -1580,48 +1643,70 @@ def train_model(model,
                 patience: int = 40,
                 data_dir: Path = None):
     """
-    Entrenamiento estilo 'paper-like' versión estable v12.
-    Guarda:
-        - best.pt
-        - final_model.pt
-        - history.json
-        - summary.json
-        - curvas PNG
+    Entrenamiento estilo 'paper-like' v12 corregido.
+    Mantiene TODOS los valores por defecto originales.
+    No requiere pasar data_dir (funciona igual).
     """
 
     out_dir.mkdir(parents=True, exist_ok=True)
 
     # ==========================================================
-    # 1) Detectar in_ch desde el loader
+    # 1) Detectar canales
     # ==========================================================
     X0, _ = next(iter(loaders["train"]))
     in_ch = X0.shape[2]
 
     # ==========================================================
-    # 2) Class Weights
+    # 2) Class Weights — ruta real desde el dataset
     # ==========================================================
+    ds_train = loaders["train"].dataset
+
+    # Preferencia: ruta real proveniente del dataset
+    Ytr_path = getattr(ds_train, "Y_path", None)
+
+    # Fallback: uso de data_dir solo si dataset no expone Y_path
+    if Ytr_path is None:
+        if data_dir is None:
+            raise RuntimeError(
+                "ERROR: El dataset no expone Y_path y data_dir=None. "
+                "Debe agregar self.Y_path en el dataset o pasar data_dir."
+            )
+        Ytr_path = Path(data_dir) / "Y_train.npz"
+
+    Ytr_path = Path(Ytr_path)
+    if not Ytr_path.exists():
+        raise FileNotFoundError(f"[ERROR] No se encontró {Ytr_path}")
+
+    # artifact path
+    artifacts_dir = Ytr_path.parent / "artifacts"
+    cw_file = artifacts_dir / "class_weights.json"
+
+    # Cargar si existe
     W = None
-    artifacts = data_dir / "artifacts"
-    cw_file = artifacts / "class_weights.json"
-
     if cw_file.exists():
-        W = _try_load_class_weights(artifacts, num_classes)
+        W = _try_load_class_weights(artifacts_dir, num_classes)
 
+    # Calcular si no existe
     if W is None:
-        print("[WARN] No se encontró class_weights.json — calculando pesos auto.")
-
-        # La única ruta correcta es data_dir/Y_train.npz
-        Ytr_path = data_dir / "Y_train.npz"
-
-        if not Ytr_path.exists():
-            raise FileNotFoundError(f"[ERROR] No existe {Ytr_path}")
-
+        print("[WARN] No se encontró class_weights.json — usando auto-weights.")
         W = _auto_class_weights_from_train(Ytr_path, num_classes)
+
+        # Validación de dimensión
+        if W.shape[0] != num_classes:
+            raise RuntimeError(
+                f"[ERROR] class_weights tiene {W.shape[0]} entradas, "
+                f"pero num_classes = {num_classes}"
+            )
+
+    # Enviar a device
+    W = W.to(device)
+
+
 
     W = W.to(device)
 
     # ==========================================================
-    # 3) Loss Function
+    # 3) Loss
     # ==========================================================
     loss_fn = CombinedLoss(
         num_classes=num_classes,
@@ -1634,11 +1719,9 @@ def train_model(model,
     # ==========================================================
     # 4) Optimizador + Scheduler
     # ==========================================================
-    optim = torch.optim.AdamW(
-        model.parameters(),
-        lr=lr,
-        weight_decay=weight_decay
-    )
+    optim = torch.optim.AdamW(model.parameters(),
+                              lr=lr,
+                              weight_decay=weight_decay)
 
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
         optim,
@@ -1646,14 +1729,14 @@ def train_model(model,
     )
 
     # ==========================================================
-    # 5) Early Stopping Setup
+    # 5) Early Stopping
     # ==========================================================
     best_val = float("inf")
     best_epoch = 0
     history = {}
 
     # ==========================================================
-    # ============= LOOP DE ENTRENAMIENTO ======================
+    # 6) LOOP DE ENTRENAMIENTO
     # ==========================================================
     for ep in range(1, epochs + 1):
 
@@ -1662,7 +1745,7 @@ def train_model(model,
         train_loss = 0.0
         cm_total = torch.zeros((num_classes, num_classes), device=device)
 
-        f_acc=f_prec=f_rec=f_f1=f_iou=0.0
+        f_acc = f_prec = f_rec = f_f1 = f_iou = 0.0
         fb = 0
 
         for X, Y in loaders["train"]:
@@ -1678,7 +1761,6 @@ def train_model(model,
             optim.step()
 
             train_loss += loss.item()
-
             cm_total += confusion_matrix_from_logits(logits, Y, num_classes)
 
             st = single_class_stats(logits, Y, focus_id)
@@ -1698,7 +1780,7 @@ def train_model(model,
 
         update_history(history, "train", macro_train, train_loss)
 
-        # ------------------- VAL -------------------
+        # ------------------- VALIDACIÓN -------------------
         val_loss, macro_val = evaluate_model(
             model,
             loaders["val"],
@@ -1708,7 +1790,7 @@ def train_model(model,
         )
         update_history(history, "val", macro_val, val_loss)
 
-        # ------------------- Scheduler -------------------
+        # ------------------- SCHEDULER -------------------
         scheduler.step()
 
         # ------------------- LOG -------------------
@@ -1727,7 +1809,7 @@ def train_model(model,
             break
 
     # ==========================================================
-    # 6) Guardado Final
+    # 7) Guardado Final
     # ==========================================================
     torch.save(model.state_dict(), out_dir / "final_model.pt")
 
@@ -1735,7 +1817,7 @@ def train_model(model,
     plot_curves(history, out_dir, model.__class__.__name__)
 
     # ==========================================================
-    # 7) Evaluación con best.pt
+    # 8) Evaluación con best.pt
     # ==========================================================
     model.load_state_dict(torch.load(out_dir / "best.pt"))
 
@@ -1761,59 +1843,87 @@ def train_model(model,
 
     return model, history, summary
 
-
-
 # ==============================================================
 # === VISUALIZACIÓN 3D =========================================
 # ==============================================================
 
 def visualize_prediction(X, Y, pred, out_dir=None):
     """
-    Guarda o muestra 3 visualizaciones:
-        - Ground Truth
-        - Predicción
-        - Diferencia
-    Usando Plotly para nubes 3D.
-    """
-    import plotly.graph_objects as go
+    Guarda o muestra 3 visualizaciones interactivas en HTML usando Plotly:
+        - Ground Truth (Viridis)
+        - Predicción (Turbo)
+        - Diferencia (Jet)
 
+    Parámetros:
+        X: np.array o tensor con forma (N, C) donde C >= 3 (XYZ)
+        Y: etiquetas verdaderas (N,)
+        pred: etiquetas predichas (N,)
+        out_dir: carpeta donde guardar plots HTML (opcional)
+    """
+
+    import plotly.graph_objects as go
+    from pathlib import Path
+
+    # Usar solo XYZ
     xyz = X[:, :3]
 
+    # -------------------------
+    # Ground Truth
+    # -------------------------
     fig_gt = go.Figure(
         data=[go.Scatter3d(
-            x=xyz[:,0], y=xyz[:,1], z=xyz[:,2],
+            x=xyz[:, 0], y=xyz[:, 1], z=xyz[:, 2],
             mode="markers",
-            marker=dict(size=2, color=Y, colorscale="Viridis")
+            marker=dict(size=2, color=Y, colorscale="Viridis"),
+            name="GT"
         )]
     )
+    fig_gt.update_layout(title="Ground Truth")
+
+    # -------------------------
+    # Predicción
+    # -------------------------
     fig_pred = go.Figure(
         data=[go.Scatter3d(
-            x=xyz[:,0], y=xyz[:,1], z=xyz[:,2],
+            x=xyz[:, 0], y=xyz[:, 1], z=xyz[:, 2],
             mode="markers",
-            marker=dict(size=2, color=pred, colorscale="Turbo")
+            marker=dict(size=2, color=pred, colorscale="Turbo"),
+            name="Pred"
         )]
     )
+    fig_pred.update_layout(title="Predicción del Modelo")
+
+    # -------------------------
+    # Diferencia
+    # -------------------------
+    diff = (pred != Y).astype(int)
+
     fig_diff = go.Figure(
         data=[go.Scatter3d(
-            x=xyz[:,0], y=xyz[:,1], z=xyz[:,2],
+            x=xyz[:, 0], y=xyz[:, 1], z=xyz[:, 2],
             mode="markers",
-            marker=dict(size=2, color=(pred!=Y).astype(int),
-                        colorscale="Jet")
+            marker=dict(size=2, color=diff, colorscale="Jet"),
+            name="Diff"
         )]
     )
+    fig_diff.update_layout(title="Diferencias (1 = error)")
 
+    # -------------------------
+    # Guardado o visualización
+    # -------------------------
     if out_dir:
         out_dir = Path(out_dir)
         out_dir.mkdir(parents=True, exist_ok=True)
+
         fig_gt.write_html(out_dir / "plot_gt.html")
         fig_pred.write_html(out_dir / "plot_pred.html")
         fig_diff.write_html(out_dir / "plot_diff.html")
-        print(f"[PLOTS] Guardados en {out_dir}")
+
+        print(f"[PLOTS] Guardados en: {out_dir}")
     else:
         fig_gt.show()
         fig_pred.show()
         fig_diff.show()
-
 
 # ==============================================================
 # === MAIN + ARGPARSE ==========================================
@@ -1828,11 +1938,8 @@ if __name__ == "__main__":
 
     parser.add_argument("--data_dir", type=str, required=True)
     parser.add_argument("--model", type=str, required=True,
-                        choices=[
-                            "pointnet", "pointnetpp",
-                            "pointnetpp_improved",
-                            "dilated", "transformer3d", "toothformer"
-                        ])
+                        choices=["pointnet", "pointnetpp", "pointnetpp_improved",
+                                 "dilated", "transformer3d", "toothformer"])
     parser.add_argument("--epochs", type=int, default=300)
     parser.add_argument("--lr", type=float, default=1e-3)
     parser.add_argument("--weight_decay", type=float, default=1e-4)
@@ -1852,18 +1959,19 @@ if __name__ == "__main__":
     data_dir = Path(args.data_dir)
     loaders = make_loaders(data_dir, batch_size=args.batch_size)
 
-    # Leer número de clases + canales
-    X0, Y0 = next(iter(loaders["train"]))
-    num_classes = int(Y0.max().item() + 1)
+    # === DETECCIÓN GLOBAL DE CLASES (CORREGIDO) =====
+    Ytrain_full = np.load(Path(args.data_dir) / "Y_train.npz")["Y"]
+    num_classes = int(Ytrain_full.max() + 1)
+
+    X0, _ = next(iter(loaders["train"]))
     in_ch = X0.shape[2]
 
-    print(f"[INFO] Detectadas {num_classes} clases.")
+    print(f"[INFO] Detectadas {num_classes} clases (global).")
     print(f"[INFO] Detectados {in_ch} canales por punto.")
 
     out_dir = Path("runs_v12") / f"{args.tag}"
     model = build_model(args.model, num_classes, in_ch, device)
 
-    # Entrenar
     model, history, summary = train_model(
         model=model,
         loaders=loaders,
@@ -1876,7 +1984,8 @@ if __name__ == "__main__":
         epochs=args.epochs,
         lr=args.lr,
         weight_decay=args.weight_decay,
-        patience=args.patience
+        patience=args.patience,
+        data_dir=data_dir
     )
 
     print("[FINISHED] Entrenamiento completado.")

@@ -1,0 +1,7 @@
+{
+  "source_mesh": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_1/lower/P0YTJU57/P0YTJU57_lower.obj",
+  "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_1/lower/P0YTJU57/P0YTJU57_lower.json",
+  "n_points": 200000,
+  "mode": "SURF_SAMPLE_GLOBAL",
+  "sample_mode": "global"
+}
