@@ -124,8 +124,8 @@ class CloudDataset(Dataset):
     def __len__(self): return self.X.shape[0]
 
     def __getitem__(self, idx):
-        X = torch.from_numpy(self.X[idx])
-        Y = torch.from_numpy(self.Y[idx])
+        X = torch.tensor(self.X[idx], dtype=torch.float32)
+        Y = torch.tensor(self.Y[idx], dtype=torch.long)
         return X, Y
 
 

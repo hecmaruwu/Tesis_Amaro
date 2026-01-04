@@ -1,0 +1,6 @@
+{
+  "source_mesh": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_2/upper/Z6BKBK3G/Z6BKBK3G_upper.obj",
+  "n_points": 8192,
+  "mode": "FPS",
+  "pca_aligned": false
+}

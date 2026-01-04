@@ -1,0 +1,52 @@
+{
+  "args": {
+    "data_dir": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/fps_aug_paperlike_v3",
+    "out_dir": "/home/htaucare/Tesis_Amaro/runs_pointnetpp_improved",
+    "epochs": 2,
+    "batch_size": 8,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "patience": 3,
+    "seed": 42,
+    "num_workers": 0,
+    "nsample": 32,
+    "ignore_index": null,
+    "d21_id": 21,
+    "use_cosine": true,
+    "eval_best": true
+  },
+  "num_classes": 17,
+  "params": 744019,
+  "best_val_loss": 0.1829146103312572,
+  "last_epoch": 2,
+  "test": {
+    "acc": 0.9723799824714661,
+    "prec": 0.05719882249832153,
+    "rec": 0.05882352963089943,
+    "f1": 0.05799980089068413,
+    "iou": 0.05719882249832153,
+    "d21_acc": 1.0,
+    "d21_f1": 0.0,
+    "d21_iou": 0.0
+  },
+  "history_keys": [
+    "train_loss",
+    "train_acc",
+    "train_prec",
+    "train_rec",
+    "train_f1",
+    "train_iou",
+    "train_d21_acc",
+    "train_d21_f1",
+    "train_d21_iou",
+    "val_loss",
+    "val_acc",
+    "val_prec",
+    "val_rec",
+    "val_f1",
+    "val_iou",
+    "val_d21_acc",
+    "val_d21_f1",
+    "val_d21_iou"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "source_mesh": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_5/lower/YBSESUN6/YBSESUN6_lower.obj",
+  "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_5/lower/YBSESUN6/YBSESUN6_lower.json",
+  "n_points": 200000,
+  "mode": "SURF_SAMPLE_GLOBAL",
+  "sample_mode": "global"
+}

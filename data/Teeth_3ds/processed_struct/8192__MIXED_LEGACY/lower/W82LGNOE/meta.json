@@ -1,0 +1,7 @@
+{
+  "source_mesh": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_1/lower/W82LGNOE/W82LGNOE_lower.obj",
+  "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_1/lower/W82LGNOE/W82LGNOE_lower.json",
+  "n_points": 8192,
+  "mode": "FPS_VERTICES_BASE",
+  "sample_mode": "fps"
+}

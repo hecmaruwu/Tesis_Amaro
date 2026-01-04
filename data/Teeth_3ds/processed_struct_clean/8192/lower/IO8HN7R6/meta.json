@@ -1,0 +1,7 @@
+{
+  "source_mesh": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_7/lower/IO8HN7R6/IO8HN7R6_lower.obj",
+  "source_json": null,
+  "n_points": 8192,
+  "mode": "FPS_VERTICES_BASE",
+  "sample_mode": "fps"
+}

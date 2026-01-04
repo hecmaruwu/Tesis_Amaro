@@ -1,0 +1,11 @@
+{
+  "points_total": 8192,
+  "balance_jaws": true,
+  "allow_unpaired": true,
+  "N_total": 167,
+  "splits": {
+    "train": 133,
+    "val": 17,
+    "test": 17
+  }
+}

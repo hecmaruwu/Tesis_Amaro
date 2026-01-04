@@ -1,0 +1,6 @@
+{
+  "source_mesh": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_5/upper/26CY2H2Q/26CY2H2Q_upper.obj",
+  "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_5/upper/26CY2H2Q/26CY2H2Q_upper.json",
+  "n_points": 8192,
+  "mode": "SURFACE_SAMPLING"
+}

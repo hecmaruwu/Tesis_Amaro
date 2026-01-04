@@ -1,0 +1,6 @@
+{
+  "source_mesh": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_6/lower/01EH2EGV/01EH2EGV_lower.obj",
+  "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_6/lower/01EH2EGV/01EH2EGV_lower.json",
+  "n_points": 8192,
+  "mode": "SURFACE_SAMPLING"
+}

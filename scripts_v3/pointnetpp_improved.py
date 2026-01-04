@@ -111,11 +111,15 @@ class CloudDataset(Dataset):
         assert self.X.shape[0] == self.Y.shape[0], \
             f"Dimensión inconsistente entre {X_path.name} y {Y_path.name}"
 
-    def __len__(self): return self.X.shape[0]
+    def __len__(self): 
+        return self.X.shape[0]
 
     def __getitem__(self, idx):
-        X = torch.from_numpy(self.X[idx])   # (P,3)
-        Y = torch.from_numpy(self.Y[idx])   # (P,)
+        # Parche: forzar ndarray "puro" y luego tensor robusto
+        X = np.array(self.X[idx], dtype=np.float32, copy=False)  # (P,3)
+        Y = np.array(self.Y[idx], dtype=np.int64,   copy=False)  # (P,)
+        X = torch.as_tensor(X)
+        Y = torch.as_tensor(Y)
         return X, Y
 
 

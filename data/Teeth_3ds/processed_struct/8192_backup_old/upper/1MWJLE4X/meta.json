@@ -1,0 +1,6 @@
+{
+  "source_mesh": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_4/upper/1MWJLE4X/1MWJLE4X_upper.obj",
+  "n_points": 8192,
+  "mode": "FPS",
+  "pca_aligned": false
+}
