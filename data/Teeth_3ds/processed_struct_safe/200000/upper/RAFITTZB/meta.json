@@ -3,5 +3,28 @@
   "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_2/upper/RAFITTZB/RAFITTZB_upper.json",
   "n_points": 200000,
   "mode": "SURF_SAMPLE_GLOBAL",
-  "sample_mode": "global"
+  "sample_mode": "global",
+  "label_policy": "exclude_wisdom_to_0",
+  "label_policy_stats": {
+    "n_total": 200000,
+    "n_to_0_wisdom": 0,
+    "n_to_0_other": 0
+  },
+  "labels_unique_after_policy": {
+    "0": 163777,
+    "11": 2625,
+    "12": 2055,
+    "13": 2357,
+    "14": 2579,
+    "15": 2503,
+    "16": 3685,
+    "17": 2419,
+    "21": 2796,
+    "22": 1836,
+    "23": 2273,
+    "24": 2542,
+    "25": 2185,
+    "26": 3784,
+    "27": 2584
+  }
 }

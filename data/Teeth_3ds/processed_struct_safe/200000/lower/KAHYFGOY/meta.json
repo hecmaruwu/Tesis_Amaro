@@ -3,5 +3,28 @@
   "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_2/lower/KAHYFGOY/KAHYFGOY_lower.json",
   "n_points": 200000,
   "mode": "SURF_SAMPLE_GLOBAL",
-  "sample_mode": "global"
+  "sample_mode": "global",
+  "label_policy": "exclude_wisdom_to_0",
+  "label_policy_stats": {
+    "n_total": 200000,
+    "n_to_0_wisdom": 7435,
+    "n_to_0_other": 0
+  },
+  "labels_unique_after_policy": {
+    "0": 106870,
+    "31": 3804,
+    "32": 4702,
+    "33": 6107,
+    "34": 5404,
+    "35": 5431,
+    "36": 11000,
+    "37": 10182,
+    "41": 3453,
+    "42": 4289,
+    "43": 5709,
+    "44": 5319,
+    "45": 5895,
+    "46": 10745,
+    "47": 11090
+  }
 }

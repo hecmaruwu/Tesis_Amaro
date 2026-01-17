@@ -3,5 +3,28 @@
   "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_2/lower/mccarthy/mccarthy_lower.json",
   "n_points": 200000,
   "mode": "SURF_SAMPLE_GLOBAL",
-  "sample_mode": "global"
+  "sample_mode": "global",
+  "label_policy": "exclude_wisdom_to_0",
+  "label_policy_stats": {
+    "n_total": 200000,
+    "n_to_0_wisdom": 0,
+    "n_to_0_other": 0
+  },
+  "labels_unique_after_policy": {
+    "0": 81770,
+    "31": 6548,
+    "32": 7110,
+    "33": 8402,
+    "34": 8023,
+    "35": 13600,
+    "36": 10428,
+    "37": 5591,
+    "41": 6606,
+    "42": 6356,
+    "43": 8419,
+    "44": 8117,
+    "45": 13390,
+    "46": 10814,
+    "47": 4826
+  }
 }

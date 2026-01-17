@@ -3,5 +3,28 @@
   "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_1/upper/baliwish/baliwish_upper.json",
   "n_points": 200000,
   "mode": "SURF_SAMPLE_GLOBAL",
-  "sample_mode": "global"
+  "sample_mode": "global",
+  "label_policy": "exclude_wisdom_to_0",
+  "label_policy_stats": {
+    "n_total": 200000,
+    "n_to_0_wisdom": 8755,
+    "n_to_0_other": 0
+  },
+  "labels_unique_after_policy": {
+    "0": 127017,
+    "11": 5632,
+    "12": 4291,
+    "13": 4173,
+    "14": 5141,
+    "15": 4310,
+    "16": 6608,
+    "17": 6246,
+    "21": 5594,
+    "22": 4389,
+    "23": 4358,
+    "24": 5162,
+    "25": 4202,
+    "26": 6723,
+    "27": 6154
+  }
 }

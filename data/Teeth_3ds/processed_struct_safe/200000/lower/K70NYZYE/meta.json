@@ -3,5 +3,28 @@
   "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_2/lower/K70NYZYE/K70NYZYE_lower.json",
   "n_points": 200000,
   "mode": "SURF_SAMPLE_GLOBAL",
-  "sample_mode": "global"
+  "sample_mode": "global",
+  "label_policy": "exclude_wisdom_to_0",
+  "label_policy_stats": {
+    "n_total": 200000,
+    "n_to_0_wisdom": 0,
+    "n_to_0_other": 0
+  },
+  "labels_unique_after_policy": {
+    "0": 102046,
+    "31": 5615,
+    "32": 5914,
+    "33": 6121,
+    "34": 6125,
+    "35": 5995,
+    "36": 11599,
+    "37": 7002,
+    "41": 6122,
+    "42": 6492,
+    "43": 6124,
+    "44": 6109,
+    "45": 6207,
+    "46": 11190,
+    "47": 7339
+  }
 }

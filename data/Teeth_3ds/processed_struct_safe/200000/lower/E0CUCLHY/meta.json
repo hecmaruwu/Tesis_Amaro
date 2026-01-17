@@ -3,5 +3,27 @@
   "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_2/lower/E0CUCLHY/E0CUCLHY_lower.json",
   "n_points": 200000,
   "mode": "SURF_SAMPLE_GLOBAL",
-  "sample_mode": "global"
+  "sample_mode": "global",
+  "label_policy": "exclude_wisdom_to_0",
+  "label_policy_stats": {
+    "n_total": 200000,
+    "n_to_0_wisdom": 0,
+    "n_to_0_other": 0
+  },
+  "labels_unique_after_policy": {
+    "0": 174523,
+    "31": 1630,
+    "32": 1632,
+    "33": 1392,
+    "34": 1808,
+    "35": 1821,
+    "36": 3552,
+    "37": 2259,
+    "41": 1651,
+    "42": 1544,
+    "43": 1499,
+    "44": 1590,
+    "45": 1832,
+    "46": 3267
+  }
 }

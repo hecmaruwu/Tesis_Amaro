@@ -3,5 +3,27 @@
   "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_2/upper/SEN849RI/SEN849RI_upper.json",
   "n_points": 200000,
   "mode": "SURF_SAMPLE_GLOBAL",
-  "sample_mode": "global"
+  "sample_mode": "global",
+  "label_policy": "exclude_wisdom_to_0",
+  "label_policy_stats": {
+    "n_total": 200000,
+    "n_to_0_wisdom": 0,
+    "n_to_0_other": 0
+  },
+  "labels_unique_after_policy": {
+    "0": 110962,
+    "11": 7330,
+    "12": 3883,
+    "13": 6089,
+    "14": 6177,
+    "15": 5262,
+    "16": 9866,
+    "17": 7292,
+    "21": 7016,
+    "22": 5907,
+    "23": 6783,
+    "24": 5744,
+    "25": 9980,
+    "26": 7709
+  }
 }

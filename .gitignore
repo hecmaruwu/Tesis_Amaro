@@ -1,4 +1,14 @@
+# datasets y salidas (NO subir)
+data/
+outputs/
+runs_clean/
+
+
+
+
+
 # --- Archivos y carpetas grandes ---
+
 *.npz
 *.npy
 *.pt

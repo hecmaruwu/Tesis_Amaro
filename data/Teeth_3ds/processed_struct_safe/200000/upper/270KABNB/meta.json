@@ -3,5 +3,28 @@
   "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_3/upper/270KABNB/270KABNB_upper.json",
   "n_points": 200000,
   "mode": "SURF_SAMPLE_GLOBAL",
-  "sample_mode": "global"
+  "sample_mode": "global",
+  "label_policy": "exclude_wisdom_to_0",
+  "label_policy_stats": {
+    "n_total": 200000,
+    "n_to_0_wisdom": 0,
+    "n_to_0_other": 0
+  },
+  "labels_unique_after_policy": {
+    "0": 167947,
+    "11": 2923,
+    "12": 1182,
+    "13": 1701,
+    "14": 1968,
+    "15": 2060,
+    "16": 3613,
+    "17": 2468,
+    "21": 2656,
+    "22": 1325,
+    "23": 1714,
+    "24": 2052,
+    "25": 2138,
+    "26": 3604,
+    "27": 2649
+  }
 }

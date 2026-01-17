@@ -3,5 +3,28 @@
   "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_2/lower/C4LOTSKE/C4LOTSKE_lower.json",
   "n_points": 200000,
   "mode": "SURF_SAMPLE_GLOBAL",
-  "sample_mode": "global"
+  "sample_mode": "global",
+  "label_policy": "exclude_wisdom_to_0",
+  "label_policy_stats": {
+    "n_total": 200000,
+    "n_to_0_wisdom": 0,
+    "n_to_0_other": 0
+  },
+  "labels_unique_after_policy": {
+    "0": 71954,
+    "31": 6327,
+    "32": 6739,
+    "33": 9268,
+    "34": 8629,
+    "35": 8492,
+    "36": 14111,
+    "37": 15717,
+    "41": 6094,
+    "42": 6382,
+    "43": 9036,
+    "44": 7347,
+    "45": 9675,
+    "46": 9539,
+    "47": 10690
+  }
 }

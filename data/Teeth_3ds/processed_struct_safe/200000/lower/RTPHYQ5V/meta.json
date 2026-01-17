@@ -3,5 +3,26 @@
   "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_5/lower/RTPHYQ5V/RTPHYQ5V_lower.json",
   "n_points": 200000,
   "mode": "SURF_SAMPLE_GLOBAL",
-  "sample_mode": "global"
+  "sample_mode": "global",
+  "label_policy": "exclude_wisdom_to_0",
+  "label_policy_stats": {
+    "n_total": 200000,
+    "n_to_0_wisdom": 0,
+    "n_to_0_other": 0
+  },
+  "labels_unique_after_policy": {
+    "0": 171886,
+    "31": 1652,
+    "32": 1813,
+    "33": 1916,
+    "34": 1768,
+    "35": 3496,
+    "36": 3232,
+    "41": 1599,
+    "42": 1968,
+    "43": 1588,
+    "44": 2124,
+    "45": 3199,
+    "46": 3759
+  }
 }

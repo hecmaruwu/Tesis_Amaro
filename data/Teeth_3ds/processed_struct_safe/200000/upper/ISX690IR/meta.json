@@ -3,5 +3,28 @@
   "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_1/upper/ISX690IR/ISX690IR_upper.json",
   "n_points": 200000,
   "mode": "SURF_SAMPLE_GLOBAL",
-  "sample_mode": "global"
+  "sample_mode": "global",
+  "label_policy": "exclude_wisdom_to_0",
+  "label_policy_stats": {
+    "n_total": 200000,
+    "n_to_0_wisdom": 0,
+    "n_to_0_other": 0
+  },
+  "labels_unique_after_policy": {
+    "0": 162607,
+    "11": 3218,
+    "12": 1927,
+    "13": 2354,
+    "14": 2141,
+    "15": 1953,
+    "16": 3946,
+    "17": 2482,
+    "21": 3468,
+    "22": 1970,
+    "23": 2415,
+    "24": 2232,
+    "25": 2325,
+    "26": 4221,
+    "27": 2741
+  }
 }

@@ -3,5 +3,28 @@
   "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_5/lower/VR3UZPCR/VR3UZPCR_lower.json",
   "n_points": 200000,
   "mode": "SURF_SAMPLE_GLOBAL",
-  "sample_mode": "global"
+  "sample_mode": "global",
+  "label_policy": "exclude_wisdom_to_0",
+  "label_policy_stats": {
+    "n_total": 200000,
+    "n_to_0_wisdom": 0,
+    "n_to_0_other": 0
+  },
+  "labels_unique_after_policy": {
+    "0": 162751,
+    "31": 1777,
+    "32": 1886,
+    "33": 2386,
+    "34": 2267,
+    "35": 2294,
+    "36": 4324,
+    "37": 3599,
+    "41": 1782,
+    "42": 1968,
+    "43": 2583,
+    "44": 2069,
+    "45": 2488,
+    "46": 3921,
+    "47": 3905
+  }
 }

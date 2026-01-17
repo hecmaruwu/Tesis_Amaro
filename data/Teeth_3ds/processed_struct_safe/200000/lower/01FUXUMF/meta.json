@@ -3,5 +3,28 @@
   "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_3/lower/01FUXUMF/01FUXUMF_lower.json",
   "n_points": 200000,
   "mode": "SURF_SAMPLE_GLOBAL",
-  "sample_mode": "global"
+  "sample_mode": "global",
+  "label_policy": "exclude_wisdom_to_0",
+  "label_policy_stats": {
+    "n_total": 200000,
+    "n_to_0_wisdom": 0,
+    "n_to_0_other": 0
+  },
+  "labels_unique_after_policy": {
+    "0": 167496,
+    "31": 1496,
+    "32": 1780,
+    "33": 2373,
+    "34": 2166,
+    "35": 2354,
+    "36": 3803,
+    "37": 2573,
+    "41": 1433,
+    "42": 1531,
+    "43": 1974,
+    "44": 2061,
+    "45": 2133,
+    "46": 3758,
+    "47": 3069
+  }
 }

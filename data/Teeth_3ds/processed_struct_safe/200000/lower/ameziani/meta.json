@@ -3,5 +3,26 @@
   "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_4/lower/ameziani/ameziani_lower.json",
   "n_points": 200000,
   "mode": "SURF_SAMPLE_GLOBAL",
-  "sample_mode": "global"
+  "sample_mode": "global",
+  "label_policy": "exclude_wisdom_to_0",
+  "label_policy_stats": {
+    "n_total": 200000,
+    "n_to_0_wisdom": 0,
+    "n_to_0_other": 0
+  },
+  "labels_unique_after_policy": {
+    "0": 108620,
+    "31": 5546,
+    "32": 6312,
+    "33": 5715,
+    "34": 6868,
+    "35": 12170,
+    "41": 5982,
+    "42": 6248,
+    "43": 6797,
+    "44": 6402,
+    "45": 7174,
+    "46": 11070,
+    "47": 11096
+  }
 }

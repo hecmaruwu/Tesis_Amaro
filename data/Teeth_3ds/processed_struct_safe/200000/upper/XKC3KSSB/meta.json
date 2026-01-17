@@ -3,5 +3,26 @@
   "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_2/upper/XKC3KSSB/XKC3KSSB_upper.json",
   "n_points": 200000,
   "mode": "SURF_SAMPLE_GLOBAL",
-  "sample_mode": "global"
+  "sample_mode": "global",
+  "label_policy": "exclude_wisdom_to_0",
+  "label_policy_stats": {
+    "n_total": 200000,
+    "n_to_0_wisdom": 0,
+    "n_to_0_other": 0
+  },
+  "labels_unique_after_policy": {
+    "0": 125911,
+    "11": 7991,
+    "12": 4409,
+    "13": 5060,
+    "14": 5451,
+    "15": 5058,
+    "16": 9900,
+    "21": 7649,
+    "22": 4426,
+    "23": 4825,
+    "24": 5079,
+    "25": 4814,
+    "26": 9427
+  }
 }

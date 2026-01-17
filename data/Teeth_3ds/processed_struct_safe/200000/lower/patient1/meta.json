@@ -3,5 +3,27 @@
   "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_5/lower/patient1/patient1_lower.json",
   "n_points": 200000,
   "mode": "SURF_SAMPLE_GLOBAL",
-  "sample_mode": "global"
+  "sample_mode": "global",
+  "label_policy": "exclude_wisdom_to_0",
+  "label_policy_stats": {
+    "n_total": 200000,
+    "n_to_0_wisdom": 0,
+    "n_to_0_other": 0
+  },
+  "labels_unique_after_policy": {
+    "0": 174037,
+    "31": 1473,
+    "32": 1584,
+    "33": 1663,
+    "34": 2414,
+    "35": 2426,
+    "36": 3143,
+    "41": 1384,
+    "42": 1583,
+    "43": 1576,
+    "44": 2431,
+    "45": 2317,
+    "46": 3437,
+    "47": 532
+  }
 }

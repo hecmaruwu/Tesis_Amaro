@@ -3,5 +3,25 @@
   "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_5/lower/AVI68NCT/AVI68NCT_lower.json",
   "n_points": 200000,
   "mode": "SURF_SAMPLE_GLOBAL",
-  "sample_mode": "global"
+  "sample_mode": "global",
+  "label_policy": "exclude_wisdom_to_0",
+  "label_policy_stats": {
+    "n_total": 200000,
+    "n_to_0_wisdom": 0,
+    "n_to_0_other": 0
+  },
+  "labels_unique_after_policy": {
+    "0": 177083,
+    "31": 1490,
+    "32": 1440,
+    "33": 1274,
+    "34": 2191,
+    "35": 3023,
+    "36": 3491,
+    "41": 1472,
+    "42": 1313,
+    "43": 1575,
+    "44": 2106,
+    "46": 3542
+  }
 }

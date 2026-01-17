@@ -3,5 +3,26 @@
   "source_json": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_2/upper/ZKJEPFDD/ZKJEPFDD_upper.json",
   "n_points": 200000,
   "mode": "SURF_SAMPLE_GLOBAL",
-  "sample_mode": "global"
+  "sample_mode": "global",
+  "label_policy": "exclude_wisdom_to_0",
+  "label_policy_stats": {
+    "n_total": 200000,
+    "n_to_0_wisdom": 0,
+    "n_to_0_other": 0
+  },
+  "labels_unique_after_policy": {
+    "0": 137982,
+    "11": 6380,
+    "12": 3965,
+    "13": 2471,
+    "14": 4797,
+    "15": 4881,
+    "16": 8127,
+    "21": 6353,
+    "22": 3938,
+    "23": 3841,
+    "24": 4445,
+    "25": 4236,
+    "26": 8584
+  }
 }
