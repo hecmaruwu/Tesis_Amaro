@@ -1,0 +1,13 @@
+row_i,name,idx_global,sample_name,jaw,split,index_csv_used
+0,ex_00_row_00000,,,,test,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/merged_200000_safe_excl_wisdom_upper_only/index_test.csv
+1,ex_01_row_00001,,,,test,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/merged_200000_safe_excl_wisdom_upper_only/index_test.csv
+2,ex_02_row_00002,,,,test,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/merged_200000_safe_excl_wisdom_upper_only/index_test.csv
+3,ex_03_row_00003,,,,test,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/merged_200000_safe_excl_wisdom_upper_only/index_test.csv
+4,ex_04_row_00004,,,,test,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/merged_200000_safe_excl_wisdom_upper_only/index_test.csv
+5,ex_05_row_00005,,,,test,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/merged_200000_safe_excl_wisdom_upper_only/index_test.csv
+6,ex_06_row_00006,,,,test,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/merged_200000_safe_excl_wisdom_upper_only/index_test.csv
+7,ex_07_row_00007,,,,test,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/merged_200000_safe_excl_wisdom_upper_only/index_test.csv
+8,ex_08_row_00008,,,,test,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/merged_200000_safe_excl_wisdom_upper_only/index_test.csv
+9,ex_09_row_00009,,,,test,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/merged_200000_safe_excl_wisdom_upper_only/index_test.csv
+10,ex_10_row_00010,,,,test,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/merged_200000_safe_excl_wisdom_upper_only/index_test.csv
+11,ex_11_row_00011,,,,test,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/merged_200000_safe_excl_wisdom_upper_only/index_test.csv

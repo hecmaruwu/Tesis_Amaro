@@ -1,0 +1,19 @@
+{
+  "script": "train_pointnetpp_traditional_fixed_v1.py",
+  "start_time": "2026-01-12T13:47:05",
+  "data_dir": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/fps_aug_fixed_v2",
+  "artifacts_dir": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/fps_aug_fixed_v2/artifacts",
+  "out_dir": "/home/htaucare/Tesis_Amaro/runs_clean/pointnetpp_traditional_fixed_v1_lr1e3_wd1e4_do05_seed42",
+  "num_classes": 27,
+  "device": "cuda",
+  "seed": 42,
+  "batch_size": 4,
+  "lr": 0.001,
+  "weight_decay": 0.0001,
+  "dropout": 0.5,
+  "ignore_index": 0,
+  "torchmetrics": true,
+  "d21_internal_idx": null,
+  "normalize_unit_sphere": true,
+  "infer_mode": "errors"
+}

@@ -1,0 +1,36 @@
+{
+  "timestamp": "2026-02-14T12:03:52",
+  "script": "train_dgcnn_classic_only_fixed_v6.py",
+  "args": {
+    "data_dir": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/upper_only_surf_global_excl_wisdom_seed42_aug2",
+    "out_dir": "/home/htaucare/Tesis_Amaro/outputs/dgcnn/cpu_debug_v6",
+    "epochs": 1,
+    "batch_size": 2,
+    "lr": 0.0002,
+    "weight_decay": 0.0001,
+    "dropout": 0.5,
+    "num_workers": 0,
+    "device": "cpu",
+    "use_amp": false,
+    "grad_clip": 1.0,
+    "k": 10,
+    "emb_dims": 256,
+    "knn_chunk_size": 256,
+    "bg_class": 0,
+    "bg_weight": 0.03,
+    "d21_internal": 8,
+    "neighbor_teeth": "",
+    "seed": 42,
+    "normalize": true,
+    "plot_every": 10,
+    "do_infer": false,
+    "infer_examples": 12,
+    "infer_split": "test"
+  },
+  "extra": {
+    "num_classes": 15,
+    "bg": 0,
+    "d21_internal": 8,
+    "neighbors": []
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "start_time": "2026-01-16T21:06:57",
+  "data_dir": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/upper_only_surf_global_excl_wisdom_seed42_aug2",
+  "artifacts_dir": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/upper_only_surf_global_excl_wisdom_seed42_aug2",
+  "out_dir": "/home/htaucare/Tesis_Amaro/outputs/pointnet_classic/upper_only_seed42_aug2",
+  "num_classes": 15,
+  "label_map_path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/upper_only_surf_global_excl_wisdom_seed42_aug2/artifacts/label_map.json",
+  "device": "cuda",
+  "seed": 42,
+  "batch_size": 8,
+  "lr": 0.001,
+  "weight_decay": 0.0001,
+  "dropout": 0.5,
+  "ignore_index": 0,
+  "torchmetrics": true,
+  "d21_internal_idx": 8,
+  "normalize_unit_sphere": true,
+  "infer_examples": 10,
+  "do_infer": true
+}

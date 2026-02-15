@@ -1,0 +1,54 @@
+{
+  "tooth_id_requested": 21,
+  "processed_struct_upper": {
+    "total_pid_dirs": 950,
+    "pids_with_tooth": 899,
+    "pids_without_tooth": 51,
+    "label_dist_original_counts": {
+      "0": 135365600,
+      "11": 3691290,
+      "12": 2361514,
+      "13": 2557914,
+      "14": 2954037,
+      "15": 2953051,
+      "16": 4866361,
+      "17": 2875430,
+      "21": 3700394,
+      "22": 2404917,
+      "23": 2580912,
+      "24": 2944382,
+      "25": 2954410,
+      "26": 4871838,
+      "27": 2917950
+    }
+  },
+  "merged_200k": {
+    "C_internal": 15,
+    "bg_pct_all_points": 76.50821052631579,
+    "d21_internal": 8,
+    "samples_total": 950,
+    "samples_with_d21_train": 723,
+    "samples_with_d21_val": 87,
+    "samples_with_d21_test": 89
+  },
+  "final_8192": {
+    "C_internal": 15,
+    "bg_pct_all_points": 81.00868626644737,
+    "d21_internal": null,
+    "train_shape": [
+      2280,
+      8192
+    ],
+    "val_shape": [
+      95,
+      8192
+    ],
+    "test_shape": [
+      95,
+      8192
+    ],
+    "samples_with_d21_train": -1,
+    "samples_with_d21_val": -1,
+    "samples_with_d21_test": -1
+  }
+}

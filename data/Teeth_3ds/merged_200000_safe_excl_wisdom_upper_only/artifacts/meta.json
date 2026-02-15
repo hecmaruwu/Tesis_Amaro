@@ -1,0 +1,36 @@
+{
+  "in_root": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000",
+  "base_dir": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000",
+  "uses_npoints_subdir": false,
+  "n_points_expected": 200000,
+  "n_samples": 950,
+  "n_points_actual": 200000,
+  "n_classes": 15,
+  "seed": 42,
+  "ratios": {
+    "train": 0.8,
+    "val": 0.1,
+    "test": 0.1
+  },
+  "jaws": [
+    "upper"
+  ],
+  "require_labels": false,
+  "labels_unique_original": [
+    0,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ]
+}

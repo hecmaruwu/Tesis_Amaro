@@ -1,0 +1,18 @@
+{
+  "start_time": "2026-01-12T12:26:02",
+  "data_dir": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split_clean/8192/fps_aug_paperlike_v3",
+  "artifacts_dir": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split_clean/8192/fps_aug_paperlike_v3/artifacts",
+  "out_dir": "/home/htaucare/Tesis_Amaro/runs_clean/pointnetpp_traditional_fixed_lr5e4_wd1e4_seed42",
+  "num_classes": 27,
+  "device": "cuda",
+  "seed": 42,
+  "batch_size": 4,
+  "lr": 0.0005,
+  "weight_decay": 0.0001,
+  "dropout": 0.3,
+  "ignore_index": 0,
+  "torchmetrics": true,
+  "d21_internal_idx": 21,
+  "normalize_unit_sphere": true,
+  "infer_mode": "d21"
+}

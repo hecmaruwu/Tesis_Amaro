@@ -1,0 +1,21 @@
+{
+  "start_time": "2026-01-16T23:58:05",
+  "data_dir": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/upper_only_surf_global_excl_wisdom_seed42_aug2",
+  "out_dir": "/home/htaucare/Tesis_Amaro/outputs/pointnet_classic/upper_only_seed42_aug2_weighted_cosine_amp",
+  "device": "cuda",
+  "seed": 42,
+  "C": 15,
+  "bg_index": 0,
+  "bg_weight": 0.1,
+  "d21_internal": 8,
+  "epochs": 120,
+  "batch_size": 16,
+  "lr": 0.0003,
+  "weight_decay": 0.0001,
+  "dropout": 0.5,
+  "grad_clip": 1.0,
+  "use_amp": true,
+  "normalize_unit_sphere": true,
+  "infer_examples": 12,
+  "do_infer": true
+}

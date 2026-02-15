@@ -1,0 +1,18 @@
+{
+  "start_time": "2026-01-12T12:18:11",
+  "data_dir": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split_clean/8192/fps_aug_paperlike_v3",
+  "artifacts_dir": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split_clean/8192/fps_aug_paperlike_v3/artifacts",
+  "out_dir": "/home/htaucare/Tesis_Amaro/runs_clean/pointnetpp_traditional_8192_fps_aug_v3_seed42_repl_classiccfg",
+  "num_classes": 27,
+  "device": "cuda",
+  "seed": 42,
+  "batch_size": 4,
+  "lr": 0.001,
+  "weight_decay": 0.0001,
+  "dropout": 0.5,
+  "ignore_index": 0,
+  "d21_internal_idx": 21,
+  "normalize_unit_sphere": true,
+  "model": "PointNet++ Traditional SSG",
+  "notes": "SA radii/nsample: (0.10,32)->(0.20,32)->(0.40,32)->global; npoint: 1024,256,64"
+}

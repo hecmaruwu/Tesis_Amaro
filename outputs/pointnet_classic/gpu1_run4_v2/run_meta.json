@@ -1,0 +1,27 @@
+{
+  "script_name": "pointnet_classic_final_v2.py",
+  "start_time": "2026-02-11T21:11:58",
+  "data_dir": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/upper_only_surf_global_excl_wisdom_seed42_aug2",
+  "out_dir": "/home/htaucare/Tesis_Amaro/outputs/pointnet_classic/gpu1_run4_v2",
+  "device": "cuda",
+  "seed": 42,
+  "num_classes": 15,
+  "bg_index": 0,
+  "bg_weight": 0.03,
+  "d21_internal": 8,
+  "neighbors_internal": {
+    "d11": 1,
+    "d22": 9
+  },
+  "epochs": 120,
+  "batch_size": 16,
+  "lr": 0.0002,
+  "weight_decay": 0.0001,
+  "dropout": 0.5,
+  "grad_clip": 1.0,
+  "use_amp": true,
+  "normalize_unit_sphere": true,
+  "infer_examples": 12,
+  "do_infer": true,
+  "infer_split": "test"
+}

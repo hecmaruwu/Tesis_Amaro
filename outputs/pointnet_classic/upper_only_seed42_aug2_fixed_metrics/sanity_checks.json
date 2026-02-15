@@ -1,0 +1,11 @@
+{
+  "train_bg_frac": 0.8097832930715461,
+  "train_acc_all_baseline_bg": 0.8097832930715461,
+  "train_no_bg_frac": 0.19021670692845394,
+  "val_bg_frac": 0.814782072368421,
+  "val_acc_all_baseline_bg": 0.814782072368421,
+  "val_no_bg_frac": 0.18521792763157896,
+  "test_bg_frac": 0.8126773231907894,
+  "test_acc_all_baseline_bg": 0.8126773231907894,
+  "test_no_bg_frac": 0.18732267680921055
+}

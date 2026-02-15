@@ -1,0 +1,40 @@
+{
+  "splits": {
+    "train": {
+      "min": 0,
+      "max": 14,
+      "total_points": 18677760,
+      "unique_classes_present": 15,
+      "bg_points": 15124938,
+      "bg_frac": 0.8097832930715461,
+      "baseline_bg_acc_all": 0.8097832930715461,
+      "d21_points": 304953,
+      "d21_frac": 0.016327064915707238
+    },
+    "val": {
+      "min": 0,
+      "max": 14,
+      "total_points": 778240,
+      "unique_classes_present": 15,
+      "bg_points": 634096,
+      "bg_frac": 0.814782072368421,
+      "baseline_bg_acc_all": 0.814782072368421,
+      "d21_points": 12197,
+      "d21_frac": 0.015672543174342104
+    },
+    "test": {
+      "min": 0,
+      "max": 14,
+      "total_points": 778240,
+      "unique_classes_present": 15,
+      "bg_points": 632458,
+      "bg_frac": 0.8126773231907894,
+      "baseline_bg_acc_all": 0.8126773231907894,
+      "d21_points": 12713,
+      "d21_frac": 0.016335577713815788
+    }
+  },
+  "num_classes": 15,
+  "ignore_index": 0,
+  "d21_idx": 8
+}
