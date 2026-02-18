@@ -1,0 +1,14 @@
+{
+  "loss": NaN,
+  "acc_all": 0.8126846353212992,
+  "acc_no_bg": 0.0,
+  "f1_macro": 0.0,
+  "iou_macro": 0.0,
+  "d21_acc": 0.9128621213438862,
+  "d21_f1": 0.0,
+  "d21_iou": 0.0,
+  "d21_bin_acc_all": 0.9836524963378147,
+  "pred_bg_frac": 1.0,
+  "best_epoch": 1,
+  "neighbor_metrics_test": {}
+}

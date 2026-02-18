@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*-
 
 """
-pointnet_classic_final_v5.py
+pointnetpp_classic_final_v1.py
 
-PointNet clásico – Segmentación multiclase dental 3D (OPCIÓN A – PAPER CORRECTA)
+PointNet++ clásico (SSG) – Segmentación multiclase dental 3D
+(Adaptación directa desde pointnet_classic_final_v5.py manteniendo TODA la trazabilidad/salidas)
 
 ✅ BG incluido en la loss (NO ignore en la loss)
 ✅ BG excluido SOLO en métricas macro (f1/iou/prec/rec/acc_no_bg)
@@ -36,28 +37,18 @@ FIXES IMPORTANTES (2026-01):
    no calza con el dataset actual.
 
 (NEW v5):
-✅ Añade soporte REAL de “neighbor teeth metrics” (igual filosofía que DGCNN v6):
+✅ Soporte REAL de “neighbor teeth metrics”:
    - Flag --neighbor_teeth "d11:1,d22:9,..." (lista arbitraria nombre:idx)
    - Loggea métricas binarias (acc/f1/iou + bin_acc_all) para cada vecino
    - Integra en CSV por epoch, history.json, test_metrics.json
-   - NO se elimina ningún contenido existente; solo se agrega esta capacidad
+
+(NEW v1 PointNet++):
+✅ Se reemplaza SOLO el backbone (PointNet clásico -> PointNet++ SSG con SA/FP),
+   manteniendo dataset, métricas, logging, outputs, inferencia y trazabilidad idénticos.
 
 Dataset esperado:
   data_dir/X_train.npz, Y_train.npz, X_val.npz, Y_val.npz, X_test.npz, Y_test.npz
   X: [B,N,3], Y: [B,N] con clases internas 0..C-1 (0=bg)
-
-Ejemplo:
-python3 pointnet_classic_final_v5.py \
-  --data_dir .../upper_only_surf_global_excl_wisdom_seed42_aug2 \
-  --out_dir  .../outputs/pointnet_classic/run1 \
-  --epochs 120 --batch_size 16 --lr 2e-4 --weight_decay 1e-4 --dropout 0.5 \
-  --num_workers 6 --device cuda --d21_internal 8 \
-  --bg_weight 0.03 --grad_clip 1.0 --use_amp \
-  --neighbor_teeth "d11:1,d22:9" \
-  --do_infer --infer_examples 12 --infer_split test
-
-Si el index auto-discovery no calza, fuerza:
-  --index_csv /ruta/a/index_test.csv
 """
 
 import os
@@ -173,68 +164,389 @@ def make_loaders(data_dir: Path, bs: int, nw: int, normalize: bool = True):
     return dl_tr, dl_va, dl_te, ds_te
 
 
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# PARTE 2/5:
+#   - Implementación PointNet++ SSG (FPS + grouping + SA + FP)
+#   - Modelo PointNet2Seg que devuelve logits [B,N,C]
+# Manteniendo exactamente el contrato del backbone anterior.
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 # ============================================================
-# POINTNET (paper-like)
+# POINTNET++ (SSG) – IMPLEMENTACIÓN SELF-CONTAINED (sin libs externas)
 # ============================================================
-class STN3d(nn.Module):
-    def __init__(self, k: int = 3):
+# Nota: Esto es un PointNet++ "clásico" estilo Qi et al. (2017):
+# - Set Abstraction (SA): FPS + ball query (radius) + PointNet local + maxpool
+# - Feature Propagation (FP): interpolación 3-NN + MLP 1D
+# Contracto final: forward(xyz[B,N,3]) -> logits[B,N,C]
+#
+# Mantiene dropout configurable en el head (igual filosofía que el PointNet v5),
+# y NO toca nada del pipeline de métricas/logging/inferencia.
+
+def _square_distance(src: torch.Tensor, dst: torch.Tensor) -> torch.Tensor:
+    """
+    src: [B, N, 3], dst: [B, M, 3]
+    return: [B, N, M] dist^2
+    """
+    # (x-y)^2 = x^2 + y^2 - 2xy
+    B, N, _ = src.shape
+    _, M, _ = dst.shape
+    dist = -2.0 * torch.matmul(src, dst.transpose(2, 1))  # [B,N,M]
+    dist += torch.sum(src ** 2, dim=-1, keepdim=True)      # [B,N,1]
+    dist += torch.sum(dst ** 2, dim=-1).unsqueeze(1)       # [B,1,M]
+    return dist
+
+
+def _index_points(points: torch.Tensor, idx: torch.Tensor) -> torch.Tensor:
+    """
+    points: [B, N, C]
+    idx:    [B, S] o [B, S, K]
+    return: [B, S, C] o [B, S, K, C]
+    """
+    device = points.device
+    B = points.shape[0]
+    view_shape = list(idx.shape)
+    view_shape[1:] = [1] * (len(view_shape) - 1)
+    repeat_shape = list(idx.shape)
+    repeat_shape[0] = 1
+    batch_indices = torch.arange(B, dtype=torch.long, device=device).view(view_shape).repeat(repeat_shape)
+    return points[batch_indices, idx, :]
+
+
+def farthest_point_sample(xyz: torch.Tensor, npoint: int) -> torch.Tensor:
+    """
+    xyz: [B, N, 3]
+    return: idx [B, npoint]
+    """
+    device = xyz.device
+    B, N, _ = xyz.shape
+    npoint = int(npoint)
+    centroids = torch.zeros(B, npoint, dtype=torch.long, device=device)
+    distance = torch.full((B, N), 1e10, device=device, dtype=xyz.dtype)
+    farthest = torch.randint(0, N, (B,), device=device, dtype=torch.long)
+    batch_indices = torch.arange(B, device=device, dtype=torch.long)
+
+    for i in range(npoint):
+        centroids[:, i] = farthest
+        centroid = xyz[batch_indices, farthest, :].view(B, 1, 3)   # [B,1,3]
+        dist = torch.sum((xyz - centroid) ** 2, dim=-1)            # [B,N]
+        mask = dist < distance
+        distance[mask] = dist[mask]
+        farthest = torch.max(distance, dim=1)[1]
+    return centroids
+
+
+def query_ball_point(radius: float, nsample: int, xyz: torch.Tensor, new_xyz: torch.Tensor) -> torch.Tensor:
+    """
+    radius: float
+    nsample: int
+    xyz: [B, N, 3] (all points)
+    new_xyz: [B, S, 3] (centroids)
+    return: group_idx [B, S, nsample]
+    """
+    radius = float(radius)
+    nsample = int(nsample)
+    B, N, _ = xyz.shape
+    _, S, _ = new_xyz.shape
+    device = xyz.device
+
+    sqrdists = _square_distance(new_xyz, xyz)  # [B,S,N]
+    group_idx = torch.arange(N, device=device, dtype=torch.long).view(1, 1, N).repeat(B, S, 1)
+
+    # mask puntos fuera de la esfera
+    group_idx[sqrdists > (radius * radius)] = N  # N = dummy
+
+    # ordenar por idx (los N quedarán al final), tomar primeros nsample
+    group_idx = group_idx.sort(dim=-1)[0][:, :, :nsample]  # [B,S,nsample]
+
+    # si algún centroid no tiene suficientes vecinos (todo N), rellena con el primero válido
+    group_first = group_idx[:, :, 0].view(B, S, 1).repeat(1, 1, nsample)
+    mask = group_idx == N
+    group_idx[mask] = group_first[mask]
+    return group_idx
+
+
+def sample_and_group(npoint: int, radius: float, nsample: int, xyz: torch.Tensor, points: Optional[torch.Tensor]):
+    """
+    npoint: #centroids
+    radius: ball query radius
+    nsample: #neighbors
+    xyz: [B,N,3]
+    points: [B,N,D] o None
+    return:
+      new_xyz: [B,S,3]
+      new_points: [B,S,nsample,3+D] (incluye xyz relativo + features si existen)
+    """
+    B, N, _ = xyz.shape
+    S = int(npoint)
+
+    fps_idx = farthest_point_sample(xyz, S)              # [B,S]
+    new_xyz = _index_points(xyz, fps_idx)                # [B,S,3]
+
+    idx = query_ball_point(radius, nsample, xyz, new_xyz)  # [B,S,nsample]
+    grouped_xyz = _index_points(xyz, idx)                   # [B,S,nsample,3]
+    grouped_xyz_norm = grouped_xyz - new_xyz.view(B, S, 1, 3)
+
+    if points is not None:
+        grouped_points = _index_points(points, idx)         # [B,S,nsample,D]
+        new_points = torch.cat([grouped_xyz_norm, grouped_points], dim=-1)  # [B,S,nsample,3+D]
+    else:
+        new_points = grouped_xyz_norm  # [B,S,nsample,3]
+
+    return new_xyz, new_points
+
+
+def sample_and_group_all(xyz: torch.Tensor, points: Optional[torch.Tensor]):
+    """
+    Agrupa todo en un solo "centroid" (global SA)
+    return:
+      new_xyz: [B,1,3] (dummy: mean)
+      new_points: [B,1,N,3+D]
+    """
+    device = xyz.device
+    B, N, _ = xyz.shape
+    new_xyz = xyz.mean(dim=1, keepdim=True)  # [B,1,3]
+    grouped_xyz = xyz.view(B, 1, N, 3)
+    grouped_xyz_norm = grouped_xyz - new_xyz.view(B, 1, 1, 3)
+
+    if points is not None:
+        grouped_points = points.view(B, 1, N, -1)
+        new_points = torch.cat([grouped_xyz_norm, grouped_points], dim=-1)
+    else:
+        new_points = grouped_xyz_norm
+    return new_xyz, new_points
+
+
+class PointNetSetAbstraction(nn.Module):
+    """
+    SA layer:
+      - si group_all=True: global SA (sin FPS/ball query)
+      - si no: FPS + ball query
+    mlp: lista de canales (salida final = último)
+    """
+    def __init__(self, npoint: int, radius: float, nsample: int,
+                 in_channel: int, mlp: List[int], group_all: bool):
         super().__init__()
-        self.k = int(k)
-        self.conv1, self.bn1 = nn.Conv1d(self.k, 64, 1), nn.BatchNorm1d(64)
-        self.conv2, self.bn2 = nn.Conv1d(64, 128, 1), nn.BatchNorm1d(128)
-        self.conv3, self.bn3 = nn.Conv1d(128, 1024, 1), nn.BatchNorm1d(1024)
-        self.fc1, self.bn4 = nn.Linear(1024, 512), nn.BatchNorm1d(512)
-        self.fc2, self.bn5 = nn.Linear(512, 256), nn.BatchNorm1d(256)
-        self.fc3 = nn.Linear(256, self.k * self.k)
+        self.npoint = int(npoint)
+        self.radius = float(radius)
+        self.nsample = int(nsample)
+        self.group_all = bool(group_all)
 
-    def forward(self, x):
-        # x: [B,k,N]
-        B = x.size(0)
-        x = F.relu(self.bn1(self.conv1(x)))
-        x = F.relu(self.bn2(self.conv2(x)))
-        x = self.bn3(self.conv3(x))
-        x = torch.max(x, 2)[0]  # [B,1024]
-        x = F.relu(self.bn4(self.fc1(x)))
-        x = F.relu(self.bn5(self.fc2(x)))
-        x = self.fc3(x).view(B, self.k, self.k)
-        iden = torch.eye(self.k, device=x.device, dtype=x.dtype).unsqueeze(0).repeat(B, 1, 1)
-        return x + iden
+        last = int(in_channel)
+        convs = []
+        bns = []
+        for out_ch in mlp:
+            convs.append(nn.Conv2d(last, int(out_ch), kernel_size=1))
+            bns.append(nn.BatchNorm2d(int(out_ch)))
+            last = int(out_ch)
+        self.convs = nn.ModuleList(convs)
+        self.bns = nn.ModuleList(bns)
+
+    def forward(self, xyz: torch.Tensor, points: Optional[torch.Tensor]):
+        """
+        xyz: [B,N,3]
+        points: [B,N,D] o None
+        return:
+          new_xyz: [B,S,3]
+          new_points: [B,S,D']  (pooled)
+        """
+        if self.group_all:
+            new_xyz, new_points = sample_and_group_all(xyz, points)  # [B,1,3], [B,1,N,3+D]
+        else:
+            new_xyz, new_points = sample_and_group(self.npoint, self.radius, self.nsample, xyz, points)
+            # new_xyz: [B,S,3], new_points: [B,S,nsample,3+D]
+
+        # para PointNet local: [B, in_channel, nsample, S]
+        new_points = new_points.permute(0, 3, 2, 1).contiguous()
+
+        for conv, bn in zip(self.convs, self.bns):
+            new_points = F.relu(bn(conv(new_points)))
+
+        # maxpool sobre nsample -> [B, D', 1, S]
+        new_points = torch.max(new_points, 2, keepdim=True)[0]
+        new_points = new_points.squeeze(2).permute(0, 2, 1).contiguous()  # [B,S,D']
+        return new_xyz, new_points
 
 
-class PointNetSeg(nn.Module):
-    def __init__(self, num_classes: int, dropout: float = 0.5):
+class PointNetFeaturePropagation(nn.Module):
+    """
+    FP layer:
+      - Interpola features de xyz2 -> xyz1 (3-NN)
+      - Concat con puntos skip (si existe)
+      - MLP 1D (Conv1d)
+    """
+    def __init__(self, in_channel: int, mlp: List[int]):
         super().__init__()
-        self.stn = STN3d(k=3)
+        last = int(in_channel)
+        convs = []
+        bns = []
+        for out_ch in mlp:
+            convs.append(nn.Conv1d(last, int(out_ch), kernel_size=1))
+            bns.append(nn.BatchNorm1d(int(out_ch)))
+            last = int(out_ch)
+        self.convs = nn.ModuleList(convs)
+        self.bns = nn.ModuleList(bns)
 
-        self.conv1, self.bn1 = nn.Conv1d(3, 64, 1), nn.BatchNorm1d(64)
-        self.conv2, self.bn2 = nn.Conv1d(64, 128, 1), nn.BatchNorm1d(128)
-        self.conv3, self.bn3 = nn.Conv1d(128, 1024, 1), nn.BatchNorm1d(1024)
+    def forward(self, xyz1: torch.Tensor, xyz2: torch.Tensor,
+                points1: Optional[torch.Tensor], points2: torch.Tensor):
+        """
+        xyz1: [B,N,3]  (target)
+        xyz2: [B,S,3]  (source, S<=N)
+        points1: [B,N,D1] o None (skip)
+        points2: [B,S,D2]        (source feats)
+        return:
+          new_points: [B,N,D']
+        """
+        B, N, _ = xyz1.shape
+        _, S, _ = xyz2.shape
 
-        # concat global(1024) + local(128) = 1152
-        self.fconv1, self.fbn1 = nn.Conv1d(1152, 512, 1), nn.BatchNorm1d(512)
-        self.fconv2, self.fbn2 = nn.Conv1d(512, 256, 1), nn.BatchNorm1d(256)
-        self.drop = nn.Dropout(float(dropout))
-        self.fconv3 = nn.Conv1d(256, int(num_classes), 1)
+        if S == 1:
+            interpolated = points2.repeat(1, N, 1)  # [B,N,D2]
+        else:
+            dists = _square_distance(xyz1, xyz2)  # [B,N,S]
+            dists, idx = dists.sort(dim=-1)
+            dists = dists[:, :, :3]  # [B,N,3]
+            idx = idx[:, :, :3]      # [B,N,3]
 
-    def forward(self, xyz):
-        # xyz: [B,N,3]
+            dist_recip = 1.0 / (dists + 1e-8)
+            norm = torch.sum(dist_recip, dim=2, keepdim=True)
+            weight = dist_recip / norm  # [B,N,3]
+
+            grouped_points = _index_points(points2, idx)  # [B,N,3,D2]
+            interpolated = torch.sum(grouped_points * weight.unsqueeze(-1), dim=2)  # [B,N,D2]
+
+        if points1 is not None:
+            new_points = torch.cat([points1, interpolated], dim=-1)  # [B,N,D1+D2]
+        else:
+            new_points = interpolated
+
+        # MLP 1D: [B, D, N]
+        new_points = new_points.permute(0, 2, 1).contiguous()
+        for conv, bn in zip(self.convs, self.bns):
+            new_points = F.relu(bn(conv(new_points)))
+        new_points = new_points.permute(0, 2, 1).contiguous()  # [B,N,D']
+        return new_points
+
+
+class PointNet2Seg(nn.Module):
+    """
+    PointNet++ SSG para segmentación.
+    Entrada: xyz [B,N,3]
+    Salida: logits [B,N,C]
+    """
+    def __init__(
+        self,
+        num_classes: int,
+        dropout: float = 0.5,
+        # hiperparams backbone (exponibles por argparse en main, pero default paper-like)
+        npoints: Tuple[int, int, int] = (1024, 256, 64),
+        radii: Tuple[float, float, float] = (0.10, 0.20, 0.40),
+        nsamples: Tuple[int, int, int] = (32, 32, 32),
+        # MLPs SA (in_channel incluye xyz_rel(3) + feats_prev)
+        sa_mlps: Tuple[Tuple[int, ...], Tuple[int, ...], Tuple[int, ...], Tuple[int, ...]] = (
+            (64, 64, 128),     # SA1
+            (128, 128, 256),   # SA2
+            (256, 256, 512),   # SA3
+            (512, 1024),       # SA4 global
+        ),
+        fp_mlps: Tuple[Tuple[int, ...], Tuple[int, ...], Tuple[int, ...], Tuple[int, ...]] = (
+            (256, 256),        # FP4 (l3<-l4)
+            (256, 256),        # FP3 (l2<-l3)
+            (256, 128),        # FP2 (l1<-l2)
+            (128, 128, 128),   # FP1 (l0<-l1)
+        ),
+    ):
+        super().__init__()
+        C = int(num_classes)
+        self.C = C
+        self.dropout = float(dropout)
+
+        n1, n2, n3 = [int(x) for x in npoints]
+        r1, r2, r3 = [float(x) for x in radii]
+        k1, k2, k3 = [int(x) for x in nsamples]
+
+        # SA layers
+        # Nivel 0: xyz solamente => points=None => in_channel para SA1 = 3 (xyz_rel)
+        self.sa1 = PointNetSetAbstraction(
+            npoint=n1, radius=r1, nsample=k1,
+            in_channel=3, mlp=list(sa_mlps[0]), group_all=False
+        )
+        # SA2: concat xyz_rel(3) + feats(128) => 3+128
+        self.sa2 = PointNetSetAbstraction(
+            npoint=n2, radius=r2, nsample=k2,
+            in_channel=3 + int(sa_mlps[0][-1]), mlp=list(sa_mlps[1]), group_all=False
+        )
+        # SA3: 3+256
+        self.sa3 = PointNetSetAbstraction(
+            npoint=n3, radius=r3, nsample=k3,
+            in_channel=3 + int(sa_mlps[1][-1]), mlp=list(sa_mlps[2]), group_all=False
+        )
+        # SA4 global: 3+512
+        self.sa4 = PointNetSetAbstraction(
+            npoint=1, radius=0.0, nsample=0,
+            in_channel=3 + int(sa_mlps[2][-1]), mlp=list(sa_mlps[3]), group_all=True
+        )
+
+        # FP layers (orden inverso)
+        # FP4: l3 (512) + up(l4=1024) => 512+1024
+        self.fp4 = PointNetFeaturePropagation(
+            in_channel=int(sa_mlps[2][-1]) + int(sa_mlps[3][-1]),
+            mlp=list(fp_mlps[0])
+        )
+        # FP3: l2 (256) + up(fp4=256) => 256+256
+        self.fp3 = PointNetFeaturePropagation(
+            in_channel=int(sa_mlps[1][-1]) + int(fp_mlps[0][-1]),
+            mlp=list(fp_mlps[1])
+        )
+        # FP2: l1 (128) + up(fp3=256) => 128+256
+        self.fp2 = PointNetFeaturePropagation(
+            in_channel=int(sa_mlps[0][-1]) + int(fp_mlps[1][-1]),
+            mlp=list(fp_mlps[2])
+        )
+        # FP1: l0 (no feats) + up(fp2=128) => 128
+        self.fp1 = PointNetFeaturePropagation(
+            in_channel=int(fp_mlps[2][-1]),
+            mlp=list(fp_mlps[3])
+        )
+
+        # Head de segmentación (paper-like)
+        self.conv1 = nn.Conv1d(int(fp_mlps[3][-1]), 128, 1)
+        self.bn1 = nn.BatchNorm1d(128)
+        self.drop1 = nn.Dropout(self.dropout)
+        self.conv2 = nn.Conv1d(128, C, 1)
+
+    def forward(self, xyz: torch.Tensor) -> torch.Tensor:
+        """
+        xyz: [B,N,3]
+        return logits: [B,N,C]
+        """
         B, N, _ = xyz.shape
-        x = xyz.transpose(2, 1).contiguous()    # [B,3,N]
-        T = self.stn(x)                         # [B,3,3]
-        x = torch.bmm(T, x)                     # [B,3,N]
+        l0_xyz = xyz
+        l0_points = None
 
-        x1 = F.relu(self.bn1(self.conv1(x)))    # [B,64,N]
-        x2 = F.relu(self.bn2(self.conv2(x1)))   # [B,128,N]
-        x3 = F.relu(self.bn3(self.conv3(x2)))   # [B,1024,N]
+        l1_xyz, l1_points = self.sa1(l0_xyz, l0_points)  # [B,n1,3], [B,n1,128]
+        l2_xyz, l2_points = self.sa2(l1_xyz, l1_points)  # [B,n2,3], [B,n2,256]
+        l3_xyz, l3_points = self.sa3(l2_xyz, l2_points)  # [B,n3,3], [B,n3,512]
+        l4_xyz, l4_points = self.sa4(l3_xyz, l3_points)  # [B,1,3],  [B,1,1024]
 
-        g = torch.max(x3, 2, keepdim=True)[0].repeat(1, 1, N)  # [B,1024,N]
-        cat = torch.cat([g, x2], dim=1)                        # [B,1152,N]
+        l3_points_fp = self.fp4(l3_xyz, l4_xyz, l3_points, l4_points)        # [B,n3,256]
+        l2_points_fp = self.fp3(l2_xyz, l3_xyz, l2_points, l3_points_fp)     # [B,n2,256]
+        l1_points_fp = self.fp2(l1_xyz, l2_xyz, l1_points, l2_points_fp)     # [B,n1,128]
+        l0_points_fp = self.fp1(l0_xyz, l1_xyz, None, l1_points_fp)          # [B,N,128]
 
-        x = F.relu(self.fbn1(self.fconv1(cat)))
-        x = F.relu(self.fbn2(self.fconv2(x)))
-        x = self.drop(x)
-        logits = self.fconv3(x).transpose(2, 1).contiguous()   # [B,N,C]
+        x = l0_points_fp.permute(0, 2, 1).contiguous()  # [B,128,N]
+        x = F.relu(self.bn1(self.conv1(x)))
+        x = self.drop1(x)
+        x = self.conv2(x)                               # [B,C,N]
+        logits = x.permute(0, 2, 1).contiguous()         # [B,N,C]
         return logits
+
+
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# PARTE 3/5:
+#   - Métricas (macro sin bg, d21 binario, neighbors)
+#   - Visualización (all/errors/d21) + helpers trazabilidad
+# (Esta parte será prácticamente idéntica a tu v5, solo pegada tal cual)
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # ============================================================
 # MÉTRICAS (macro sin bg) + d21 binario
@@ -734,6 +1046,14 @@ def _resolve_tooth_internal_from_label_map(data_dir: Path, target_fdi: int) -> O
 
     return None
 
+
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# PARTE 4/5:
+#   - run_epoch (idéntico: update en train(), métricas en eval() opcional)
+#   - main(): argparse + sanity + loaders + model=PointNet2Seg + logging/csv/history
+#   - train loop + prints + best/last checkpoints
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 # ============================================================
 # TRAIN / EVAL (v4: update en train(), métricas en eval() para TRAIN)
 # ============================================================
@@ -941,8 +1261,9 @@ def run_epoch(
 
 run_epoch.scaler = None  # type: ignore
 
+
 # ============================================================
-# MAIN (v5)
+# MAIN (PointNet++ clásico)
 # ============================================================
 def main():
     ap = argparse.ArgumentParser()
@@ -989,6 +1310,18 @@ def main():
                     help="Dónde calcular métricas de vecinos durante entrenamiento. default=val")
     ap.add_argument("--neighbor_every", type=int, default=1,
                     help="Cada cuántos epochs calcular vecinos (1=siempre). Si es >1, reduce costo.")
+
+    # ---------------- PointNet++ hyperparams (exponibles) ----------------
+    ap.add_argument("--sa_npoints", type=str, default="1024,256,64",
+                    help="npoints por SA (3 niveles), ej: 1024,256,64")
+    ap.add_argument("--sa_radii", type=str, default="0.10,0.20,0.40",
+                    help="radii por SA, ej: 0.10,0.20,0.40")
+    ap.add_argument("--sa_nsamples", type=str, default="32,32,32",
+                    help="nsamples (k) por SA, ej: 32,32,32")
+    ap.add_argument("--sa_mlps", type=str, default="64-64-128|128-128-256|256-256-512|512-1024",
+                    help="MLPs SA por nivel separados por |. Ej: 64-64-128|128-128-256|256-256-512|512-1024")
+    ap.add_argument("--fp_mlps", type=str, default="256-256|256-256|256-128|128-128-128",
+                    help="MLPs FP por nivel separados por |. Ej: 256-256|256-256|256-128|128-128-128")
 
     args = ap.parse_args()
     set_seed(args.seed)
@@ -1037,9 +1370,50 @@ def main():
     )
 
     # =========================================================
+    # PARSE BACKBONE HPARAMS
+    # =========================================================
+    def _parse_ints_csv(s: str, n: int) -> Tuple[int, ...]:
+        parts = [p.strip() for p in str(s).split(",") if p.strip()]
+        if len(parts) != int(n):
+            raise ValueError(f"esperaba {n} ints en '{s}'")
+        return tuple(int(p) for p in parts)
+
+    def _parse_floats_csv(s: str, n: int) -> Tuple[float, ...]:
+        parts = [p.strip() for p in str(s).split(",") if p.strip()]
+        if len(parts) != int(n):
+            raise ValueError(f"esperaba {n} floats en '{s}'")
+        return tuple(float(p) for p in parts)
+
+    def _parse_mlps_pipe(s: str, expected_blocks: int) -> Tuple[Tuple[int, ...], ...]:
+        blocks = [b.strip() for b in str(s).split("|") if b.strip()]
+        if len(blocks) != int(expected_blocks):
+            raise ValueError(f"esperaba {expected_blocks} bloques en '{s}' (separados por '|')")
+        out = []
+        for b in blocks:
+            nums = [x.strip() for x in b.split("-") if x.strip()]
+            if len(nums) == 0:
+                raise ValueError(f"bloque vacío en '{s}'")
+            out.append(tuple(int(x) for x in nums))
+        return tuple(out)
+
+    sa_npoints = _parse_ints_csv(args.sa_npoints, 3)
+    sa_radii = _parse_floats_csv(args.sa_radii, 3)
+    sa_nsamples = _parse_ints_csv(args.sa_nsamples, 3)
+    sa_mlps = _parse_mlps_pipe(args.sa_mlps, 4)
+    fp_mlps = _parse_mlps_pipe(args.fp_mlps, 4)
+
+    # =========================================================
     # MODEL / OPT / LOSS
     # =========================================================
-    model = PointNetSeg(num_classes=C, dropout=float(args.dropout)).to(device)
+    model = PointNet2Seg(
+        num_classes=C,
+        dropout=float(args.dropout),
+        npoints=sa_npoints,
+        radii=sa_radii,
+        nsamples=sa_nsamples,
+        sa_mlps=sa_mlps,
+        fp_mlps=fp_mlps,
+    ).to(device)
 
     w = torch.ones(C, device=device, dtype=torch.float32)
     w[bg] = float(args.bg_weight)
@@ -1058,7 +1432,6 @@ def main():
     )
 
     d21_int = int(args.d21_internal)
-
     print(f"[INFO] d21_internal={d21_int}")
 
     # =========================================================
@@ -1073,18 +1446,15 @@ def main():
     else:
         print(f"[NEIGHBORS] none")
 
-    # columnas dinámicas (aparecen al final para NO romper el orden base)
     neighbor_cols = []
     for name, _ in neighbor_list:
-        neighbor_cols += [
-            f"{name}_acc", f"{name}_f1", f"{name}_iou", f"{name}_bin_acc_all"
-        ]
+        neighbor_cols += [f"{name}_acc", f"{name}_f1", f"{name}_iou", f"{name}_bin_acc_all"]
 
     # =========================================================
     # LOGGING
     # =========================================================
     run_meta = {
-        "script_name": "pointnet_classic_final_v5.py",
+        "script_name": "pointnetpp_classic_final_v1.py",
         "start_time": datetime.now().isoformat(timespec="seconds"),
         "data_dir": str(data_dir),
         "out_dir": str(out_dir),
@@ -1107,7 +1477,13 @@ def main():
         "do_infer": bool(args.do_infer),
         "infer_split": str(args.infer_split),
         "index_csv": str(args.index_csv) if args.index_csv else "",
-        # v5 neighbors
+        # PointNet++ hyperparams
+        "sa_npoints": list(sa_npoints),
+        "sa_radii": list(sa_radii),
+        "sa_nsamples": list(sa_nsamples),
+        "sa_mlps": [list(b) for b in sa_mlps],
+        "fp_mlps": [list(b) for b in fp_mlps],
+        # neighbors
         "neighbor_teeth": str(args.neighbor_teeth),
         "neighbor_eval_split": str(args.neighbor_eval_split),
         "neighbor_every": int(args.neighbor_every),
@@ -1116,7 +1492,7 @@ def main():
     save_json(run_meta, out_dir / "run_meta.json")
 
     # =========================================================
-    # CSV por epoch (igual que v3 + v5 neighbors al final)
+    # CSV por epoch (base + neighbors al final)
     # =========================================================
     csv_path = out_dir / "metrics_epoch.csv"
     with open(csv_path, "w", newline="", encoding="utf-8") as f:
@@ -1150,7 +1526,6 @@ def main():
         _mk(f"train_{k}")
         _mk(f"val_{k}")
 
-    # v5: history para neighbors (val por defecto; si split incluye test/both, test se guarda al final)
     for name, _ in neighbor_list:
         for met in ("acc", "f1", "iou", "bin_acc_all"):
             _mk(f"val_{name}_{met}")
@@ -1168,7 +1543,7 @@ def main():
     for epoch in range(1, int(args.epochs) + 1):
         e0 = time.time()
 
-        # 1) Paso de entrenamiento (backprop)  [model.train(True)]
+        # 1) Paso de entrenamiento (backprop)
         tr_backprop = run_epoch(
             model=model,
             loader=dl_tr,
@@ -1183,7 +1558,7 @@ def main():
             grad_clip=float(args.grad_clip),
         )
 
-        # 2) Métricas de train comparables (opcional): forward en eval() sin dropout
+        # 2) Métricas train comparables (opcional)
         if bool(args.train_metrics_eval):
             tr = run_epoch(
                 model=model,
@@ -1194,14 +1569,14 @@ def main():
                 d21_idx=d21_int,
                 device=device,
                 bg=bg,
-                train=False,   # eval mode
+                train=False,
                 use_amp=False,
                 grad_clip=None,
             )
         else:
             tr = tr_backprop
 
-        # 3) Validación (eval)
+        # 3) Validación
         va = run_epoch(
             model=model,
             loader=dl_va,
@@ -1216,7 +1591,7 @@ def main():
             grad_clip=None,
         )
 
-        # 4) v5 Neighbors (opcional, configurable)
+        # 4) Neighbors (val por epoch según neighbor_every)
         do_neighbors = (len(neighbor_list) > 0) and (str(args.neighbor_eval_split).lower() != "none")
         do_neighbors = do_neighbors and (int(args.neighbor_every) > 0) and ((epoch % int(args.neighbor_every)) == 0)
 
@@ -1231,8 +1606,6 @@ def main():
                     neighbor_list=neighbor_list,
                     bg=bg
                 )
-            # si split_mode es test/both, el test por epoch es MUY caro; por defecto lo dejamos para el final (PART 4).
-            # aquí solo calculamos val (y guardamos split_mode en meta).
 
         sched.step()
         lr_now = float(opt.param_groups[0]["lr"])
@@ -1249,7 +1622,6 @@ def main():
             history[f"train_{k}"].append(float(tr[k]))
             history[f"val_{k}"].append(float(va[k]))
 
-        # v5 neighbors history (val)
         if neighbor_list:
             for name, _ in neighbor_list:
                 for met in ("acc", "f1", "iou", "bin_acc_all"):
@@ -1283,9 +1655,8 @@ def main():
                 sec,
             ]
 
-            # neighbors al final (solo en val; train queda en blanco/0 por diseño)
             if neighbor_cols:
-                row_train += ["" for _ in neighbor_cols]  # no calculamos neighbors en train (costo)
+                row_train += ["" for _ in neighbor_cols]
                 row_val += [float(nb_vals.get(col, 0.0)) for col in neighbor_cols]
 
             wcsv.writerow(row_train)
@@ -1306,20 +1677,12 @@ def main():
                 f"val pred_bg_frac={va['pred_bg_frac']:.3f} (bg_gt≈{bg_va:.3f})"
             )
 
-        # print (igual que v3 + v5 neighbors compacto)
         nb_str = ""
         if neighbor_list and do_neighbors:
-            # mostramos solo F1 para no alargar infinito
             parts = []
             for name, _ in neighbor_list:
                 parts.append(f"{name}_f1={nb_vals.get(f'{name}_f1', 0.0):.3f}")
             nb_str = " | nb(" + ",".join(parts) + ")"
-
-        # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        # PARTE 2/2 continúa desde este print hacia abajo, con los
-        # prints "full" (train/val + neighbors detallados opcional)
-        # y el TEST print corregido (incluye d21_bin_acc_all y pred_bg_frac).
-        # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
         print(
             f"[{epoch:03d}/{int(args.epochs)}] "
@@ -1329,14 +1692,11 @@ def main():
             f"acc_all={va['acc_all']:.3f} acc_no_bg={va['acc_no_bg']:.3f} | "
             f"d21(cls) acc={va['d21_acc']:.3f} f1={va['d21_f1']:.3f} iou={va['d21_iou']:.3f} | "
             f"d21(bin all) acc={va['d21_bin_acc_all']:.3f} | "
-            # (ADD) imprimir también fracción de bg predicha en TRAIN para compararla
             f"pred_bg_frac(train)={tr['pred_bg_frac']:.3f} pred_bg_frac(val)={va['pred_bg_frac']:.3f} "
             f"lr={lr_now:.2e} sec={sec:.1f}"
             f"{nb_str}"
         )
 
-        # (ADD v5) Si quieres ver "todas" las métricas de neighbors (acc/f1/iou/bin_acc_all),
-        # las imprimimos en una línea extra SOLO cuando se calculan (para no spamear).
         if neighbor_list and do_neighbors:
             parts_full = []
             for name, _ in neighbor_list:
@@ -1349,6 +1709,15 @@ def main():
             print("[neighbors val] " + " | ".join(parts_full))
 
     save_json(history, out_dir / "history.json")
+
+    # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    # PARTE 5/5:
+    #   - Cargar best, test eval (print completo), neighbors test
+    #   - guardar test_metrics.json
+    #   - plots (Train vs Val) + plots neighbors
+    #   - inferencia (3 PNGs por sample) + manifest
+    #   - footer __main__
+    # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     # =========================================================
     # TEST (best checkpoint) + PLOTS (SIN testline) + INFERENCIA
@@ -1384,7 +1753,6 @@ def main():
         grad_clip=None,
     )
 
-    # (FIX/ADD) imprimir TODAS las métricas igual al estilo del screenshot
     print(
         f"[test] "
         f"loss={test_metrics['loss']:.4f} "
@@ -1395,7 +1763,6 @@ def main():
         f"d21(cls) acc={test_metrics['d21_acc']:.3f} "
         f"f1={test_metrics['d21_f1']:.3f} "
         f"iou={test_metrics['d21_iou']:.3f} | "
-        # (ADD) faltaban estas:
         f"d21(bin all) acc={test_metrics['d21_bin_acc_all']:.3f} | "
         f"pred_bg_frac(test)={test_metrics['pred_bg_frac']:.3f}"
     )
@@ -1414,7 +1781,7 @@ def main():
                 neighbor_list=neighbor_list,
                 bg=bg
             )
-            # (ADD) además de listarlos, imprimimos en una sola línea estilo screenshot
+
             parts = []
             for name, _ in neighbor_list:
                 parts.append(
@@ -1425,7 +1792,6 @@ def main():
                 )
             print("[test neighbors] " + " | ".join(parts))
 
-            # mantenemos el print detallado anterior (NO borramos nada)
             print("[test neighbors]")
             for k, v in test_neighbors.items():
                 print(f"  {k} = {v:.4f}")
@@ -1459,14 +1825,13 @@ def main():
             best_epoch=best_epoch,
         )
 
-    # neighbors plots (val)
     for name, _ in neighbor_list:
         for met in ("acc", "f1", "iou", "bin_acc_all"):
             key = f"val_{name}_{met}"
             if key in history:
                 plot_train_val(
                     name=f"{name}_{met}",
-                    y_tr=[0.0] * len(history[key]),  # no train para neighbors
+                    y_tr=[0.0] * len(history[key]),
                     y_va=history[key],
                     out_png=plot_dir / f"{name}_{met}.png",
                     best_epoch=best_epoch,
@@ -1479,13 +1844,10 @@ def main():
         infer_split = str(args.infer_split).lower()
         if infer_split == "test":
             loader = dl_te
-            ds_ref = ds_te
         elif infer_split == "val":
             loader = dl_va
-            ds_ref = None
         else:
             loader = dl_tr
-            ds_ref = None
 
         model.eval()
         infer_dir = out_dir / "inference"
@@ -1498,6 +1860,8 @@ def main():
             auto_index = _discover_index_csv(data_dir, infer_split)
             if auto_index:
                 index_map = _read_index_csv(auto_index)
+
+        manifest_rows = []
 
         done = 0
         with torch.no_grad():
@@ -1515,6 +1879,7 @@ def main():
                     pr_np = pred[b].detach().cpu().numpy()
 
                     tag = f"{infer_split}_sample_{done}"
+                    info = {}
                     if index_map and done in index_map:
                         info = index_map[done]
                         safe = _sanitize_tag(info.get("sample_name", ""))
@@ -1543,14 +1908,36 @@ def main():
                         title=tag,
                     )
 
+                    manifest_rows.append({
+                        "row_i": done,
+                        "tag": tag,
+                        "split": infer_split,
+                        "sample_name": info.get("sample_name", ""),
+                        "jaw": info.get("jaw", ""),
+                        "path": info.get("path", ""),
+                    })
+
                     done += 1
 
                 if done >= int(args.infer_examples):
                     break
 
+        if manifest_rows:
+            manifest_path = infer_dir / "inference_manifest.csv"
+            with open(manifest_path, "w", newline="", encoding="utf-8") as f:
+                writer = csv.DictWriter(
+                    f,
+                    fieldnames=["row_i", "tag", "split", "sample_name", "jaw", "path"]
+                )
+                writer.writeheader()
+                for row in manifest_rows:
+                    writer.writerow(row)
+
     total_sec = time.time() - t0
-    print(f"[done] Entrenamiento terminado en {_fmt_hms(total_sec)}. "
-          f"best_epoch={best_epoch} best_val={best_val_f1:.4f}")
+    print(
+        f"[done] Entrenamiento terminado en {_fmt_hms(total_sec)}. "
+        f"best_epoch={best_epoch} best_val={best_val_f1:.4f}"
+    )
 
 
 if __name__ == "__main__":

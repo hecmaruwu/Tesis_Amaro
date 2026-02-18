@@ -1,0 +1,13 @@
+split,row_i,tag,sample_name,jaw,idx_global,path,png_all,png_errors,png_d21
+test,0,01MAVHYZ,01MAVHYZ,upper,269,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/01MAVHYZ,01MAVHYZ_all.png,01MAVHYZ_errors.png,01MAVHYZ_d21.png
+test,1,01FR2S9H,01FR2S9H,upper,201,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/01FR2S9H,01FR2S9H_all.png,01FR2S9H_errors.png,01FR2S9H_d21.png
+test,2,01AVY0SK,01AVY0SK,upper,161,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/01AVY0SK,01AVY0SK_all.png,01AVY0SK_errors.png,01AVY0SK_d21.png
+test,3,ECZA08SG,ECZA08SG,upper,555,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/ECZA08SG,ECZA08SG_all.png,ECZA08SG_errors.png,ECZA08SG_d21.png
+test,4,OEIWQQMQ,OEIWQQMQ,upper,729,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/OEIWQQMQ,OEIWQQMQ_all.png,OEIWQQMQ_errors.png,OEIWQQMQ_d21.png
+test,5,6BWQC0CT,6BWQC0CT,upper,401,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/6BWQC0CT,6BWQC0CT_all.png,6BWQC0CT_errors.png,6BWQC0CT_d21.png
+test,6,MC39MU3H,MC39MU3H,upper,702,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/MC39MU3H,MC39MU3H_all.png,MC39MU3H_errors.png,MC39MU3H_d21.png
+test,7,ASUXPX7O,ASUXPX7O,upper,476,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/ASUXPX7O,ASUXPX7O_all.png,ASUXPX7O_errors.png,ASUXPX7O_d21.png
+test,8,U1HFBZ1F,U1HFBZ1F,upper,821,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/U1HFBZ1F,U1HFBZ1F_all.png,U1HFBZ1F_errors.png,U1HFBZ1F_d21.png
+test,9,QVUPP39R,QVUPP39R,upper,771,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/QVUPP39R,QVUPP39R_all.png,QVUPP39R_errors.png,QVUPP39R_d21.png
+test,10,017APYC4,017APYC4,upper,105,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/017APYC4,017APYC4_all.png,017APYC4_errors.png,017APYC4_d21.png
+test,11,F5NBC5X3,F5NBC5X3,upper,565,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/F5NBC5X3,F5NBC5X3_all.png,F5NBC5X3_errors.png,F5NBC5X3_d21.png

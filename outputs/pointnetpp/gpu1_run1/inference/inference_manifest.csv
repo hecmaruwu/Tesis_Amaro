@@ -1,0 +1,13 @@
+row_i,tag,split,sample_name,jaw,path
+0,test_sample_0_01MAVHYZ,test,01MAVHYZ,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/01MAVHYZ
+1,test_sample_1_01FR2S9H,test,01FR2S9H,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/01FR2S9H
+2,test_sample_2_01AVY0SK,test,01AVY0SK,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/01AVY0SK
+3,test_sample_3_ECZA08SG,test,ECZA08SG,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/ECZA08SG
+4,test_sample_4_OEIWQQMQ,test,OEIWQQMQ,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/OEIWQQMQ
+5,test_sample_5_6BWQC0CT,test,6BWQC0CT,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/6BWQC0CT
+6,test_sample_6_MC39MU3H,test,MC39MU3H,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/MC39MU3H
+7,test_sample_7_ASUXPX7O,test,ASUXPX7O,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/ASUXPX7O
+8,test_sample_8_U1HFBZ1F,test,U1HFBZ1F,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/U1HFBZ1F
+9,test_sample_9_QVUPP39R,test,QVUPP39R,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/QVUPP39R
+10,test_sample_10_017APYC4,test,017APYC4,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/017APYC4
+11,test_sample_11_F5NBC5X3,test,F5NBC5X3,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/F5NBC5X3
