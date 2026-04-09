@@ -1,0 +1,44 @@
+{
+  "timestamp": "2026-02-25T00:52:13",
+  "script": "train_dgcnn_classic_only_fixed_v12.py",
+  "args": {
+    "data_dir": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/upper_only_surf_global_excl_wisdom_seed42_aug2",
+    "out_dir": "/home/htaucare/Tesis_Amaro/outputs/dgcnn/gpu1_run1_v12_neighbors",
+    "epochs": 120,
+    "batch_size": 16,
+    "lr": 0.0002,
+    "weight_decay": 0.0001,
+    "dropout": 0.5,
+    "num_workers": 6,
+    "device": "cuda",
+    "use_amp": true,
+    "grad_clip": 1.0,
+    "k": 20,
+    "emb_dims": 1024,
+    "knn_chunk_size": 1024,
+    "bg_class": 0,
+    "bg_weight": 0.03,
+    "d21_internal": 8,
+    "neighbor_teeth": "d11:1,d22:9",
+    "seed": 42,
+    "normalize": true,
+    "do_infer": true,
+    "infer_examples": 12,
+    "infer_split": "test"
+  },
+  "extra": {
+    "num_classes": 15,
+    "bg": 0,
+    "d21_internal": 8,
+    "neighbors": [
+      [
+        "d11",
+        1
+      ],
+      [
+        "d22",
+        9
+      ]
+    ]
+  }
+}

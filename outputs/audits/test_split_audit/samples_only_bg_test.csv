@@ -1,0 +1,7 @@
+row_i,n_points,n_classes_present,classes_present,class_counts,bg_count,bg_frac,has_d21,only_bg,few_classes,high_bg,sample_name,jaw,path,idx_global
+3,8192,1,[0],"{""0"": 8192}",8192,1.0,0,1,1,1,ECZA08SG,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/ECZA08SG,555
+20,8192,1,[0],"{""0"": 8192}",8192,1.0,0,1,1,1,CEJA35ER,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/CEJA35ER,508
+26,8192,1,[0],"{""0"": 8192}",8192,1.0,0,1,1,1,EXS8T3FT,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/EXS8T3FT,564
+28,8192,1,[0],"{""0"": 8192}",8192,1.0,0,1,1,1,R95ZJSBF,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/R95ZJSBF,776
+45,8192,1,[0],"{""0"": 8192}",8192,1.0,0,1,1,1,F7U8167K,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/F7U8167K,566
+93,8192,1,[0],"{""0"": 8192}",8192,1.0,0,1,1,1,8AJQSFHA,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/8AJQSFHA,435

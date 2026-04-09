@@ -1,0 +1,9 @@
+row_i,n_points,n_classes_present,classes_present,class_counts,bg_count,bg_frac,has_d21,only_bg,few_classes,high_bg,sample_name,jaw,path,idx_global
+0,8192,1,[0],"{""0"": 8192}",8192,1.0,0,1,1,1,SN7PVUZ9,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/SN7PVUZ9,804
+2,8192,1,[0],"{""0"": 8192}",8192,1.0,0,1,1,1,XQF3UEIP,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/XQF3UEIP,908
+3,8192,1,[0],"{""0"": 8192}",8192,1.0,0,1,1,1,FTNZTJHB,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/FTNZTJHB,577
+29,8192,1,[0],"{""0"": 8192}",8192,1.0,0,1,1,1,66DO6JR9,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/66DO6JR9,397
+46,8192,1,[0],"{""0"": 8192}",8192,1.0,0,1,1,1,C4PMST0J,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/C4PMST0J,502
+57,8192,8,"[0, 3, 4, 5, 7, 9, 10, 13]","{""0"": 6554, ""3"": 160, ""4"": 186, ""5"": 266, ""7"": 379, ""9"": 121, ""10"": 175, ""13"": 351}",6554,0.800048828125,0,0,0,0,4W9X0QQI,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/4W9X0QQI,378
+62,8192,1,[0],"{""0"": 8192}",8192,1.0,0,1,1,1,GNZPOB11,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/GNZPOB11,592
+91,8192,1,[0],"{""0"": 8192}",8192,1.0,0,1,1,1,9XPEHROH,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/9XPEHROH,461
