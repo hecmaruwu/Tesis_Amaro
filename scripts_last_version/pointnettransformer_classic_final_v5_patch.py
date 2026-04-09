@@ -2,49 +2,31 @@
 # -*- coding: utf-8 -*-
 
 """
-pointnet_classic_final_v8_patch.py
+pointnettransformer_classic_final_v5_patch.py
 
-PointNet clásico – Segmentación multiclase dental 3D
-(VERSIÓN v8 PATCH FINAL, aditiva sobre v7_patch)
+PointNet-Transformer – Segmentación multiclase dental 3D
+(VERSIÓN v5 PATCH FINAL, alineada con pointnet_classic_final_v8_patch.py)
 
-Objetivos de esta versión:
-✅ Mantener outputs y filosofía original del v7_patch
+Objetivos:
+✅ Mantener outputs/estructura equivalentes al PointNet parcheado final
 ✅ Mantener trazabilidad completa con index_csv + inference_manifest.csv
+✅ Mantener history.json + history_epoch.jsonl + metrics_epoch.csv
 ✅ Mantener test_metrics.json original
-✅ Mantener test_metrics_filtered.json e ignored_test_samples.json
-✅ Mantener inferencia visual filtrando only_bg
-✅ Corregir flags que estaban declarados pero no aplicaban realmente
-✅ Agregar plots faltantes de d21 y neighbor teeth
-✅ No eliminar funcionalidades previas
+✅ Añadir test_metrics_filtered.json + ignored_test_samples.json
+✅ Filtrar inferencia visual para omitir samples only_bg
+✅ Añadir plots completos:
+   - d21_acc, d21_f1, d21_iou
+   - neighbor teeth: acc, f1, iou, bin_acc_all
+✅ Corregir flags que estaban declarados pero no aplicaban completamente
+✅ Aplicar grad clipping real
+✅ Hacer que infer_examples limite de verdad la inferencia
+✅ Mantener filosofía de plots Train vs Val únicamente
+✅ Mantener métricas macro sin bg + d21 binario + d21_bin_acc_all
 
-Correcciones principales respecto a v7_patch:
-1) ✅ Se agregan plots train-vs-val para:
-   - d21_acc
-   - d21_f1
-   - d21_iou
-2) ✅ Se agregan plots de neighbor teeth para cada diente configurado:
-   - {name}_acc
-   - {name}_f1
-   - {name}_iou
-   - {name}_bin_acc_all
-3) ✅ Se aplica grad clipping real durante train
-4) ✅ infer_examples ahora sí limita la cantidad de ejemplos graficados
-5) ✅ neighbor_eval_split ahora sí controla sobre qué split(s) se calculan y guardan
-   las métricas de vecinos por época:
-   - val   -> vecinos solo en val
-   - test  -> vecinos solo en test
-   - both  -> vecinos en val y test
-   - none  -> no calcula vecinos por época
-   Nota:
-   - Para no romper el formato histórico base, train sigue guardándose sin columnas
-     extra si no corresponde.
-   - Los plots siguen siendo Train vs Val únicamente.
-   - Si neighbor_eval_split=test, se guarda CSV/JSON con esas métricas, pero no se
-     fuerza línea de test en plots.
-6) ✅ history.json y history_epoch.jsonl incluyen también las nuevas curvas
-7) ✅ robustez extra en savefig/logging
-8) ✅ AMP actualizado a torch.amp cuando esté disponible
-9) ✅ Compatibilidad con la salida original del v7_patch
+Backbone:
+- PointNet-style embedding inicial
+- Transformer Encoder sobre tokens de puntos
+- Propagación token->full con kNN chunked
 
 Dataset esperado:
   data_dir/X_train.npz, Y_train.npz, X_val.npz, Y_val.npz, X_test.npz, Y_test.npz
@@ -88,6 +70,11 @@ def set_seed(seed: int = 42):
         torch.cuda.manual_seed_all(seed)
 
 
+def _set_seed(seed: int = 42):
+    # alias por compatibilidad con versiones previas
+    return set_seed(seed)
+
+
 def save_json(obj: Any, path: Path):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -112,6 +99,21 @@ def _now_str() -> str:
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
+def _fmt_hms(seconds: float) -> str:
+    seconds = float(seconds)
+    h = int(seconds // 3600)
+    m = int((seconds % 3600) // 60)
+    s = seconds % 60
+    return f"{h:d}h {m:02d}m {s:05.2f}s"
+
+
+def _get_lr(opt: torch.optim.Optimizer) -> float:
+    try:
+        return float(opt.param_groups[0].get("lr", 0.0))
+    except Exception:
+        return float("nan")
+
+
 def log_line(msg: str, log_path: Optional[Path] = None, also_print: bool = True):
     line = f"[{_now_str()}] {msg}"
     if also_print:
@@ -120,14 +122,6 @@ def log_line(msg: str, log_path: Optional[Path] = None, also_print: bool = True)
         log_path.parent.mkdir(parents=True, exist_ok=True)
         with open(log_path, "a", encoding="utf-8") as f:
             f.write(line + "\n")
-
-
-def _fmt_hms(seconds: float) -> str:
-    seconds = float(seconds)
-    h = int(seconds // 3600)
-    m = int((seconds % 3600) // 60)
-    s = seconds % 60
-    return f"{h:d}h {m:02d}m {s:05.2f}s"
 
 
 # ============================================================
@@ -207,7 +201,6 @@ class NPZDataset(Dataset):
     def __getitem__(self, i: int):
         i = int(i)
 
-        # robusto para workers
         x = np.ascontiguousarray(self.X[i], dtype=np.float32)
         y = np.ascontiguousarray(self.Y[i], dtype=np.int64)
 
@@ -220,6 +213,20 @@ class NPZDataset(Dataset):
         if self.return_index:
             return xyz, lab, torch.tensor(i, dtype=torch.int64)
         return xyz, lab
+
+
+class NPZPointDataset(Dataset):
+    """
+    Alias compatible con versiones previas del script Transformer.
+    """
+    def __init__(self, Xp: Path, Yp: Path, normalize: bool = True, return_index: bool = False):
+        self.base = NPZDataset(Xp, Yp, normalize=normalize, return_index=return_index)
+
+    def __len__(self):
+        return len(self.base)
+
+    def __getitem__(self, i: int):
+        return self.base[i]
 
 
 def _make_loader(ds: Dataset, bs: int, nw: int, shuffle: bool) -> DataLoader:
@@ -247,6 +254,11 @@ def make_loaders(data_dir: Path, bs: int, nw: int, normalize: bool = True):
     return dl_tr, dl_va, dl_te
 
 
+def make_loaders_v3(data_dir: Path, bs: int, nw: int, normalize: bool = True):
+    # wrapper de compatibilidad
+    return make_loaders(data_dir, bs, nw, normalize=normalize)
+
+
 def make_infer_loader(data_dir: Path, split: str, bs: int, nw: int, normalize: bool = True) -> DataLoader:
     split = str(split).lower().strip()
 
@@ -262,69 +274,20 @@ def make_infer_loader(data_dir: Path, split: str, bs: int, nw: int, normalize: b
     return _make_loader(ds, bs=bs, nw=nw, shuffle=False)
 
 
-# ============================================================
-# POINTNET (paper-like)
-# ============================================================
-class STN3d(nn.Module):
-    def __init__(self, k: int = 3):
-        super().__init__()
-        self.k = int(k)
-        self.conv1, self.bn1 = nn.Conv1d(self.k, 64, 1), nn.BatchNorm1d(64)
-        self.conv2, self.bn2 = nn.Conv1d(64, 128, 1), nn.BatchNorm1d(128)
-        self.conv3, self.bn3 = nn.Conv1d(128, 1024, 1), nn.BatchNorm1d(1024)
-        self.fc1, self.bn4 = nn.Linear(1024, 512), nn.BatchNorm1d(512)
-        self.fc2, self.bn5 = nn.Linear(512, 256), nn.BatchNorm1d(256)
-        self.fc3 = nn.Linear(256, self.k * self.k)
-
-    def forward(self, x):
-        # x: [B,k,N]
-        B = x.size(0)
-        x = F.relu(self.bn1(self.conv1(x)))
-        x = F.relu(self.bn2(self.conv2(x)))
-        x = self.bn3(self.conv3(x))
-        x = torch.max(x, 2)[0]  # [B,1024]
-        x = F.relu(self.bn4(self.fc1(x)))
-        x = F.relu(self.bn5(self.fc2(x)))
-        x = self.fc3(x).view(B, self.k, self.k)
-        iden = torch.eye(self.k, device=x.device, dtype=x.dtype).unsqueeze(0).repeat(B, 1, 1)
-        return x + iden
+def make_infer_loader_v3(data_dir: Path, split: str, bs: int, nw: int, normalize: bool = True) -> DataLoader:
+    # wrapper de compatibilidad
+    return make_infer_loader(data_dir, split, bs, nw, normalize=normalize)
 
 
-class PointNetSeg(nn.Module):
-    def __init__(self, num_classes: int, dropout: float = 0.5):
-        super().__init__()
-        self.stn = STN3d(k=3)
+def infer_num_classes_from_npz(data_dir: Path) -> int:
+    ys = []
+    for split in ("train", "val", "test"):
+        yp = data_dir / f"Y_{split}.npz"
+        y = np.load(yp)["Y"].reshape(-1)
+        ys.append(y)
+    y_all = np.concatenate(ys, axis=0)
+    return int(np.max(y_all)) + 1
 
-        self.conv1, self.bn1 = nn.Conv1d(3, 64, 1), nn.BatchNorm1d(64)
-        self.conv2, self.bn2 = nn.Conv1d(64, 128, 1), nn.BatchNorm1d(128)
-        self.conv3, self.bn3 = nn.Conv1d(128, 1024, 1), nn.BatchNorm1d(1024)
-
-        # concat global(1024) + local(128) = 1152
-        self.fconv1, self.fbn1 = nn.Conv1d(1152, 512, 1), nn.BatchNorm1d(512)
-        self.fconv2, self.fbn2 = nn.Conv1d(512, 256, 1), nn.BatchNorm1d(256)
-        self.drop = nn.Dropout(float(dropout))
-        self.fconv3 = nn.Conv1d(256, int(num_classes), 1)
-
-    def forward(self, xyz):
-        # xyz: [B,N,3]
-        B, N, _ = xyz.shape
-        x = xyz.transpose(2, 1).contiguous()    # [B,3,N]
-        T = self.stn(x)                         # [B,3,3]
-        x = torch.bmm(T, x)                     # [B,3,N]
-
-        x1 = F.relu(self.bn1(self.conv1(x)))    # [B,64,N]
-        x2 = F.relu(self.bn2(self.conv2(x1)))   # [B,128,N]
-        x3 = F.relu(self.bn3(self.conv3(x2)))   # [B,1024,N]
-
-        g = torch.max(x3, 2, keepdim=True)[0].repeat(1, 1, N)  # [B,1024,N]
-        cat = torch.cat([g, x2], dim=1)                        # [B,1152,N]
-
-        x = F.relu(self.fbn1(self.fconv1(cat)))
-        x = F.relu(self.fbn2(self.fconv2(x)))
-        x = self.drop(x)
-        logits = self.fconv3(x).transpose(2, 1).contiguous()   # [B,N,C]
-        return logits
-    
 
 # ============================================================
 # MÉTRICAS (macro sin bg) + d21 binario + vecinos
@@ -333,7 +296,7 @@ class PointNetSeg(nn.Module):
 def macro_metrics_no_bg(pred: torch.Tensor, gt: torch.Tensor, C: int, bg: int = 0) -> Tuple[float, float]:
     """
     Macro-F1 e IoU macro calculados EXCLUYENDO BG (gt!=bg),
-    promediando sobre clases 1..C-1.
+    promediando sobre clases 1..C-1 (omitimos clases sin soporte).
     """
     pred = pred.reshape(-1)
     gt = gt.reshape(-1)
@@ -375,7 +338,7 @@ def d21_metrics_binary(
 ) -> Tuple[float, float, float]:
     """
     d21 como binario: positivo = clase d21_idx, negativo = resto.
-    include_bg=False => excluye bg del cálculo
+    include_bg=False => excluye puntos bg del cálculo
     include_bg=True  => incluye bg también
     """
     pred = pred.reshape(-1)
@@ -425,19 +388,19 @@ def _tooth_metrics_binary(pred: torch.Tensor, gt: torch.Tensor, tooth_idx: int, 
     }
 
 
-def parse_neighbor_teeth(spec: Optional[str]) -> List[Tuple[str, int]]:
+def parse_neighbor_teeth(s: Optional[str]) -> List[Tuple[str, int]]:
     """
-    Parse de:
-      "d11:1,d22:9,foo:3"
-    -> [("d11",1), ("d22",9), ("foo",3)]
+    Parse string tipo:
+      "d11:1,d22:9"
+    -> [("d11",1), ("d22",9)]
 
     Duplicados por nombre: prevalece el último.
     Se preserva el orden de primera aparición.
     """
-    if spec is None:
+    if s is None:
         return []
 
-    s = str(spec).strip()
+    s = str(s).strip()
     if not s:
         return []
 
@@ -448,11 +411,13 @@ def parse_neighbor_teeth(spec: Optional[str]) -> List[Tuple[str, int]]:
         tok = tok.strip()
         if not tok or ":" not in tok:
             continue
+
         name, idxs = tok.split(":", 1)
         name = name.strip()
         idxs = idxs.strip()
         if not name:
             continue
+
         try:
             idx = int(idxs)
         except Exception:
@@ -471,37 +436,125 @@ def _compute_metrics_from_logits(
     y: torch.Tensor,
     C: int,
     d21_idx: int,
-    bg: int,
+    bg: int
 ) -> Dict[str, float]:
     pred = logits.argmax(dim=-1)
 
     acc_all = _acc_all(pred, y)
 
     mask = (y != int(bg))
-    acc_no_bg = float((pred[mask] == y[mask]).float().mean().item()) if mask.sum() > 0 else 0.0
+    if mask.any():
+        acc_no_bg = float((pred[mask] == y[mask]).float().mean().item())
+    else:
+        acc_no_bg = 0.0
 
     f1m, ioum = macro_metrics_no_bg(pred, y, C=C, bg=bg)
 
-    d21_acc, d21_f1, d21_iou = d21_metrics_binary(pred, y, d21_idx, bg, False)
-    d21_bin_all, _, _ = d21_metrics_binary(pred, y, d21_idx, bg, True)
+    d21_acc, d21_f1, d21_iou = d21_metrics_binary(
+        pred, y, d21_idx=d21_idx, bg=bg, include_bg=False
+    )
+    d21_bin_acc_all, _, _ = d21_metrics_binary(
+        pred, y, d21_idx=d21_idx, bg=bg, include_bg=True
+    )
 
-    pred_bg_frac = float((pred == int(bg)).float().mean().item())
+    pred_bg_frac = float((pred.reshape(-1) == int(bg)).float().mean().item())
 
     return {
-        "acc_all": acc_all,
-        "acc_no_bg": acc_no_bg,
-        "f1_macro": f1m,
-        "iou_macro": ioum,
-        "d21_acc": d21_acc,
-        "d21_f1": d21_f1,
-        "d21_iou": d21_iou,
-        "d21_bin_acc_all": d21_bin_all,
-        "pred_bg_frac": pred_bg_frac,
+        "acc_all": float(acc_all),
+        "acc_no_bg": float(acc_no_bg),
+        "f1_macro": float(f1m),
+        "iou_macro": float(ioum),
+        "d21_acc": float(d21_acc),
+        "d21_f1": float(d21_f1),
+        "d21_iou": float(d21_iou),
+        "d21_bin_acc_all": float(d21_bin_acc_all),
+        "pred_bg_frac": float(pred_bg_frac),
     }
 
 
+@torch.no_grad()
+def _neighbors_metrics_from_logits(
+    logits: torch.Tensor,
+    y: torch.Tensor,
+    neighbor_list: List[Tuple[str, int]],
+    bg: int
+) -> Dict[str, float]:
+    if not neighbor_list:
+        return {}
+
+    pred = logits.argmax(dim=-1)
+    out: Dict[str, float] = {}
+
+    for name, idx in neighbor_list:
+        m = _tooth_metrics_binary(pred, y, tooth_idx=int(idx), bg=int(bg))
+        out[f"{name}_acc"] = float(m["acc"])
+        out[f"{name}_f1"] = float(m["f1"])
+        out[f"{name}_iou"] = float(m["iou"])
+        out[f"{name}_bin_acc_all"] = float(m["bin_acc_all"])
+        out[f"{name}_bin_f1_all"] = float(m["bin_f1_all"])
+        out[f"{name}_bin_iou_all"] = float(m["bin_iou_all"])
+
+    return out
+
+
+def _merge_metrics(base: Dict[str, float], extra: Dict[str, float]) -> Dict[str, float]:
+    out = dict(base)
+    for k, v in (extra or {}).items():
+        out[k] = float(v)
+    return out
+
+
+def _format_neighbor_console(metrics: Dict[str, float], neighbor_list: List[Tuple[str, int]]) -> str:
+    if not neighbor_list:
+        return ""
+    chunks = []
+    for name, _ in neighbor_list:
+        acc = metrics.get(f"{name}_acc", None)
+        f1  = metrics.get(f"{name}_f1", None)
+        iou = metrics.get(f"{name}_iou", None)
+        if acc is None and f1 is None and iou is None:
+            continue
+        chunks.append(f"nb[{name}] acc={acc:.3f} f1={f1:.3f} iou={iou:.3f}")
+    return " | " + " ".join(chunks) if chunks else ""
+
+
+@torch.no_grad()
+def eval_neighbors_on_loader(
+    model: nn.Module,
+    loader: DataLoader,
+    device: torch.device,
+    neighbor_list: List[Tuple[str, int]],
+    bg: int
+) -> Dict[str, float]:
+    if not neighbor_list:
+        return {}
+
+    model.eval()
+    sums = {f"{name}_{k}": 0.0 for name, _ in neighbor_list for k in ("acc", "f1", "iou", "bin_acc_all")}
+    nb = 0
+
+    for xyz, y in loader:
+        xyz = xyz.to(device, non_blocking=True)
+        y = y.to(device, non_blocking=True)
+
+        logits = model(xyz)
+        pred = logits.argmax(dim=-1)
+
+        for name, idx in neighbor_list:
+            m = _tooth_metrics_binary(pred, y, tooth_idx=idx, bg=bg)
+            sums[f"{name}_acc"] += m["acc"]
+            sums[f"{name}_f1"] += m["f1"]
+            sums[f"{name}_iou"] += m["iou"]
+            sums[f"{name}_bin_acc_all"] += m["bin_acc_all"]
+
+        nb += 1
+
+    nb = max(1, nb)
+    return {k: v / nb for k, v in sums.items()}
+
+
 # ============================================================
-# VISUALIZACIÓN
+# VISUALIZACIÓN (robusta para numpy/torch)
 # ============================================================
 def _class_colors(C: int):
     cmap = plt.colormaps.get_cmap("tab20")
@@ -561,7 +614,6 @@ def plot_pointcloud_all_classes(
 
     ax1.set_title("GT (todas las clases)", fontsize=10)
     ax2.set_title("Pred (todas las clases)", fontsize=10)
-
     for ax in (ax1, ax2):
         ax.set_axis_off()
         ax.view_init(elev=20, azim=45)
@@ -645,13 +697,7 @@ def plot_d21_focus(
     _safe_savefig(out_png, errors_log=errors_log)
 
 
-def plot_train_val(
-    name: str,
-    y_tr: List[float],
-    y_va: List[float],
-    out_png: Path,
-    best_epoch: Optional[int] = None
-):
+def plot_train_val(name: str, y_tr: List[float], y_va: List[float], out_png: Path, best_epoch: Optional[int] = None):
     out_png.parent.mkdir(parents=True, exist_ok=True)
     plt.figure(figsize=(7, 4))
     plt.plot(y_tr, label="train")
@@ -668,7 +714,530 @@ def plot_train_val(
 
 
 # ============================================================
-# HELPERS DE TRAZABILIDAD (index_*.csv)
+# FAST kNN (chunked) + propagación token->full
+# - evita O(N^2) sobre N=8192
+# - atención solo en M tokens (M=token_subsample)
+# - luego propaga logits/features a todos los puntos usando kNN (prop_k)
+# ============================================================
+def _as_fp32(x: torch.Tensor) -> torch.Tensor:
+    return x.float() if x.dtype != torch.float32 else x
+
+
+@torch.no_grad()
+def knn_indices_chunked(q_xyz: torch.Tensor, k_xyz: torch.Tensor, k: int, chunk: int = 2048) -> torch.Tensor:
+    """
+    kNN desde queries a keys, CHUNKED (FP32).
+      q_xyz: [B,Q,3]
+      k_xyz: [B,K,3]
+    return idx: [B,Q,k]  (idx sobre dimensión K)
+
+    Nota:
+    - dist^2 = ||q||^2 + ||k||^2 - 2 q·k
+    - chunked en Q para evitar memoria gigante
+    """
+    q_xyz = _as_fp32(q_xyz)
+    k_xyz = _as_fp32(k_xyz)
+
+    B, Q, _ = q_xyz.shape
+    _, K, _ = k_xyz.shape
+    k = int(k)
+    chunk = int(chunk)
+
+    device = q_xyz.device
+    idx_out = torch.empty((B, Q, k), dtype=torch.long, device=device)
+
+    q2 = (q_xyz ** 2).sum(dim=-1, keepdim=True)                   # [B,Q,1]
+    k2 = (k_xyz ** 2).sum(dim=-1, keepdim=True).transpose(2, 1)   # [B,1,K]
+    k_t = k_xyz.transpose(2, 1).contiguous()                      # [B,3,K]
+
+    for s in range(0, Q, chunk):
+        e = min(Q, s + chunk)
+        q = q_xyz[:, s:e, :]                                      # [B,Qs,3]
+        dot = torch.matmul(q, k_t)                                # [B,Qs,K]
+        dist = q2[:, s:e, :] + k2 - 2.0 * dot                     # [B,Qs,K]
+        dist = torch.clamp(dist, min=0.0)
+
+        kk = min(k, K) if K > 0 else 1
+        idx = torch.topk(dist, k=kk, dim=-1, largest=False).indices
+        if idx.shape[-1] < k:
+            pad = k - idx.shape[-1]
+            idx = torch.cat([idx, idx[..., :1].repeat(1, 1, pad)], dim=-1)
+
+        idx_out[:, s:e, :] = idx[:, :, :k]
+
+    return idx_out
+
+
+def index_points(points: torch.Tensor, idx: torch.Tensor) -> torch.Tensor:
+    """
+    points: [B,N,C]
+    idx:    [B,S] or [B,S,K]
+    return: [B,S,C] or [B,S,K,C]
+    """
+    B, N, C = points.shape
+    idx = torch.clamp(idx, 0, N - 1)
+    device = points.device
+
+    view_shape = list(idx.shape)
+    view_shape[1:] = [1] * (len(view_shape) - 1)
+    repeat_shape = list(idx.shape)
+    repeat_shape[0] = 1
+
+    batch_indices = torch.arange(B, device=device).view(view_shape).repeat(repeat_shape)
+    return points[batch_indices, idx, :]
+
+
+def farthest_point_sample_stub(xyz: torch.Tensor, M: int) -> torch.Tensor:
+    """
+    Mantiene la lógica del original:
+    token subsample simple/rápido por batch.
+    No reemplazamos el enfoque base del script.
+    """
+    B, N, _ = xyz.shape
+    M = int(min(M, N))
+    device = xyz.device
+
+    idx = torch.empty((B, M), dtype=torch.long, device=device)
+    for b in range(B):
+        perm = torch.randperm(N, device=device)
+        idx[b] = perm[:M]
+    return idx
+
+
+# ============================================================
+# POINTNET-TRANSFORMER FAST – backbone original respetado
+# ============================================================
+class PointMLPEmbed(nn.Module):
+    """
+    Embedding inicial por punto (MLP compartido).
+    Entrada:  xyz [B,N,3]
+    Salida:   feat [B,N,D]
+    """
+    def __init__(self, d_model: int = 256, hidden: int = 128, dropout: float = 0.0):
+        super().__init__()
+        self.d_model = int(d_model)
+        self.net = nn.Sequential(
+            nn.Linear(3, int(hidden)),
+            nn.ReLU(inplace=True),
+            nn.Dropout(float(dropout)),
+            nn.Linear(int(hidden), int(d_model)),
+        )
+
+    def forward(self, xyz: torch.Tensor) -> torch.Tensor:
+        return self.net(xyz)
+
+
+class PositionalEncodingMLP(nn.Module):
+    """
+    Positional encoding aprendido desde xyz.
+    Suma pe = f(xyz) a los tokens.
+    """
+    def __init__(self, d_model: int = 256, hidden: int = 128, dropout: float = 0.0):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(3, int(hidden)),
+            nn.ReLU(inplace=True),
+            nn.Dropout(float(dropout)),
+            nn.Linear(int(hidden), int(d_model)),
+        )
+
+    def forward(self, xyz: torch.Tensor) -> torch.Tensor:
+        return self.net(xyz)
+
+
+class TransformerBlock(nn.Module):
+    """
+    Wrapper simple sobre TransformerEncoderLayer con batch_first=True.
+    """
+    def __init__(
+        self,
+        d_model: int = 256,
+        nhead: int = 8,
+        dim_feedforward: int = 512,
+        dropout: float = 0.1,
+        activation: str = "gelu",
+        norm_first: bool = True,
+    ):
+        super().__init__()
+        self.layer = nn.TransformerEncoderLayer(
+            d_model=int(d_model),
+            nhead=int(nhead),
+            dim_feedforward=int(dim_feedforward),
+            dropout=float(dropout),
+            activation=str(activation),
+            batch_first=True,
+            norm_first=bool(norm_first),
+        )
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        return self.layer(x)
+
+
+class PointNetTransformerSegFast(nn.Module):
+    """
+    Segmentación punto-a-punto FAST:
+      xyz(N) -> tokens(M) -> transformer(M) -> head(M) -> logits_tokens
+      logits_tokens -> propaga a N con kNN (N->M) => logits_full [B,N,C]
+
+    Importante:
+    - Este forward devuelve logits [B,N,C] SIEMPRE.
+    """
+    def __init__(
+        self,
+        num_classes: int,
+        d_model: int = 256,
+        embed_hidden: int = 128,
+        depth: int = 4,
+        nhead: int = 8,
+        dim_feedforward: int = 512,
+        dropout: float = 0.1,
+        use_pos_mlp: bool = True,
+        pos_hidden: int = 128,
+        norm_first: bool = True,
+        activation: str = "gelu",
+        head_hidden: int = 256,
+        head_dropout: float = 0.1,
+        token_subsample: int = 2048,
+        prop_k: int = 3,
+        prop_chunk: int = 2048,
+    ):
+        super().__init__()
+        self.num_classes = int(num_classes)
+        self.d_model = int(d_model)
+        self.depth = int(depth)
+        self.use_pos_mlp = bool(use_pos_mlp)
+
+        self.token_subsample = int(token_subsample)
+        self.prop_k = int(prop_k)
+        self.prop_chunk = int(prop_chunk)
+
+        self.embed = PointMLPEmbed(
+            d_model=int(d_model),
+            hidden=int(embed_hidden),
+            dropout=float(dropout)
+        )
+
+        self.pos = (
+            PositionalEncodingMLP(
+                d_model=int(d_model),
+                hidden=int(pos_hidden),
+                dropout=float(dropout),
+            )
+            if self.use_pos_mlp
+            else None
+        )
+
+        self.encoder = nn.ModuleList([
+            TransformerBlock(
+                d_model=int(d_model),
+                nhead=int(nhead),
+                dim_feedforward=int(dim_feedforward),
+                dropout=float(dropout),
+                activation=str(activation),
+                norm_first=bool(norm_first),
+            )
+            for _ in range(int(depth))
+        ])
+
+        self.head = nn.Sequential(
+            nn.Linear(int(d_model), int(head_hidden)),
+            nn.ReLU(inplace=True),
+            nn.Dropout(float(head_dropout)),
+            nn.Linear(int(head_hidden), int(num_classes)),
+        )
+
+    def forward(self, xyz: torch.Tensor) -> torch.Tensor:
+        """
+        xyz: [B,N,3]
+        return logits: [B,N,C]
+        """
+        B, N, _ = xyz.shape
+        xyz = xyz.float()
+
+        # --- token subsample ---
+        M = int(min(self.token_subsample, N))
+        if M < N:
+            tok_idx = farthest_point_sample_stub(xyz, M)          # [B,M]
+            tok_xyz = index_points(xyz, tok_idx)                  # [B,M,3]
+        else:
+            tok_xyz = xyz
+
+        # --- embed tokens ---
+        x = self.embed(tok_xyz)                                   # [B,M,D]
+        if self.pos is not None:
+            x = x + self.pos(tok_xyz)
+
+        # --- transformer sobre tokens ---
+        for blk in self.encoder:
+            x = blk(x)                                            # [B,M,D]
+
+        logits_tok = self.head(x)                                 # [B,M,C]
+
+        # --- si M==N, listo ---
+        if M == N:
+            return logits_tok
+
+        # --- propagación token -> full usando kNN chunked ---
+        if xyz.device.type == "cuda":
+            with torch.amp.autocast(device_type="cuda", enabled=False):
+                idx_nm = knn_indices_chunked(
+                    q_xyz=_as_fp32(xyz),
+                    k_xyz=_as_fp32(tok_xyz),
+                    k=self.prop_k,
+                    chunk=self.prop_chunk
+                )
+        else:
+            idx_nm = knn_indices_chunked(
+                q_xyz=_as_fp32(xyz),
+                k_xyz=_as_fp32(tok_xyz),
+                k=self.prop_k,
+                chunk=self.prop_chunk
+            )
+
+        logits_nk = index_points(logits_tok, idx_nm)              # [B,N,k,C]
+        logits_full = logits_nk.mean(dim=2)                       # [B,N,C]
+        return logits_full
+
+
+# ============================================================
+# TRAIN / EVAL CORE
+# ============================================================
+@torch.no_grad()
+def _mean_dict(accum: Dict[str, float], n: int) -> Dict[str, float]:
+    n = max(1, int(n))
+    return {k: v / n for k, v in accum.items()}
+
+
+@torch.no_grad()
+def _compute_metrics_from_logits(
+    logits: torch.Tensor,
+    y: torch.Tensor,
+    C: int,
+    d21_idx: int,
+    bg: int
+) -> Dict[str, float]:
+    pred = logits.argmax(dim=-1)
+
+    acc_all = _acc_all(pred, y)
+
+    mask = (y != int(bg))
+    if mask.any():
+        acc_no_bg = float((pred[mask] == y[mask]).float().mean().item())
+    else:
+        acc_no_bg = 0.0
+
+    f1m, ioum = macro_metrics_no_bg(pred, y, C=C, bg=bg)
+
+    d21_acc, d21_f1, d21_iou = d21_metrics_binary(
+        pred, y, d21_idx=d21_idx, bg=bg, include_bg=False
+    )
+    d21_bin_acc_all, _, _ = d21_metrics_binary(
+        pred, y, d21_idx=d21_idx, bg=bg, include_bg=True
+    )
+
+    pred_bg_frac = float((pred.reshape(-1) == int(bg)).float().mean().item())
+
+    return {
+        "acc_all": float(acc_all),
+        "acc_no_bg": float(acc_no_bg),
+        "f1_macro": float(f1m),
+        "iou_macro": float(ioum),
+        "d21_acc": float(d21_acc),
+        "d21_f1": float(d21_f1),
+        "d21_iou": float(d21_iou),
+        "d21_bin_acc_all": float(d21_bin_acc_all),
+        "pred_bg_frac": float(pred_bg_frac),
+    }
+
+
+@torch.no_grad()
+def _neighbors_metrics_from_logits(
+    logits: torch.Tensor,
+    y: torch.Tensor,
+    neighbor_list: List[Tuple[str, int]],
+    bg: int
+) -> Dict[str, float]:
+    """
+    Calcula métricas binarias para dientes vecinos
+    (igual filosofía que d21, pero para múltiples clases).
+    """
+    if not neighbor_list:
+        return {}
+
+    pred = logits.argmax(dim=-1)
+    out: Dict[str, float] = {}
+
+    for name, idx in neighbor_list:
+        m = _tooth_metrics_binary(pred, y, tooth_idx=int(idx), bg=int(bg))
+        out[f"{name}_acc"] = float(m["acc"])
+        out[f"{name}_f1"] = float(m["f1"])
+        out[f"{name}_iou"] = float(m["iou"])
+        out[f"{name}_bin_acc_all"] = float(m["bin_acc_all"])
+
+    return out
+
+
+def run_epoch(
+    model: nn.Module,
+    loader: DataLoader,
+    optimizer: Optional[torch.optim.Optimizer],
+    loss_fn: nn.Module,
+    C: int,
+    d21_idx: int,
+    device: torch.device,
+    bg: int,
+    train: bool,
+    use_amp: bool,
+    grad_clip: Optional[float],
+    neighbor_list: Optional[List[Tuple[str, int]]] = None,
+    train_metrics_eval: bool = False,
+):
+    neighbor_list = neighbor_list or []
+
+    if train:
+        model.train()
+    else:
+        model.eval()
+
+    sums = defaultdict(float)
+    neigh_sums = defaultdict(float)
+    nb = 0
+
+    scaler = _make_grad_scaler(device, use_amp)
+
+    for batch in loader:
+        xyz, y = batch
+        xyz = xyz.to(device, non_blocking=True)
+        y = y.to(device, non_blocking=True)
+
+        if train:
+            optimizer.zero_grad(set_to_none=True)
+
+            with _AutocastCtx(device, _amp_enabled(device, use_amp)):
+                logits = model(xyz)
+                loss = loss_fn(logits.reshape(-1, C), y.reshape(-1))
+
+            if scaler is not None:
+                scaler.scale(loss).backward()
+
+                # grad clipping real
+                if grad_clip is not None and grad_clip > 0:
+                    scaler.unscale_(optimizer)
+                    torch.nn.utils.clip_grad_norm_(model.parameters(), float(grad_clip))
+
+                scaler.step(optimizer)
+                scaler.update()
+            else:
+                loss.backward()
+                if grad_clip is not None and grad_clip > 0:
+                    torch.nn.utils.clip_grad_norm_(model.parameters(), float(grad_clip))
+                optimizer.step()
+
+            logits_eval = model(xyz) if train_metrics_eval else logits.detach()
+
+        else:
+            with torch.no_grad():
+                logits = model(xyz)
+                loss = loss_fn(logits.reshape(-1, C), y.reshape(-1))
+                logits_eval = logits
+
+        m = _compute_metrics_from_logits(logits_eval, y, C, d21_idx, bg)
+
+        sums["loss"] += float(loss.item())
+        for k, v in m.items():
+            sums[k] += float(v)
+
+        if neighbor_list:
+            nm = _neighbors_metrics_from_logits(logits_eval, y, neighbor_list, bg)
+            for k, v in nm.items():
+                neigh_sums[k] += float(v)
+
+        nb += 1
+
+    out = _mean_dict(sums, nb)
+
+    for k, v in neigh_sums.items():
+        out[k] = v / max(1, nb)
+
+    return out
+
+# ============================================================
+# TEST FILTRADO (ONLY_BG)
+# ============================================================
+@torch.no_grad()
+def run_epoch_filtered_only_bg(
+    model: nn.Module,
+    loader: DataLoader,
+    loss_fn: nn.Module,
+    C: int,
+    d21_idx: int,
+    device: torch.device,
+    bg: int,
+):
+    model.eval()
+
+    sums = defaultdict(float)
+    n_valid = 0
+    ignored_rows = []
+
+    for batch_idx, batch in enumerate(loader):
+        if len(batch) == 3:
+            xyz, y, row_i = batch
+            ri = int(row_i.item())
+        else:
+            xyz, y = batch
+            ri = batch_idx
+
+        y_np = y[0].detach().cpu().numpy()
+        vals = np.unique(y_np)
+
+        if len(vals) == 1 and int(vals[0]) == int(bg):
+            ignored_rows.append(ri)
+            continue
+
+        xyz = xyz.to(device, non_blocking=True)
+        y = y.to(device, non_blocking=True)
+
+        logits = model(xyz)
+        loss = loss_fn(logits.reshape(-1, C), y.reshape(-1))
+
+        m = _compute_metrics_from_logits(logits, y, C, d21_idx, bg)
+
+        sums["loss"] += float(loss.item())
+        for k, v in m.items():
+            sums[k] += float(v)
+
+        n_valid += 1
+
+    n = max(1, n_valid)
+
+    out = {k: v / n for k, v in sums.items()}
+    out["n_valid_samples"] = int(n_valid)
+    out["ignored_rows"] = ignored_rows
+    return out
+
+
+# ============================================================
+# NEIGHBOR CONTROL
+# ============================================================
+def should_eval_neighbors(split: str, mode: str) -> bool:
+    mode = str(mode).lower()
+    if mode == "none":
+        return False
+    if mode == "both":
+        return True
+    return split == mode
+
+
+def merge_neighbor_metrics(base: Dict[str, float], neigh: Dict[str, float]) -> Dict[str, float]:
+    out = dict(base)
+    for k, v in neigh.items():
+        out[k] = float(v)
+    return out
+
+
+# ============================================================
+# TRAZABILIDAD (index_*.csv)
 # ============================================================
 def _sanitize_tag(s: str, maxlen: int = 80) -> str:
     s = (s or "").strip()
@@ -751,7 +1320,7 @@ def _discover_index_csv(data_dir: Path, split: str) -> Optional[Path]:
             break
         cur = cur.parent
 
-    # 3) fallback en ancestros/merged_*
+    # 3) fallback merged_*
     candidates = []
     cur = data_dir
     ancestors = [cur]
@@ -775,301 +1344,61 @@ def _discover_index_csv(data_dir: Path, split: str) -> Optional[Path]:
 
 
 # ============================================================
-# ENTRENAMIENTO / EVALUACIÓN
-# ============================================================
-@torch.no_grad()
-def _mean_dict(accum: Dict[str, float], n: int) -> Dict[str, float]:
-    n = max(1, int(n))
-    return {k: v / n for k, v in accum.items()}
-
-
-def run_epoch(
-    model: nn.Module,
-    loader: DataLoader,
-    optimizer: Optional[torch.optim.Optimizer],
-    loss_fn: nn.Module,
-    C: int,
-    d21_idx: int,
-    device: torch.device,
-    bg: int,
-    train: bool,
-    use_amp: bool,
-    grad_clip: Optional[float],
-    neighbor_list: Optional[List[Tuple[str, int]]] = None,
-    train_metrics_eval: bool = False,
-):
-    neighbor_list = neighbor_list or []
-
-    if train:
-        model.train()
-    else:
-        model.eval()
-
-    sums = defaultdict(float)
-    neigh_sums = defaultdict(float)
-    nb = 0
-
-    scaler = _make_grad_scaler(device, use_amp)
-
-    for batch in loader:
-        xyz, y = batch
-        xyz = xyz.to(device, non_blocking=True)
-        y = y.to(device, non_blocking=True)
-
-        # =========================
-        # TRAIN
-        # =========================
-        if train:
-            optimizer.zero_grad(set_to_none=True)
-
-            with _AutocastCtx(device, _amp_enabled(device, use_amp)):
-                logits = model(xyz)
-                loss = loss_fn(logits.reshape(-1, C), y.reshape(-1))
-
-            if scaler is not None:
-                scaler.scale(loss).backward()
-
-                # ✅ GRAD CLIP REAL
-                if grad_clip is not None and grad_clip > 0:
-                    scaler.unscale_(optimizer)
-                    torch.nn.utils.clip_grad_norm_(model.parameters(), float(grad_clip))
-
-                scaler.step(optimizer)
-                scaler.update()
-            else:
-                loss.backward()
-
-                if grad_clip is not None and grad_clip > 0:
-                    torch.nn.utils.clip_grad_norm_(model.parameters(), float(grad_clip))
-
-                optimizer.step()
-
-            # métricas
-            logits_eval = model(xyz) if train_metrics_eval else logits.detach()
-
-        # =========================
-        # EVAL
-        # =========================
-        else:
-            with torch.no_grad():
-                logits = model(xyz)
-                loss = loss_fn(logits.reshape(-1, C), y.reshape(-1))
-                logits_eval = logits
-
-        # =========================
-        # MÉTRICAS BASE
-        # =========================
-        m = _compute_metrics_from_logits(logits_eval, y, C, d21_idx, bg)
-
-        sums["loss"] += float(loss.item())
-        for k, v in m.items():
-            sums[k] += float(v)
-
-        # =========================
-        # NEIGHBORS
-        # =========================
-        if neighbor_list:
-            pred = logits_eval.argmax(dim=-1)
-            for name, idx in neighbor_list:
-                nm = _tooth_metrics_binary(pred, y, idx, bg)
-                for k, v in nm.items():
-                    neigh_sums[f"{name}_{k}"] += float(v)
-
-        nb += 1
-
-    out = _mean_dict(sums, nb)
-
-    for k, v in neigh_sums.items():
-        out[k] = v / max(1, nb)
-
-    return out
-
-
-# ============================================================
-# TEST FILTRADO (ONLY_BG)
-# ============================================================
-@torch.no_grad()
-def run_epoch_filtered_only_bg(
-    model: nn.Module,
-    loader: DataLoader,
-    loss_fn: nn.Module,
-    C: int,
-    d21_idx: int,
-    device: torch.device,
-    bg: int,
-):
-    model.eval()
-
-    sums = defaultdict(float)
-    n_valid = 0
-    ignored_rows = []
-
-    for batch_idx, batch in enumerate(loader):
-        if len(batch) == 3:
-            xyz, y, row_i = batch
-            ri = int(row_i.item())
-        else:
-            xyz, y = batch
-            ri = batch_idx
-
-        y_np = y[0].detach().cpu().numpy()
-        vals = np.unique(y_np)
-
-        if len(vals) == 1 and int(vals[0]) == int(bg):
-            ignored_rows.append(ri)
-            continue
-
-        xyz = xyz.to(device, non_blocking=True)
-        y = y.to(device, non_blocking=True)
-
-        logits = model(xyz)
-        loss = loss_fn(logits.reshape(-1, C), y.reshape(-1))
-
-        m = _compute_metrics_from_logits(logits, y, C, d21_idx, bg)
-
-        sums["loss"] += float(loss.item())
-        for k, v in m.items():
-            sums[k] += float(v)
-
-        n_valid += 1
-
-    n = max(1, n_valid)
-
-    out = {k: v / n for k, v in sums.items()}
-    out["n_valid_samples"] = int(n_valid)
-    out["ignored_rows"] = ignored_rows
-    return out
-
-
-# ============================================================
-# NEIGHBOR EVAL CONTROL (FIX REAL)
-# ============================================================
-def should_eval_neighbors(split: str, mode: str) -> bool:
-    """
-    mode:
-      val   -> solo val
-      test  -> solo test
-      both  -> val + test
-      none  -> ninguno
-    """
-    mode = str(mode).lower()
-    if mode == "none":
-        return False
-    if mode == "both":
-        return True
-    return split == mode
-
-
-def merge_neighbor_metrics(base: Dict[str, float], neigh: Dict[str, float]) -> Dict[str, float]:
-    """
-    Merge no destructivo: agrega métricas de vecinos sin romper estructura base.
-    """
-    out = dict(base)
-    for k, v in neigh.items():
-        out[k] = float(v)
-    return out
-
-
-@torch.no_grad()
-def eval_neighbors_on_loader(
-    model: nn.Module,
-    loader: DataLoader,
-    device: torch.device,
-    neighbor_list: List[Tuple[str, int]],
-    bg: int
-) -> Dict[str, float]:
-    if not neighbor_list:
-        return {}
-
-    model.eval()
-    sums = {f"{name}_{k}": 0.0 for name, _ in neighbor_list for k in ("acc", "f1", "iou", "bin_acc_all")}
-    nb = 0
-
-    for xyz, y in loader:
-        xyz = xyz.to(device, non_blocking=True)
-        y = y.to(device, non_blocking=True)
-
-        logits = model(xyz)
-        pred = logits.argmax(dim=-1)
-
-        for name, idx in neighbor_list:
-            m = _tooth_metrics_binary(pred, y, idx, bg)
-            sums[f"{name}_acc"] += m["acc"]
-            sums[f"{name}_f1"] += m["f1"]
-            sums[f"{name}_iou"] += m["iou"]
-            sums[f"{name}_bin_acc_all"] += m["bin_acc_all"]
-
-        nb += 1
-
-    nb = max(1, nb)
-    return {k: v / nb for k, v in sums.items()}
-
-
-# ============================================================
 # ARGPARSE
 # ============================================================
 def parse_args():
-    ap = argparse.ArgumentParser()
+    p = argparse.ArgumentParser(description="PointNet-Transformer FAST v5 PATCH (full trazabilidad)")
 
-    ap.add_argument("--data_dir", type=str, required=True)
-    ap.add_argument("--out_dir", type=str, required=True)
+    p.add_argument("--data_dir", type=str, required=True)
+    p.add_argument("--out_dir", type=str, required=True)
 
-    ap.add_argument("--epochs", type=int, default=120)
-    ap.add_argument("--batch_size", type=int, default=16)
-    ap.add_argument("--lr", type=float, default=2e-4)
-    ap.add_argument("--weight_decay", type=float, default=1e-4)
-    ap.add_argument("--dropout", type=float, default=0.5)
+    p.add_argument("--epochs", type=int, default=120)
+    p.add_argument("--batch_size", type=int, default=8)
+    p.add_argument("--lr", type=float, default=2e-4)
+    p.add_argument("--weight_decay", type=float, default=1e-4)
+    p.add_argument("--num_workers", type=int, default=4)
+    p.add_argument("--infer_num_workers", type=int, default=None)
 
-    ap.add_argument("--num_workers", type=int, default=6)
-    ap.add_argument("--infer_num_workers", type=int, default=None)
+    p.add_argument("--device", type=str, default="cuda", choices=["cuda", "cpu"])
+    p.add_argument("--seed", type=int, default=42)
+    p.add_argument("--use_amp", action="store_true")
+    p.add_argument("--grad_clip", type=float, default=1.0)
 
-    ap.add_argument("--seed", type=int, default=42)
-    ap.add_argument("--device", type=str, default="cuda", choices=["cuda", "cpu"])
+    p.add_argument("--bg_index", type=int, default=0)
+    p.add_argument("--bg_weight", type=float, default=0.03)
+    p.add_argument("--d21_internal", type=int, required=True)
 
-    ap.add_argument("--d21_internal", type=int, required=True)
+    p.add_argument("--neighbor_teeth", type=str, default="")
+    p.add_argument("--neighbor_eval_split", type=str, default="val", choices=["val", "test", "both", "none"])
+    p.add_argument("--neighbor_every", type=int, default=1)
 
-    ap.add_argument("--bg_index", type=int, default=0)
-    ap.add_argument("--bg_weight", type=float, default=0.10)
+    p.add_argument("--no_normalize", action="store_true")
+    p.add_argument("--index_csv", type=str, default=None)
 
-    ap.add_argument("--grad_clip", type=float, default=1.0)
-    ap.add_argument("--use_amp", action="store_true")
+    p.add_argument("--do_infer", action="store_true")
+    p.add_argument("--infer_examples", type=int, default=12)
+    p.add_argument("--infer_split", type=str, default="test", choices=["test", "val", "train"])
+    p.add_argument("--train_metrics_eval", action="store_true")
 
-    ap.add_argument("--no_normalize", action="store_true")
+    # Backbone FAST original
+    p.add_argument("--d_model", type=int, default=256)
+    p.add_argument("--embed_hidden", type=int, default=128)
+    p.add_argument("--depth", type=int, default=4)
+    p.add_argument("--nhead", type=int, default=8)
+    p.add_argument("--dim_feedforward", type=int, default=512)
+    p.add_argument("--dropout", type=float, default=0.1)
+    p.add_argument("--head_hidden", type=int, default=256)
+    p.add_argument("--head_dropout", type=float, default=0.1)
+    p.add_argument("--use_pos_mlp", action="store_true")
+    p.add_argument("--pos_hidden", type=int, default=128)
+    p.add_argument("--norm_first", action="store_true")
+    p.add_argument("--activation", type=str, default="gelu")
 
-    ap.add_argument("--index_csv", type=str, default=None)
+    p.add_argument("--token_subsample", type=int, default=2048)
+    p.add_argument("--prop_k", type=int, default=3)
+    p.add_argument("--prop_chunk", type=int, default=2048)
 
-    ap.add_argument("--do_infer", action="store_true")
-    ap.add_argument("--infer_examples", type=int, default=12)
-    ap.add_argument("--infer_split", type=str, default="test", choices=["test", "val", "train"])
-
-    ap.add_argument(
-        "--train_metrics_eval",
-        action="store_true",
-        help="Si está activo, calcula métricas de TRAIN con model.eval() (sin dropout/BN train), "
-             "pero mantiene el forward train para backprop."
-    )
-
-    ap.add_argument(
-        "--neighbor_teeth",
-        type=str,
-        default="",
-        help='Lista "name:idx" separada por coma. Ej: "d11:1,d22:9" (idx = clase interna).'
-    )
-    ap.add_argument(
-        "--neighbor_eval_split",
-        type=str,
-        default="val",
-        choices=["val", "test", "both", "none"],
-        help="Dónde calcular métricas de vecinos durante entrenamiento."
-    )
-    ap.add_argument(
-        "--neighbor_every",
-        type=int,
-        default=1,
-        help="Cada cuántos epochs calcular vecinos."
-    )
-
-    return ap.parse_args()
+    return p.parse_args()
 
 
 # ============================================================
@@ -1077,7 +1406,6 @@ def parse_args():
 # ============================================================
 def main():
     args = parse_args()
-    set_seed(args.seed)
 
     data_dir = Path(args.data_dir)
     out_dir = Path(args.out_dir)
@@ -1088,7 +1416,8 @@ def main():
     run_log = out_dir / "run.log"
     err_log = out_dir / "errors.log"
 
-    # ---------------- device ----------------
+    _set_seed(args.seed)
+
     if args.device == "cuda" and torch.cuda.is_available():
         device = torch.device("cuda")
         torch.backends.cudnn.benchmark = True
@@ -1108,7 +1437,7 @@ def main():
     bg_va = float((Yva == bg).mean())
     bg_te = float((Yte == bg).mean())
 
-    C = int(max(int(Ytr.max()), int(Yva.max()), int(Yte.max()))) + 1
+    C = infer_num_classes_from_npz(data_dir)
 
     log_line(f"[SANITY] num_classes C = {C}", run_log)
     log_line(f"[SANITY] bg_frac train/val/test = {bg_tr:.4f} {bg_va:.4f} {bg_te:.4f}", run_log)
@@ -1130,22 +1459,39 @@ def main():
     # =========================================================
     # MODEL / OPT / LOSS
     # =========================================================
-    model = PointNetSeg(num_classes=C, dropout=float(args.dropout)).to(device)
+    model = PointNetTransformerSegFast(
+        num_classes=C,
+        d_model=args.d_model,
+        embed_hidden=args.embed_hidden,
+        depth=args.depth,
+        nhead=args.nhead,
+        dim_feedforward=args.dim_feedforward,
+        dropout=args.dropout,
+        use_pos_mlp=bool(args.use_pos_mlp),
+        pos_hidden=args.pos_hidden,
+        norm_first=bool(args.norm_first),
+        activation=args.activation,
+        head_hidden=args.head_hidden,
+        head_dropout=args.head_dropout,
+        token_subsample=args.token_subsample,
+        prop_k=args.prop_k,
+        prop_chunk=args.prop_chunk,
+    ).to(device)
 
-    w = torch.ones(C, device=device, dtype=torch.float32)
-    w[bg] = float(args.bg_weight)
-    loss_fn = nn.CrossEntropyLoss(weight=w)
+    weights = torch.ones(C, dtype=torch.float32)
+    weights[int(args.bg_index)] = float(args.bg_weight)
+    weights = weights.to(device)
 
-    opt = torch.optim.Adam(
+    loss_fn = nn.CrossEntropyLoss(weight=weights)
+    optimizer = torch.optim.AdamW(
         model.parameters(),
-        lr=float(args.lr),
-        weight_decay=float(args.weight_decay),
+        lr=args.lr,
+        weight_decay=args.weight_decay
     )
-
-    sched = torch.optim.lr_scheduler.CosineAnnealingLR(
-        opt,
-        T_max=int(args.epochs),
-        eta_min=1e-6,
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
+        optimizer,
+        T_max=args.epochs,
+        eta_min=1e-6
     )
 
     d21_int = int(args.d21_internal)
@@ -1173,7 +1519,7 @@ def main():
     # RUN META
     # =========================================================
     run_meta = {
-        "script_name": "pointnet_classic_final_v8_patch.py",
+        "script_name": "pointnettransformer_classic_final_v5_patch.py",
         "start_time": datetime.now().isoformat(timespec="seconds"),
         "data_dir": str(data_dir),
         "out_dir": str(out_dir),
@@ -1187,7 +1533,6 @@ def main():
         "batch_size": int(args.batch_size),
         "lr": float(args.lr),
         "weight_decay": float(args.weight_decay),
-        "dropout": float(args.dropout),
         "grad_clip": float(args.grad_clip),
         "use_amp": bool(args.use_amp),
         "normalize_unit_sphere": bool(not args.no_normalize),
@@ -1201,6 +1546,21 @@ def main():
         "neighbor_eval_split": str(args.neighbor_eval_split),
         "neighbor_every": int(args.neighbor_every),
         "neighbor_parsed": neighbor_list,
+        "d_model": int(args.d_model),
+        "embed_hidden": int(args.embed_hidden),
+        "depth": int(args.depth),
+        "nhead": int(args.nhead),
+        "dim_feedforward": int(args.dim_feedforward),
+        "dropout": float(args.dropout),
+        "head_hidden": int(args.head_hidden),
+        "head_dropout": float(args.head_dropout),
+        "use_pos_mlp": bool(args.use_pos_mlp),
+        "pos_hidden": int(args.pos_hidden),
+        "norm_first": bool(args.norm_first),
+        "activation": str(args.activation),
+        "token_subsample": int(args.token_subsample),
+        "prop_k": int(args.prop_k),
+        "prop_chunk": int(args.prop_chunk),
     }
     save_json(run_meta, out_dir / "run_meta.json")
 
@@ -1254,16 +1614,13 @@ def main():
     # =========================================================
     # TRAIN LOOP
     # =========================================================
-    for epoch in range(1, int(args.epochs) + 1):
+    for epoch in range(1, args.epochs + 1):
         t_ep = time.time()
 
-        # -------------------------
-        # Train base
-        # -------------------------
         tr = run_epoch(
             model=model,
             loader=dl_tr,
-            optimizer=opt,
+            optimizer=optimizer,
             loss_fn=loss_fn,
             C=C,
             d21_idx=d21_int,
@@ -1276,9 +1633,6 @@ def main():
             train_metrics_eval=args.train_metrics_eval,
         )
 
-        # -------------------------
-        # Val base
-        # -------------------------
         va = run_epoch(
             model=model,
             loader=dl_va,
@@ -1295,9 +1649,6 @@ def main():
             train_metrics_eval=False,
         )
 
-        # -------------------------
-        # Neighbors (FIX REAL)
-        # -------------------------
         do_neighbor_now = (
             len(neighbor_list) > 0
             and int(args.neighbor_every) > 0
@@ -1308,7 +1659,6 @@ def main():
         va_neigh = {}
 
         if do_neighbor_now:
-            # train neighbors: siempre sobre train si hay neighbors, para poder tener curvas train-vs-val
             tr_neigh = eval_neighbors_on_loader(
                 model=model,
                 loader=dl_tr,
@@ -1317,7 +1667,6 @@ def main():
                 bg=bg,
             )
 
-            # val neighbors: solo si corresponde por config
             if should_eval_neighbors("val", args.neighbor_eval_split):
                 va_neigh = eval_neighbors_on_loader(
                     model=model,
@@ -1330,13 +1679,10 @@ def main():
         tr = merge_neighbor_metrics(tr, tr_neigh)
         va = merge_neighbor_metrics(va, va_neigh)
 
-        sched.step()
-        lr_now = float(opt.param_groups[0]["lr"])
+        scheduler.step()
+        lr_now = float(_get_lr(optimizer))
         sec = float(time.time() - t_ep)
 
-        # -------------------------
-        # History
-        # -------------------------
         for k, v in tr.items():
             key = f"train_{k}"
             if key in history:
@@ -1347,7 +1693,6 @@ def main():
             if key in history:
                 history[key].append(float(v))
 
-        # si un epoch no calculó neighbor en val, repetir último valor o 0.0 para mantener curvas parejas
         for name, _ in neighbor_list:
             for met in ("acc", "f1", "iou", "bin_acc_all"):
                 kt = f"train_{name}_{met}"
@@ -1366,9 +1711,6 @@ def main():
             history_jsonl
         )
 
-        # -------------------------
-        # CSV
-        # -------------------------
         with open(csv_path, "a", newline="", encoding="utf-8") as f:
             wcsv = csv.writer(f)
 
@@ -1396,9 +1738,6 @@ def main():
             wcsv.writerow(_row("train", tr))
             wcsv.writerow(_row("val", va))
 
-        # -------------------------
-        # Consola
-        # -------------------------
         msg = (
             f"[{epoch}/{args.epochs}] "
             f"train loss={tr['loss']:.4f} f1m={tr['f1_macro']:.3f} | "
@@ -1414,37 +1753,25 @@ def main():
 
         log_line(msg, run_log)
 
-        # -------------------------
-        # Best checkpoint
-        # -------------------------
         if va["d21_f1"] > best_val_d21_f1:
             best_val_d21_f1 = va["d21_f1"]
             best_epoch = epoch
             torch.save({"model": model.state_dict()}, best_path)
 
     # =========================================================
-    # SAVE LAST
+    # SAVE LAST / HISTORY / PLOTS BASE
     # =========================================================
     torch.save({"model": model.state_dict()}, last_path)
-
-    # =========================================================
-    # HISTORY JSON FINAL
-    # =========================================================
     save_json(dict(history), out_dir / "history.json")
 
-    # =========================================================
-    # PLOTS BASE
-    # =========================================================
     plot_train_val("loss", history["train_loss"], history["val_loss"], out_dir / "plots/loss.png", best_epoch)
     plot_train_val("f1_macro", history["train_f1_macro"], history["val_f1_macro"], out_dir / "plots/f1_macro.png", best_epoch)
     plot_train_val("iou_macro", history["train_iou_macro"], history["val_iou_macro"], out_dir / "plots/iou_macro.png", best_epoch)
 
-    # ✅ d21 completos
     plot_train_val("d21_acc", history["train_d21_acc"], history["val_d21_acc"], out_dir / "plots/d21_acc.png", best_epoch)
     plot_train_val("d21_f1", history["train_d21_f1"], history["val_d21_f1"], out_dir / "plots/d21_f1.png", best_epoch)
     plot_train_val("d21_iou", history["train_d21_iou"], history["val_d21_iou"], out_dir / "plots/d21_iou.png", best_epoch)
 
-    # ✅ neighbor plots nuevos
     for name, _ in neighbor_list:
         plot_train_val(
             f"{name}_acc",
@@ -1497,7 +1824,6 @@ def main():
         train_metrics_eval=False,
     )
 
-    # test neighbors si corresponde por config
     if len(neighbor_list) > 0 and should_eval_neighbors("test", args.neighbor_eval_split):
         te_neigh = eval_neighbors_on_loader(
             model=model,
@@ -1532,13 +1858,6 @@ def main():
         device=device,
         bg=bg,
     )
-
-    # neighbors también en test filtrado si corresponde
-    if len(neighbor_list) > 0 and should_eval_neighbors("test", args.neighbor_eval_split):
-        # reconstruimos loader de test bs normal para neighbors filtrados sample a sample
-        # pero como esta métrica es aditiva, la dejamos fuera del filtered base para no
-        # alterar la lógica histórica del archivo filtered
-        pass
 
     save_json(te_filtered, out_dir / "test_metrics_filtered.json")
 
@@ -1589,7 +1908,7 @@ def main():
                     ignored_rows.append(ri)
                     continue
 
-                # ✅ ahora sí respeta infer_examples
+                # respeta infer_examples
                 if done_examples >= max_examples:
                     break
 
@@ -1670,7 +1989,6 @@ def main():
                 writer.writeheader()
                 writer.writerows(manifest)
         else:
-            # deja igual un csv vacío con encabezado mínimo si no hubo samples válidos
             with open(inf_root / "inference_manifest.csv", "w", newline="", encoding="utf-8") as f:
                 writer = csv.DictWriter(
                     f,

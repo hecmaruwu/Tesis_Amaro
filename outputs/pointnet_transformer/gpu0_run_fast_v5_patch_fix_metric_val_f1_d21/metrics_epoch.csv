@@ -1,0 +1,1 @@
+epoch,split,loss,acc_all,acc_no_bg,f1_macro,iou_macro,d21_acc,d21_f1,d21_iou,d21_bin_acc_all,pred_bg_frac,lr,sec,d11_acc,d11_f1,d11_iou,d11_bin_acc_all,d22_acc,d22_f1,d22_iou,d22_bin_acc_all
