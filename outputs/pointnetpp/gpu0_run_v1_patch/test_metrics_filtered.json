@@ -1,0 +1,21 @@
+{
+  "loss": NaN,
+  "acc_all": 0.800048828125,
+  "acc_no_bg": 0.0,
+  "f1_macro": 0.0,
+  "iou_macro": 0.0,
+  "d21_acc": 0.9127944464967395,
+  "d21_f1": 0.0,
+  "d21_iou": 0.0,
+  "d21_bin_acc_all": 0.9825631473829297,
+  "pred_bg_frac": 1.0,
+  "n_valid_samples": 89,
+  "ignored_rows": [
+    3,
+    20,
+    26,
+    28,
+    45,
+    93
+  ]
+}

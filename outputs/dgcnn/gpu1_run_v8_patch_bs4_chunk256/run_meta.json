@@ -38,5 +38,9 @@
   ],
   "k": 20,
   "emb_dims": 1024,
-  "knn_chunk_size": 256
+  "knn_chunk_size": 256,
+  "end_time": "2026-04-09T10:29:09",
+  "elapsed_sec": 31546.519752025604,
+  "best_epoch": 111,
+  "best_val_d21_f1": 0.9380139531437792
 }
