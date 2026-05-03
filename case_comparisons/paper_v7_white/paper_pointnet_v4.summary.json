@@ -1,0 +1,21 @@
+{
+  "out_html": "/home/htaucare/Tesis_Amaro/case_comparisons/best4_test_v3/row_005_6BWQC0CT_upper/paper_pointnet_v4.html",
+  "align_meta": {
+    "mode": "robust_bbox",
+    "source_center": [
+      2.017876625061035,
+      1.065652847290039,
+      -92.90081024169922
+    ],
+    "source_scale_diag": 77.8936538696289,
+    "target_center": [
+      -0.01936715841293335,
+      -0.08842629194259644,
+      -0.04630701243877411
+    ],
+    "target_scale_diag": 2.272296667098999
+  },
+  "models": [
+    "pointnet"
+  ]
+}

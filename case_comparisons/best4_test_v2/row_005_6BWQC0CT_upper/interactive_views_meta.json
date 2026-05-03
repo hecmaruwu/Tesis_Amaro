@@ -1,0 +1,48 @@
+{
+  "case_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/best4_test_v2/row_005_6BWQC0CT_upper",
+  "sample_name": "6BWQC0CT",
+  "jaw": "upper",
+  "zoom": 1.8,
+  "common_zoomed_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/best4_test_v2/row_005_6BWQC0CT_upper/common_zoomed",
+  "plotly_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/best4_test_v2/row_005_6BWQC0CT_upper/plotly",
+  "plotly_available": true,
+  "alignment_info": {
+    "raw_centroid": [
+      2.035615113983096,
+      -0.6506424153339153,
+      -90.05015842235798
+    ],
+    "raw_radius": 54.15454576748805,
+    "ref_centroid": [
+      0.0009104203807090983,
+      -0.004178364342542817,
+      0.010672303641428744
+    ],
+    "ref_radius": 1.0017247867325776,
+    "alignment": "center_and_radius_to_xyz8192"
+  },
+  "common_status": {
+    "raw_mesh": true,
+    "raw_plus_gt_8192": true,
+    "gt_8192": true
+  },
+  "model_status": {
+    "pointnet": {
+      "has_pred_labels": false,
+      "message": "No existe pred_labels.npy; solo están disponibles las PNG estándar."
+    },
+    "pointnetpp": {
+      "has_pred_labels": false,
+      "message": "No existe pred_labels.npy; solo están disponibles las PNG estándar."
+    },
+    "dgcnn": {
+      "has_pred_labels": false,
+      "message": "No existe pred_labels.npy; solo están disponibles las PNG estándar."
+    },
+    "pointnettransformer": {
+      "has_pred_labels": false,
+      "message": "No existe pred_labels.npy; solo están disponibles las PNG estándar."
+    }
+  },
+  "note": "Los HTML 3D de cada modelo requieren pred_labels.npy. Las PNG estándar no contienen coordenadas/labels predichos suficientes para reconstruir 3D interactivo."
+}

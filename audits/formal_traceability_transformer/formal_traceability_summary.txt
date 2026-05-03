@@ -1,0 +1,19 @@
+FORMAL TRACEABILITY CHECK
+==========================================================================================
+data_dir: /home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/upper_only_surf_global_excl_wisdom_seed42_aug2
+split: test
+index_csv: /home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/upper_only_surf_global_excl_wisdom_seed42_aug2/index_test.csv
+raw_root: /home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw
+inference_manifest: /home/htaucare/Tesis_Amaro/outputs/pointnettransformer/grid_pro_runner_v2_gpu0/exp02_bs4_lr1e4_dm256_dep4_h8_ff512_tok2048/inference/inference_manifest.csv
+
+NPZ INFO
+{"X_path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/upper_only_surf_global_excl_wisdom_seed42_aug2/X_test.npz", "Y_path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/upper_only_surf_global_excl_wisdom_seed42_aug2/Y_test.npz", "X_shape": [95, 8192, 3], "Y_shape": [95, 8192], "n_rows": 95, "ok_same_rows": true, "ok_points_shape": true}
+
+INDEX ALIGNMENT CHECK
+{"ok_exact_0_to_n_minus_1": true, "n_index_rows": 95, "n_expected_rows": 95, "missing_rows": [], "extra_rows": []}
+
+ROW CHECKS
+row=0 | sample=01MAVHYZ | jaw=upper | processed_exists=True | raw_candidate_count=1 | raw_unique_match=True | manifest_has_entry=True | full_traceability_formal=True
+row=5 | sample=6BWQC0CT | jaw=upper | processed_exists=True | raw_candidate_count=1 | raw_unique_match=True | manifest_has_entry=True | full_traceability_formal=True
+row=10 | sample=017APYC4 | jaw=upper | processed_exists=True | raw_candidate_count=1 | raw_unique_match=True | manifest_has_entry=True | full_traceability_formal=True
+row=25 | sample=38JDN4ZV | jaw=upper | processed_exists=True | raw_candidate_count=1 | raw_unique_match=True | manifest_has_entry=False | full_traceability_formal=False

@@ -1,0 +1,57 @@
+{
+  "case_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper",
+  "out_png": "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper/paper_pointnet_v9_clean.png",
+  "out_html": "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper/paper_pointnet_v9_clean.html",
+  "individual_panels": [
+    "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper/v9_individual/01_gt_multiclase.png",
+    "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper/v9_individual/02_pred_multiclase.png",
+    "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper/v9_individual/03_errores_multiclase.png",
+    "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper/v9_individual/04_gt_d21_vecinos.png",
+    "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper/v9_individual/05_pred_d21_vecinos.png",
+    "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper/v9_individual/06_error_d21.png"
+  ],
+  "model": "pointnet",
+  "d21_class": 8,
+  "neighbors": [
+    [
+      "d11",
+      1
+    ],
+    [
+      "d22",
+      9
+    ]
+  ],
+  "align_mode": "robust_bbox",
+  "raw_mesh_path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_4/upper/6BWQC0CT/6BWQC0CT_upper.obj",
+  "align_meta": {
+    "mode": "robust_bbox",
+    "source_center": [
+      2.017876625061035,
+      1.065652847290039,
+      -92.90081024169922
+    ],
+    "source_scale_diag": 77.8936538696289,
+    "target_center": [
+      -0.01936715841293335,
+      -0.08842629194259644,
+      -0.04630701243877411
+    ],
+    "target_scale_diag": 2.272296667098999
+  },
+  "metrics": {
+    "acc_no_bg": 0.9548229548229549,
+    "d21_precision": 0.7676767676728906,
+    "d21_recall": 0.9999999999934212,
+    "d21_f1": 0.8685714280751021,
+    "d21_iou": 0.7676767676728906,
+    "n_points": 8192
+  },
+  "colors_focus": {
+    "d21": "#FF8C00",
+    "left_neighbor": "#0070C0",
+    "right_neighbor": "#FF69B4",
+    "tp": "#00B050",
+    "error": "#FF0000"
+  }
+}

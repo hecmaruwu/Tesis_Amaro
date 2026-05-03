@@ -1,0 +1,57 @@
+{
+  "case_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper",
+  "out_png": "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper/paper_pointnet_v12_dental_bbox.png",
+  "out_html": "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper/paper_pointnet_v12_dental_bbox.html",
+  "individual_panels": [
+    "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper/v12_individual_dental_bbox/01_gt_multiclase.png",
+    "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper/v12_individual_dental_bbox/02_pred_multiclase.png",
+    "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper/v12_individual_dental_bbox/03_errores_multiclase.png",
+    "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper/v12_individual_dental_bbox/04_gt_d21_vecinos.png",
+    "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper/v12_individual_dental_bbox/05_pred_d21_vecinos.png",
+    "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper/v12_individual_dental_bbox/06_error_d21.png"
+  ],
+  "model": "pointnet",
+  "d21_class": 8,
+  "neighbors": [
+    [
+      "d11",
+      1
+    ],
+    [
+      "d22",
+      9
+    ]
+  ],
+  "align_mode": "dental_bbox",
+  "mesh_top_q": 0.45,
+  "show_classes": "all",
+  "raw_mesh_path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_4/upper/6BWQC0CT/6BWQC0CT_upper.obj",
+  "align_meta": {
+    "align_mode": "dental_bbox",
+    "mesh_anchor_n": 77887,
+    "target_anchor_n": 1638,
+    "mesh_top_axis": 2,
+    "mesh_top_q": 0.45,
+    "method": "dental_bbox",
+    "source_center": [
+      1.6487655639648438,
+      -1.0308818817138672,
+      -85.3828125
+    ],
+    "source_scale": 69.86052703857422,
+    "target_center": [
+      -0.020386576652526855,
+      -0.06247851252555847,
+      0.2738647758960724
+    ],
+    "target_scale": 1.5800904035568237
+  },
+  "metrics": {
+    "acc_no_bg": 0.9548229548229549,
+    "d21_precision": 0.7676767676728906,
+    "d21_recall": 0.9999999999934212,
+    "d21_f1": 0.8685714280751021,
+    "d21_iou": 0.7676767676728906,
+    "n_points": 8192
+  }
+}

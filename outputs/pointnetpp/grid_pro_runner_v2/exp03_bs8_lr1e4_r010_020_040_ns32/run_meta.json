@@ -44,5 +44,9 @@
   "sa2_nsample": 32,
   "sa3_npoint": 64,
   "sa3_radius": 0.4,
-  "sa3_nsample": 32
+  "sa3_nsample": 32,
+  "end_time": "2026-04-15T23:18:44",
+  "elapsed_sec": 24988.960451841354,
+  "best_epoch": 111,
+  "best_val_d21_f1": 0.9575688903421281
 }

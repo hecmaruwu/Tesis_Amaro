@@ -1,0 +1,22 @@
+{
+  "name": "exp13_bs4_lr2e4_dm256_dep4_h8_ff512_do005",
+  "out_dir": "/home/htaucare/Tesis_Amaro/outputs/pointnettransformer/grid_pro_runner_v2_gpu0/exp13_bs4_lr2e4_dm256_dep4_h8_ff512_do005",
+  "status": "ok",
+  "return_code": 0,
+  "elapsed_sec": 23444.643679380417,
+  "command": "python3 -u /home/htaucare/Tesis_Amaro/scripts_last_version/pointnettransformer_classic_final_v5_patch.py --data_dir /home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/upper_only_surf_global_excl_wisdom_seed42_aug2 --epochs 120 --batch_size 4 --lr 0.0002 --weight_decay 0.0001 --num_workers 6 --infer_num_workers 0 --device cuda --seed 42 --use_amp --grad_clip 1.0 --bg_index 0 --bg_weight 0.03 --d21_internal 8 --neighbor_teeth d11:1,d22:9 --neighbor_eval_split both --neighbor_every 1 --index_csv /home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/upper_only_surf_global_excl_wisdom_seed42_aug2/index_test.csv --do_infer --infer_examples 20 --infer_split test --train_metrics_eval --d_model 256 --embed_hidden 128 --depth 4 --nhead 8 --dim_feedforward 512 --dropout 0.05 --head_hidden 256 --head_dropout 0.05 --use_pos_mlp --pos_hidden 128 --norm_first --activation gelu --token_subsample 2048 --prop_k 3 --prop_chunk 2048 --out_dir /home/htaucare/Tesis_Amaro/outputs/pointnettransformer/grid_pro_runner_v2_gpu0/exp13_bs4_lr2e4_dm256_dep4_h8_ff512_do005",
+  "attempted_batch_size": 4,
+  "retries": 0,
+  "oom_detected": false,
+  "final_reason": "success",
+  "best_epoch": 54,
+  "val_best_d21_f1": 0.922169,
+  "test_d21_f1": 0.9189085362288356,
+  "test_f1_macro": 0.8624321727268939,
+  "test_iou_macro": 0.7673095373762783,
+  "test_filtered_d21_f1": 0.9109800621588452,
+  "test_filtered_f1_macro": 0.8360051757852588,
+  "test_filtered_iou_macro": 0.76283891058571,
+  "score": 0.9109800621588452,
+  "rank": 1
+}

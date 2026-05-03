@@ -1,0 +1,8 @@
+{
+  "ignored_rows": [],
+  "n_ignored": 0,
+  "n_rendered": 20,
+  "infer_examples_requested": 20,
+  "infer_examples_rendered": 20,
+  "index_csv_used": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/upper_only_splitseed1_subseed42/index_test.csv"
+}

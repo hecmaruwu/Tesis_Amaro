@@ -1,0 +1,90 @@
+{
+  "row_final": 0,
+  "row_merged_200k_pos": 0,
+  "sample_name": "01MAVHYZ",
+  "jaw": "upper",
+  "final_index_meta": {
+    "row_i": "0",
+    "idx_global": "269",
+    "sample_name": "01MAVHYZ",
+    "jaw": "upper",
+    "path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/01MAVHYZ",
+    "n_points": "200000",
+    "has_labels": "1"
+  },
+  "raw_mesh_path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_4/upper/01MAVHYZ/01MAVHYZ_upper.obj",
+  "d21_class": 8,
+  "models": {
+    "pointnet": "/home/htaucare/Tesis_Amaro/outputs/pointnet_classic/grid_pro_runner_v1/exp03_bs16_lr3e4_do05_bg003_amp/inference",
+    "pointnetpp": "/home/htaucare/Tesis_Amaro/outputs/pointnetpp/grid_pro_runner_v2/exp04_bs8_lr3e4_r010_020_040_ns32/inference",
+    "dgcnn": "/home/htaucare/Tesis_Amaro/outputs/dgcnn/grid_pro_runner_v2_gpu1/exp06_bs8_lr2e4_k20_emb768_bg003/inference",
+    "pointnettransformer": "/home/htaucare/Tesis_Amaro/outputs/pointnettransformer/grid_pro_runner_v2_gpu0/exp13_bs4_lr2e4_dm256_dep4_h8_ff512_do005/inference"
+  },
+  "model_report": {
+    "pointnet": {
+      "copy_status": {
+        "all": true,
+        "errors": true,
+        "d21": true
+      },
+      "pred_status": {
+        "found_pred_file": false,
+        "pred_file": ""
+      },
+      "overlay_status": {
+        "generated": false,
+        "files": {}
+      }
+    },
+    "pointnetpp": {
+      "copy_status": {
+        "all": true,
+        "errors": true,
+        "d21": true
+      },
+      "pred_status": {
+        "found_pred_file": false,
+        "pred_file": ""
+      },
+      "overlay_status": {
+        "generated": false,
+        "files": {}
+      }
+    },
+    "dgcnn": {
+      "copy_status": {
+        "all": true,
+        "errors": true,
+        "d21": true
+      },
+      "pred_status": {
+        "found_pred_file": false,
+        "pred_file": ""
+      },
+      "overlay_status": {
+        "generated": false,
+        "files": {}
+      }
+    },
+    "pointnettransformer": {
+      "copy_status": {
+        "all": true,
+        "errors": true,
+        "d21": true
+      },
+      "pred_status": {
+        "found_pred_file": false,
+        "pred_file": ""
+      },
+      "overlay_status": {
+        "generated": false,
+        "files": {}
+      }
+    }
+  },
+  "common_files": {
+    "xyz_8192": "/home/htaucare/Tesis_Amaro/case_comparisons/best4_test_v2/row_000_01MAVHYZ_upper/common/xyz_8192.npy",
+    "gt_labels": "/home/htaucare/Tesis_Amaro/case_comparisons/best4_test_v2/row_000_01MAVHYZ_upper/common/gt_labels.npy",
+    "bundle_case_data": "/home/htaucare/Tesis_Amaro/case_comparisons/best4_test_v2/row_000_01MAVHYZ_upper/common/bundle_case_data.npz"
+  }
+}

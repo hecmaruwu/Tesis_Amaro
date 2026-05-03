@@ -1,0 +1,20 @@
+{
+  "case_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/best4_test_v2/row_005_6BWQC0CT_upper",
+  "out_png": "/home/htaucare/Tesis_Amaro/case_comparisons/best4_test_v2/row_005_6BWQC0CT_upper/paper_pointnet_only.png",
+  "tmp_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/best4_test_v2/row_005_6BWQC0CT_upper/paper_tmp_renders_v2",
+  "selected_models": [
+    "pointnet"
+  ],
+  "layout": {
+    "panel_w": 460,
+    "panel_h": 320,
+    "legend_w": 280,
+    "render_w": 720,
+    "render_h": 520,
+    "zoom": 1.55
+  },
+  "used_pred_labels": {
+    "pointnet": true
+  },
+  "note": "Si used_pred_labels=false, esa columna usó PNG fallback y no render 3D homogéneo."
+}

@@ -1,0 +1,267 @@
+{
+  "summary": {
+    "data_dir": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/upper_only_surf_global_excl_wisdom_seed42_aug2",
+    "split": "test",
+    "X_shape": [
+      95,
+      8192,
+      3
+    ],
+    "Y_shape": [
+      95,
+      8192
+    ],
+    "index_csv": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/upper_only_surf_global_excl_wisdom_seed42_aug2/index_test.csv",
+    "inference_dir": "/home/htaucare/Tesis_Amaro/outputs/dgcnn/gpu1_run_v9_patch/inference",
+    "inference_manifest": "",
+    "original_root": "/home/htaucare/Tesis_Amaro/data",
+    "d21_class": 8,
+    "bg_index": 0,
+    "index_alignment_check": {
+      "ok_exact_0_to_n_minus_1": true,
+      "n_index_rows": 95,
+      "n_expected_rows": 95,
+      "missing_rows": [],
+      "extra_rows": []
+    }
+  },
+  "audited_rows": [
+    {
+      "row_i": 0,
+      "split": "test",
+      "npz_summary": {
+        "num_points": 8192,
+        "bbox_min": [
+          -0.9161129593849182,
+          -0.7114241123199463,
+          -0.42008501291275024
+        ],
+        "bbox_max": [
+          0.867339551448822,
+          0.5806203484535217,
+          0.41029617190361023
+        ],
+        "centroid": [
+          -0.005159382708370686,
+          -0.009829632937908173,
+          0.010412873700261116
+        ],
+        "class_hist": {
+          "0": 6554,
+          "1": 137,
+          "2": 115,
+          "3": 78,
+          "4": 103,
+          "5": 139,
+          "6": 185,
+          "8": 149,
+          "9": 94,
+          "10": 167,
+          "11": 91,
+          "12": 145,
+          "13": 235
+        },
+        "bg_frac": 0.800048828125,
+        "only_bg": false
+      },
+      "index_meta": {
+        "row_i": "0",
+        "sample_name": "01MAVHYZ",
+        "jaw": "upper",
+        "path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/01MAVHYZ"
+      },
+      "has_index_entry": true,
+      "original_path_resolved": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/01MAVHYZ",
+      "original_path_resolution_mode": "absolute_or_existing",
+      "original_exists": true,
+      "manifest_meta": {},
+      "manifest_check": {
+        "has_manifest_entry": false
+      },
+      "verdict_index_link_ok": true,
+      "verdict_original_link_ok": true,
+      "verdict_manifest_link_ok": false,
+      "verdict_index_vs_manifest_ok": false,
+      "audit_png_labels": "/home/htaucare/Tesis_Amaro/audits/traceability_test/visuals/test_row0_01MAVHYZ_upper_labels.png",
+      "audit_png_d21": "/home/htaucare/Tesis_Amaro/audits/traceability_test/visuals/test_row0_01MAVHYZ_upper_d21.png"
+    },
+    {
+      "row_i": 5,
+      "split": "test",
+      "npz_summary": {
+        "num_points": 8192,
+        "bbox_min": [
+          -0.8957712650299072,
+          -0.7802772521972656,
+          -0.4832221269607544
+        ],
+        "bbox_max": [
+          0.8549213409423828,
+          0.5724653005599976,
+          0.41730791330337524
+        ],
+        "centroid": [
+          0.0009104189230129123,
+          -0.004178368020802736,
+          0.010672288946807384
+        ],
+        "class_hist": {
+          "0": 6554,
+          "1": 145,
+          "2": 88,
+          "3": 82,
+          "4": 100,
+          "5": 81,
+          "6": 176,
+          "7": 116,
+          "8": 152,
+          "9": 83,
+          "10": 92,
+          "11": 94,
+          "12": 86,
+          "13": 184,
+          "14": 159
+        },
+        "bg_frac": 0.800048828125,
+        "only_bg": false
+      },
+      "index_meta": {
+        "row_i": "5",
+        "sample_name": "6BWQC0CT",
+        "jaw": "upper",
+        "path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/6BWQC0CT"
+      },
+      "has_index_entry": true,
+      "original_path_resolved": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/6BWQC0CT",
+      "original_path_resolution_mode": "absolute_or_existing",
+      "original_exists": true,
+      "manifest_meta": {},
+      "manifest_check": {
+        "has_manifest_entry": false
+      },
+      "verdict_index_link_ok": true,
+      "verdict_original_link_ok": true,
+      "verdict_manifest_link_ok": false,
+      "verdict_index_vs_manifest_ok": false,
+      "audit_png_labels": "/home/htaucare/Tesis_Amaro/audits/traceability_test/visuals/test_row5_6BWQC0CT_upper_labels.png",
+      "audit_png_d21": "/home/htaucare/Tesis_Amaro/audits/traceability_test/visuals/test_row5_6BWQC0CT_upper_d21.png"
+    },
+    {
+      "row_i": 10,
+      "split": "test",
+      "npz_summary": {
+        "num_points": 8192,
+        "bbox_min": [
+          -0.8971319198608398,
+          -0.7619511485099792,
+          -0.47650668025016785
+        ],
+        "bbox_max": [
+          0.8422697186470032,
+          0.5846520066261292,
+          0.4017668664455414
+        ],
+        "centroid": [
+          0.0010855667060241103,
+          -0.014773334376513958,
+          0.013352766633033752
+        ],
+        "class_hist": {
+          "0": 6554,
+          "1": 168,
+          "2": 82,
+          "3": 94,
+          "4": 122,
+          "5": 116,
+          "6": 198,
+          "7": 100,
+          "8": 140,
+          "9": 100,
+          "10": 96,
+          "11": 138,
+          "12": 109,
+          "13": 175
+        },
+        "bg_frac": 0.800048828125,
+        "only_bg": false
+      },
+      "index_meta": {
+        "row_i": "10",
+        "sample_name": "017APYC4",
+        "jaw": "upper",
+        "path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/017APYC4"
+      },
+      "has_index_entry": true,
+      "original_path_resolved": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/017APYC4",
+      "original_path_resolution_mode": "absolute_or_existing",
+      "original_exists": true,
+      "manifest_meta": {},
+      "manifest_check": {
+        "has_manifest_entry": false
+      },
+      "verdict_index_link_ok": true,
+      "verdict_original_link_ok": true,
+      "verdict_manifest_link_ok": false,
+      "verdict_index_vs_manifest_ok": false,
+      "audit_png_labels": "/home/htaucare/Tesis_Amaro/audits/traceability_test/visuals/test_row10_017APYC4_upper_labels.png",
+      "audit_png_d21": "/home/htaucare/Tesis_Amaro/audits/traceability_test/visuals/test_row10_017APYC4_upper_d21.png"
+    },
+    {
+      "row_i": 25,
+      "split": "test",
+      "npz_summary": {
+        "num_points": 8192,
+        "bbox_min": [
+          -0.9119857549667358,
+          -0.7749742269515991,
+          -0.4762411117553711
+        ],
+        "bbox_max": [
+          0.8492131233215332,
+          0.5639858841896057,
+          0.3658772110939026
+        ],
+        "centroid": [
+          -0.0020707163494080305,
+          -0.007228249683976173,
+          0.022502342239022255
+        ],
+        "class_hist": {
+          "0": 6554,
+          "1": 207,
+          "4": 94,
+          "5": 119,
+          "6": 191,
+          "7": 240,
+          "8": 178,
+          "11": 78,
+          "12": 123,
+          "13": 179,
+          "14": 229
+        },
+        "bg_frac": 0.800048828125,
+        "only_bg": false
+      },
+      "index_meta": {
+        "row_i": "25",
+        "sample_name": "38JDN4ZV",
+        "jaw": "upper",
+        "path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/38JDN4ZV"
+      },
+      "has_index_entry": true,
+      "original_path_resolved": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/38JDN4ZV",
+      "original_path_resolution_mode": "absolute_or_existing",
+      "original_exists": true,
+      "manifest_meta": {},
+      "manifest_check": {
+        "has_manifest_entry": false
+      },
+      "verdict_index_link_ok": true,
+      "verdict_original_link_ok": true,
+      "verdict_manifest_link_ok": false,
+      "verdict_index_vs_manifest_ok": false,
+      "audit_png_labels": "/home/htaucare/Tesis_Amaro/audits/traceability_test/visuals/test_row25_38JDN4ZV_upper_labels.png",
+      "audit_png_d21": "/home/htaucare/Tesis_Amaro/audits/traceability_test/visuals/test_row25_38JDN4ZV_upper_d21.png"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "row_final": 5,
+  "row_merged_200k": 5,
+  "sample_name": "6BWQC0CT",
+  "jaw": "upper",
+  "final_index_meta": {
+    "row_i": "5",
+    "idx_global": "401",
+    "sample_name": "6BWQC0CT",
+    "jaw": "upper",
+    "path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/6BWQC0CT",
+    "n_points": "200000",
+    "has_labels": "1"
+  },
+  "raw_mesh_path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_4/upper/6BWQC0CT/6BWQC0CT_upper.obj",
+  "models": {
+    "pointnet": "/home/htaucare/Tesis_Amaro/outputs/pointnet_classic/grid_pro_runner_v1/exp03_bs16_lr3e4_do05_bg003_amp/inference",
+    "pointnetpp": "/home/htaucare/Tesis_Amaro/outputs/pointnetpp/grid_pro_runner_v2/exp04_bs8_lr3e4_r010_020_040_ns32/inference",
+    "dgcnn": "/home/htaucare/Tesis_Amaro/outputs/dgcnn/grid_pro_runner_v2_gpu1/exp06_bs8_lr2e4_k20_emb768_bg003/inference",
+    "pointnettransformer": "/home/htaucare/Tesis_Amaro/outputs/pointnettransformer/grid_pro_runner_v2_gpu0/exp13_bs4_lr2e4_dm256_dep4_h8_ff512_do005/inference"
+  },
+  "model_copy_status": {
+    "pointnet": {
+      "all": true,
+      "errors": true,
+      "d21": true
+    },
+    "pointnetpp": {
+      "all": true,
+      "errors": true,
+      "d21": true
+    },
+    "dgcnn": {
+      "all": true,
+      "errors": true,
+      "d21": true
+    },
+    "pointnettransformer": {
+      "all": true,
+      "errors": true,
+      "d21": true
+    }
+  },
+  "bundle_npz": "/home/htaucare/Tesis_Amaro/case_comparisons/best4_test/row_005_6BWQC0CT_upper/common/bundle_case_data.npz"
+}

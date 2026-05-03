@@ -1,0 +1,10 @@
+{
+  "N": 8192,
+  "cap_bg_input": 0.8,
+  "cap_bg_frac_used": 0.8,
+  "seed": 1,
+  "use_augmentation": true,
+  "augment_times": 2,
+  "ensure_coverage": true,
+  "num_classes": 15
+}

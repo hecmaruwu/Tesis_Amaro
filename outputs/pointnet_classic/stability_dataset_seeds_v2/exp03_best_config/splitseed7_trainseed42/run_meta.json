@@ -1,0 +1,43 @@
+{
+  "script_name": "pointnet_classic_final_v8_patch.py",
+  "start_time": "2026-04-24T21:49:15",
+  "data_dir": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/upper_only_splitseed7_subseed42",
+  "out_dir": "/home/htaucare/Tesis_Amaro/outputs/pointnet_classic/stability_dataset_seeds_v2/exp03_best_config/splitseed7_trainseed42",
+  "device": "cuda",
+  "seed": 42,
+  "num_classes": 15,
+  "bg_index": 0,
+  "bg_weight": 0.03,
+  "d21_internal": 8,
+  "epochs": 120,
+  "batch_size": 16,
+  "lr": 0.0003,
+  "weight_decay": 0.0001,
+  "dropout": 0.5,
+  "grad_clip": 1.0,
+  "use_amp": true,
+  "normalize_unit_sphere": true,
+  "train_metrics_eval": true,
+  "infer_examples": 20,
+  "do_infer": true,
+  "infer_split": "test",
+  "infer_num_workers": 0,
+  "index_csv": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/upper_only_splitseed7_subseed42/index_test.csv",
+  "neighbor_teeth": "d11:1,d22:9",
+  "neighbor_eval_split": "both",
+  "neighbor_every": 1,
+  "neighbor_parsed": [
+    [
+      "d11",
+      1
+    ],
+    [
+      "d22",
+      9
+    ]
+  ],
+  "end_time": "2026-04-24T22:17:18",
+  "elapsed_sec": 1683.3853857517242,
+  "best_epoch": 89,
+  "best_val_d21_f1": 0.9573104510946325
+}

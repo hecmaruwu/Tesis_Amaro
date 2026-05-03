@@ -1,0 +1,5 @@
+row_i,sample_name,jaw,processed_path,processed_exists,raw_candidate_count,raw_unique_match,raw_selected,manifest_has_entry,manifest_match_sample_name,manifest_match_jaw,manifest_match_path,verdict_full_traceability_formal
+0,01MAVHYZ,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/01MAVHYZ,True,1,True,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_4/upper/01MAVHYZ/01MAVHYZ_upper.obj,True,True,True,True,True
+5,6BWQC0CT,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/6BWQC0CT,True,1,True,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_4/upper/6BWQC0CT/6BWQC0CT_upper.obj,True,True,True,True,True
+10,017APYC4,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/017APYC4,True,1,True,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_5/upper/017APYC4/017APYC4_upper.obj,True,True,True,True,True
+25,38JDN4ZV,upper,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/38JDN4ZV,True,1,True,/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_3/upper/38JDN4ZV/38JDN4ZV_upper.obj,False,False,False,False,False

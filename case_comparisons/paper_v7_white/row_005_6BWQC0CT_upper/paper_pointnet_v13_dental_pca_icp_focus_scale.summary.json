@@ -1,0 +1,158 @@
+{
+  "case_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper",
+  "out_png": "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper/paper_pointnet_v13_dental_pca_icp_focus_scale.png",
+  "out_html": "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper/paper_pointnet_v13_dental_pca_icp_focus_scale.html",
+  "individual_panels": [
+    "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper/v13_individual_dental_pca_icp_focus_scale/01_gt_multiclase.png",
+    "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper/v13_individual_dental_pca_icp_focus_scale/02_pred_multiclase.png",
+    "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper/v13_individual_dental_pca_icp_focus_scale/03_errores_multiclase.png",
+    "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper/v13_individual_dental_pca_icp_focus_scale/04_gt_d21_vecinos.png",
+    "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper/v13_individual_dental_pca_icp_focus_scale/05_pred_d21_vecinos.png",
+    "/home/htaucare/Tesis_Amaro/case_comparisons/paper_v7_white/row_005_6BWQC0CT_upper/v13_individual_dental_pca_icp_focus_scale/06_error_d21.png"
+  ],
+  "model": "pointnet",
+  "d21_class": 8,
+  "neighbors": [
+    [
+      "d11",
+      1
+    ],
+    [
+      "d22",
+      9
+    ]
+  ],
+  "align_mode": "dental_pca_icp",
+  "mesh_top_q": 0.5,
+  "icp_iter": 80,
+  "icp_max_corr": 0.05,
+  "icp_trim_q": 0.7,
+  "icp_allow_scaling": true,
+  "icp_focus": "d21_neighbors",
+  "show_classes": "all",
+  "raw_mesh_path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_4/upper/6BWQC0CT/6BWQC0CT_upper.obj",
+  "align_meta": {
+    "align_mode": "dental_pca_icp",
+    "mesh_anchor_n": 70806,
+    "target_anchor_n": 380,
+    "target_anchor_kind": "d21_plus_neighbors",
+    "mesh_top_axis": 2,
+    "mesh_top_q": 0.5,
+    "icp_iter": 80,
+    "icp_max_corr": 0.05,
+    "icp_trim_q": 0.7,
+    "icp_allow_scaling": true,
+    "icp_focus": "d21_neighbors",
+    "method": "dental_pca",
+    "source_center": [
+      0.44363081455230713,
+      -5.0960373878479,
+      -86.36436462402344
+    ],
+    "target_center": [
+      -0.014853198081254959,
+      -0.49959632754325867,
+      0.31084275245666504
+    ],
+    "scale": 0.0080359049077059,
+    "score": 0.02797390660099323,
+    "sign_matrix": [
+      [
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    ],
+    "refine": {
+      "enabled": true,
+      "method": "internal_trimmed_icp",
+      "has_scipy": true,
+      "n_iter_requested": 80,
+      "max_corr": 0.05,
+      "trim_q": 0.7,
+      "allow_scaling": true,
+      "n_iter_done": 60,
+      "history_tail": [
+        {
+          "iter": 52,
+          "n_corr": 5410,
+          "median_dist_before": 0.015415247529745102,
+          "mean_dist_before": 0.016779527068138123,
+          "scale_step": 0.9968283058134367
+        },
+        {
+          "iter": 53,
+          "n_corr": 5408,
+          "median_dist_before": 0.015381645411252975,
+          "mean_dist_before": 0.01674441620707512,
+          "scale_step": 0.997445138456448
+        },
+        {
+          "iter": 54,
+          "n_corr": 5405,
+          "median_dist_before": 0.015376381576061249,
+          "mean_dist_before": 0.01670876331627369,
+          "scale_step": 0.9979607964193468
+        },
+        {
+          "iter": 55,
+          "n_corr": 5401,
+          "median_dist_before": 0.01533334981650114,
+          "mean_dist_before": 0.016679929569363594,
+          "scale_step": 0.9983795466207609
+        },
+        {
+          "iter": 56,
+          "n_corr": 5401,
+          "median_dist_before": 0.015297508798539639,
+          "mean_dist_before": 0.01667563058435917,
+          "scale_step": 0.9985089183900052
+        },
+        {
+          "iter": 57,
+          "n_corr": 5401,
+          "median_dist_before": 0.015304162167012691,
+          "mean_dist_before": 0.01666923426091671,
+          "scale_step": 0.998947676083511
+        },
+        {
+          "iter": 58,
+          "n_corr": 5400,
+          "median_dist_before": 0.015315672382712364,
+          "mean_dist_before": 0.0166584812104702,
+          "scale_step": 0.9991289646168816
+        },
+        {
+          "iter": 59,
+          "n_corr": 5400,
+          "median_dist_before": 0.01529728528112173,
+          "mean_dist_before": 0.016651015728712082,
+          "scale_step": 0.9990162551382132
+        }
+      ],
+      "median_before_first": 0.024101201444864273,
+      "median_before_last": 0.01529728528112173,
+      "total_scale": 0.699550716091197,
+      "source_sample_n": 8000,
+      "target_sample_n": 380
+    }
+  },
+  "metrics": {
+    "acc_no_bg": 0.9548229548229549,
+    "d21_precision": 0.7676767676728906,
+    "d21_recall": 0.9999999999934212,
+    "d21_f1": 0.8685714280751021,
+    "d21_iou": 0.7676767676728906,
+    "n_points": 8192
+  }
+}

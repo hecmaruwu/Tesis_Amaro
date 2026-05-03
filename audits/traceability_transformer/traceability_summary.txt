@@ -1,0 +1,18 @@
+TRACEABILITY AUDIT SUMMARY
+================================================================================
+data_dir: /home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/upper_only_surf_global_excl_wisdom_seed42_aug2
+split: test
+X shape: (95, 8192, 3)
+Y shape: (95, 8192)
+index_csv: /home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/upper_only_surf_global_excl_wisdom_seed42_aug2/index_test.csv
+inference_manifest: /home/htaucare/Tesis_Amaro/outputs/pointnettransformer/grid_pro_runner_v2_gpu0/exp02_bs4_lr1e4_dm256_dep4_h8_ff512_tok2048/inference/inference_manifest.csv
+original_root: /home/htaucare/Tesis_Amaro/data
+
+INDEX ALIGNMENT CHECK
+{'ok_exact_0_to_n_minus_1': True, 'n_index_rows': 95, 'n_expected_rows': 95, 'missing_rows': [], 'extra_rows': []}
+
+AUDITED ROWS
+row=0 | sample=01MAVHYZ | jaw=upper | orig_exists=True | idx_ok=True | manifest_ok=True | idx_vs_manifest_ok=True | only_bg=False | bg_frac=0.8000
+row=5 | sample=6BWQC0CT | jaw=upper | orig_exists=True | idx_ok=True | manifest_ok=True | idx_vs_manifest_ok=True | only_bg=False | bg_frac=0.8000
+row=10 | sample=017APYC4 | jaw=upper | orig_exists=True | idx_ok=True | manifest_ok=True | idx_vs_manifest_ok=True | only_bg=False | bg_frac=0.8000
+row=25 | sample=38JDN4ZV | jaw=upper | orig_exists=True | idx_ok=True | manifest_ok=False | idx_vs_manifest_ok=False | only_bg=False | bg_frac=0.8000

@@ -1,0 +1,18 @@
+{
+  "name": "exp03_bs16_lr3e4_do05_bg003_amp",
+  "out_dir": "/home/htaucare/Tesis_Amaro/outputs/pointnet_classic/grid_pro_runner_v1/exp03_bs16_lr3e4_do05_bg003_amp",
+  "status": "ok",
+  "return_code": 0,
+  "elapsed_sec": 4190.768878221512,
+  "command": "python3 -u /home/htaucare/Tesis_Amaro/scripts_last_version/pointnet_classic_final_v8_patch.py --data_dir /home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/upper_only_surf_global_excl_wisdom_seed42_aug2 --epochs 120 --batch_size 16 --lr 0.0003 --weight_decay 0.0001 --dropout 0.5 --num_workers 6 --infer_num_workers 0 --device cuda --use_amp --grad_clip 1.0 --d21_internal 8 --bg_index 0 --bg_weight 0.03 --neighbor_teeth d11:1,d22:9 --neighbor_eval_split both --neighbor_every 1 --seed 42 --train_metrics_eval --do_infer --infer_split test --infer_examples 20 --index_csv /home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/upper_only_surf_global_excl_wisdom_seed42_aug2/index_test.csv --out_dir /home/htaucare/Tesis_Amaro/outputs/pointnet_classic/grid_pro_runner_v1/exp03_bs16_lr3e4_do05_bg003_amp",
+  "best_epoch": 53,
+  "val_best_d21_f1": 0.946795,
+  "test_d21_f1": 0.9413655703785687,
+  "test_f1_macro": 0.8809635295567619,
+  "test_iou_macro": 0.7900709451279657,
+  "test_filtered_d21_f1": 0.9371084020036168,
+  "test_filtered_f1_macro": 0.8652072937884528,
+  "test_filtered_iou_macro": 0.8085852444255052,
+  "score": 0.9371084020036168,
+  "rank": 1
+}

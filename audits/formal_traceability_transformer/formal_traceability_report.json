@@ -1,0 +1,204 @@
+{
+  "summary": {
+    "data_dir": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/upper_only_surf_global_excl_wisdom_seed42_aug2",
+    "split": "test",
+    "index_csv": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/upper_only_surf_global_excl_wisdom_seed42_aug2/index_test.csv",
+    "raw_root": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw",
+    "inference_manifest": "/home/htaucare/Tesis_Amaro/outputs/pointnettransformer/grid_pro_runner_v2_gpu0/exp02_bs4_lr1e4_dm256_dep4_h8_ff512_tok2048/inference/inference_manifest.csv",
+    "npz_info": {
+      "X_path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/upper_only_surf_global_excl_wisdom_seed42_aug2/X_test.npz",
+      "Y_path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/fixed_split/8192/upper_only_surf_global_excl_wisdom_seed42_aug2/Y_test.npz",
+      "X_shape": [
+        95,
+        8192,
+        3
+      ],
+      "Y_shape": [
+        95,
+        8192
+      ],
+      "n_rows": 95,
+      "ok_same_rows": true,
+      "ok_points_shape": true
+    },
+    "index_alignment_check": {
+      "ok_exact_0_to_n_minus_1": true,
+      "n_index_rows": 95,
+      "n_expected_rows": 95,
+      "missing_rows": [],
+      "extra_rows": []
+    }
+  },
+  "audited_rows": [
+    {
+      "row_i": 0,
+      "index_meta": {
+        "row_i": "0",
+        "sample_name": "01MAVHYZ",
+        "jaw": "upper",
+        "path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/01MAVHYZ"
+      },
+      "has_index_entry": true,
+      "processed_path_resolved": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/01MAVHYZ",
+      "processed_path_resolution_mode": "exists",
+      "processed_exists": true,
+      "raw_candidates": [
+        "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_4/upper/01MAVHYZ/01MAVHYZ_upper.obj"
+      ],
+      "raw_candidate_count": 1,
+      "raw_unique_match": true,
+      "raw_selected": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_4/upper/01MAVHYZ/01MAVHYZ_upper.obj",
+      "manifest_meta": {
+        "row_i": "0",
+        "tag": "test_row0_01MAVHYZ",
+        "sample_name": "01MAVHYZ",
+        "jaw": "upper",
+        "path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/01MAVHYZ",
+        "png_all": "inference_all/test_row0_01MAVHYZ.png",
+        "png_errors": "inference_errors/test_row0_01MAVHYZ.png",
+        "png_d21": "inference_d21/test_row0_01MAVHYZ.png"
+      },
+      "manifest_check": {
+        "has_manifest_entry": true,
+        "match_sample_name": true,
+        "index_sample_name": "01MAVHYZ",
+        "manifest_sample_name": "01MAVHYZ",
+        "match_jaw": true,
+        "index_jaw": "upper",
+        "manifest_jaw": "upper",
+        "match_path": true,
+        "index_path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/01MAVHYZ",
+        "manifest_path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/01MAVHYZ"
+      },
+      "verdict_npz_to_index": true,
+      "verdict_index_to_processed": true,
+      "verdict_processed_to_raw": true,
+      "verdict_index_to_manifest": true,
+      "verdict_index_manifest_consistent": true,
+      "verdict_full_traceability_formal": true
+    },
+    {
+      "row_i": 5,
+      "index_meta": {
+        "row_i": "5",
+        "sample_name": "6BWQC0CT",
+        "jaw": "upper",
+        "path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/6BWQC0CT"
+      },
+      "has_index_entry": true,
+      "processed_path_resolved": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/6BWQC0CT",
+      "processed_path_resolution_mode": "exists",
+      "processed_exists": true,
+      "raw_candidates": [
+        "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_4/upper/6BWQC0CT/6BWQC0CT_upper.obj"
+      ],
+      "raw_candidate_count": 1,
+      "raw_unique_match": true,
+      "raw_selected": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_4/upper/6BWQC0CT/6BWQC0CT_upper.obj",
+      "manifest_meta": {
+        "row_i": "5",
+        "tag": "test_row5_6BWQC0CT",
+        "sample_name": "6BWQC0CT",
+        "jaw": "upper",
+        "path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/6BWQC0CT",
+        "png_all": "inference_all/test_row5_6BWQC0CT.png",
+        "png_errors": "inference_errors/test_row5_6BWQC0CT.png",
+        "png_d21": "inference_d21/test_row5_6BWQC0CT.png"
+      },
+      "manifest_check": {
+        "has_manifest_entry": true,
+        "match_sample_name": true,
+        "index_sample_name": "6BWQC0CT",
+        "manifest_sample_name": "6BWQC0CT",
+        "match_jaw": true,
+        "index_jaw": "upper",
+        "manifest_jaw": "upper",
+        "match_path": true,
+        "index_path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/6BWQC0CT",
+        "manifest_path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/6BWQC0CT"
+      },
+      "verdict_npz_to_index": true,
+      "verdict_index_to_processed": true,
+      "verdict_processed_to_raw": true,
+      "verdict_index_to_manifest": true,
+      "verdict_index_manifest_consistent": true,
+      "verdict_full_traceability_formal": true
+    },
+    {
+      "row_i": 10,
+      "index_meta": {
+        "row_i": "10",
+        "sample_name": "017APYC4",
+        "jaw": "upper",
+        "path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/017APYC4"
+      },
+      "has_index_entry": true,
+      "processed_path_resolved": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/017APYC4",
+      "processed_path_resolution_mode": "exists",
+      "processed_exists": true,
+      "raw_candidates": [
+        "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_5/upper/017APYC4/017APYC4_upper.obj"
+      ],
+      "raw_candidate_count": 1,
+      "raw_unique_match": true,
+      "raw_selected": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_5/upper/017APYC4/017APYC4_upper.obj",
+      "manifest_meta": {
+        "row_i": "10",
+        "tag": "test_row10_017APYC4",
+        "sample_name": "017APYC4",
+        "jaw": "upper",
+        "path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/017APYC4",
+        "png_all": "inference_all/test_row10_017APYC4.png",
+        "png_errors": "inference_errors/test_row10_017APYC4.png",
+        "png_d21": "inference_d21/test_row10_017APYC4.png"
+      },
+      "manifest_check": {
+        "has_manifest_entry": true,
+        "match_sample_name": true,
+        "index_sample_name": "017APYC4",
+        "manifest_sample_name": "017APYC4",
+        "match_jaw": true,
+        "index_jaw": "upper",
+        "manifest_jaw": "upper",
+        "match_path": true,
+        "index_path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/017APYC4",
+        "manifest_path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/017APYC4"
+      },
+      "verdict_npz_to_index": true,
+      "verdict_index_to_processed": true,
+      "verdict_processed_to_raw": true,
+      "verdict_index_to_manifest": true,
+      "verdict_index_manifest_consistent": true,
+      "verdict_full_traceability_formal": true
+    },
+    {
+      "row_i": 25,
+      "index_meta": {
+        "row_i": "25",
+        "sample_name": "38JDN4ZV",
+        "jaw": "upper",
+        "path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/38JDN4ZV"
+      },
+      "has_index_entry": true,
+      "processed_path_resolved": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/38JDN4ZV",
+      "processed_path_resolution_mode": "exists",
+      "processed_exists": true,
+      "raw_candidates": [
+        "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_3/upper/38JDN4ZV/38JDN4ZV_upper.obj"
+      ],
+      "raw_candidate_count": 1,
+      "raw_unique_match": true,
+      "raw_selected": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_3/upper/38JDN4ZV/38JDN4ZV_upper.obj",
+      "manifest_meta": {},
+      "manifest_check": {
+        "has_manifest_entry": false
+      },
+      "verdict_npz_to_index": true,
+      "verdict_index_to_processed": true,
+      "verdict_processed_to_raw": true,
+      "verdict_index_to_manifest": false,
+      "verdict_index_manifest_consistent": false,
+      "verdict_full_traceability_formal": false
+    }
+  ]
+}
