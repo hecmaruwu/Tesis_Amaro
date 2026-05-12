@@ -92,23 +92,25 @@ outputs/**
 !outputs/**/
 
 # =========================================================
-# IGNORAR INFERENCIAS PESADAS
+# IGNORAR TODO inference pesado
 # =========================================================
-outputs/**/inference/
+outputs/**/inference/**
 
 # =========================================================
-# IGNORAR PLOTS POR DEFECTO
+# PERMITIR SOLO METADATA DE INFERENCIA
+# =========================================================
+!outputs/**/inference/ignored_inference_samples.json
+!outputs/**/inference/inference_manifest.csv
+
+# =========================================================
+# IGNORAR TODOS LOS PLOTS POR DEFECTO
 # =========================================================
 outputs/**/plots/*
 
 # =========================================================
-# PERMITIR SOLO PLOTS IMPORTANTES
+# PERMITIR SOLO PNG DE PLOTS
 # =========================================================
-!outputs/**/plots/d21_f1.png
-!outputs/**/plots/d21_iou.png
-!outputs/**/plots/f1_macro.png
-!outputs/**/plots/iou_macro.png
-!outputs/**/plots/loss.png
+!outputs/**/plots/*.png
 
 # =========================================================
 # IGNORAR JSON/CSV PESADOS
@@ -116,6 +118,13 @@ outputs/**/plots/*
 outputs/**/history.json
 outputs/**/history_epoch.json
 outputs/**/metrics_epoch.csv
+
+# =========================================================
+# IGNORAR PESOS
+# =========================================================
+outputs/**/*.pt
+outputs/**/*.pth
+outputs/**/*.ckpt
 
 # =========================================================
 # PERMITIR JSON IMPORTANTES
@@ -183,24 +192,3 @@ outputs/**/metrics_epoch.csv
 # =========================================================
 !env_backup/
 !env_backup/**
-
-# =========================================================
-# ARCHIVOS IMPORTANTES ESPECÍFICOS
-# =========================================================
-
-# Ambiente
-!environment_requireimientos_que_sirven.yml
-!req_actual_env.txt
-!requirements_entorno_training.txt
-!requirements_entorno_training.yml
-
-# Metadata importantes
-!outputs/**/run_meta.json
-!outputs/**/test_metrics.json
-!outputs/**/test_metrics_filtered.json
-!outputs/**/ignored_test_samples.json
-
-# Resúmenes PointNet++
-!outputs/pointnetpp/grid_pro_runner_v2/best_experiment.json
-!outputs/pointnetpp/grid_pro_runner_v2/experiments_summary.csv
-!outputs/pointnetpp/grid_pro_runner_v2/experiments_summary.json
