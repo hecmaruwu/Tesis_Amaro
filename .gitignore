@@ -1,40 +1,65 @@
-# --- Archivos y carpetas grandes ---
+# =========================================================
+# TESIS_AMARO - GITIGNORE
+# =========================================================
 
+# =========================================================
+# DATASETS PESADOS
+# =========================================================
 *.npz
 *.npy
-*.pt
-*.pth
+*.h5
+*.hdf5
+*.bin
+*.onnx
+*.pkl
+
+# =========================================================
+# MALLAS / GEOMETRÍA
+# =========================================================
 *.stl
 *.ply
 *.obj
+*.off
+
+# =========================================================
+# PESOS DE MODELOS
+# =========================================================
+*.pt
+*.pth
+*.ckpt
+
+# =========================================================
+# ARCHIVOS COMPRIMIDOS
+# =========================================================
 *.zip
 *.tar
 *.gz
 *.bz2
-*.h5
-*.ckpt
-*.bin
-*.onnx
-*.pkl
+*.7z
+
+# =========================================================
+# LOGS
+# =========================================================
 *.log
 
-# --- Archivos temporales o compilados ---
+# =========================================================
+# CACHE PYTHON
+# =========================================================
 __pycache__/
 *.pyc
 *.pyo
 *.so
+
+# =========================================================
+# SISTEMA / IDE
+# =========================================================
 .DS_Store
+.idea/
+.vscode/
 
-# --- Resultados de entrenamiento o salida ---
-results/
-runs/
-runs_grid/
-weights/
-logs/
-out/
-models/
-
-# --- Entornos y configuraciones locales ---
+# =========================================================
+# ENTORNOS LOCALES
+# =========================================================
 .env/
 .envs/
 venv/
@@ -43,15 +68,139 @@ envs/
 *.lock
 *.egg-info
 *.sqlite3
-.idea/
-.vscode/
 
-# --- Archivos específicos a mantener manualmente ---
+# =========================================================
+# OUTPUTS GENERALES PESADOS
+# =========================================================
+results/
+runs/
+runs_grid/
+weights/
+logs/
+out/
+models/
+
+# =========================================================
+# IGNORAR TODO outputs POR DEFECTO
+# =========================================================
+outputs/**
+
+# =========================================================
+# PERMITIR ESTRUCTURA outputs
+# =========================================================
+!outputs/
+!outputs/**/
+
+# =========================================================
+# IGNORAR INFERENCIAS PESADAS
+# =========================================================
+outputs/**/inference/
+
+# =========================================================
+# IGNORAR PLOTS POR DEFECTO
+# =========================================================
+outputs/**/plots/*
+
+# =========================================================
+# PERMITIR SOLO PLOTS IMPORTANTES
+# =========================================================
+!outputs/**/plots/d21_f1.png
+!outputs/**/plots/d21_iou.png
+!outputs/**/plots/f1_macro.png
+!outputs/**/plots/iou_macro.png
+!outputs/**/plots/loss.png
+
+# =========================================================
+# IGNORAR JSON/CSV PESADOS
+# =========================================================
+outputs/**/history.json
+outputs/**/history_epoch.json
+outputs/**/metrics_epoch.csv
+
+# =========================================================
+# PERMITIR JSON IMPORTANTES
+# =========================================================
+!outputs/**/run_meta.json
+!outputs/**/test_metrics.json
+!outputs/**/test_metrics_filtered.json
+!outputs/**/ignored_test_samples.json
+
+# =========================================================
+# PERMITIR RESÚMENES IMPORTANTES POINTNET++
+# =========================================================
+!outputs/pointnetpp/grid_pro_runner_v2/best_experiment.json
+!outputs/pointnetpp/grid_pro_runner_v2/experiments_summary.csv
+!outputs/pointnetpp/grid_pro_runner_v2/experiments_summary.json
+
+# =========================================================
+# SCRIPTS IMPORTANTES
+# =========================================================
 !scripts/**/*.py
 !scripts_v2/**/*.py
-!docs/
-!envs/
-!analysis_refine_report/
-!configs/
-!training/
+!scripts_v3/**/*.py
+!scripts_v4/**/*.py
+!scripts_v5/**/*.py
+!scripts_final/**/*.py
+!scripts_finales_verdaderos/**/*.py
+!scripts_last_version/**/*.py
 
+# =========================================================
+# RUN_EXPERIMENTS
+# =========================================================
+!run_experiments/**
+
+# =========================================================
+# TRAINING
+# =========================================================
+!training/**
+
+# =========================================================
+# CONFIGS / DOCS
+# =========================================================
+!docs/
+!configs/
+!analysis_refine_report/
+
+# =========================================================
+# ARCHIVOS IMPORTANTES RAÍZ
+# =========================================================
+!README.md
+!LICENSE
+!EXPERIMENTS.md
+!.gitattributes
+!.gitignore
+
+# =========================================================
+# ARCHIVOS DE ENTORNO IMPORTANTES
+# =========================================================
+!environment_requireimientos_que_sirven.yml
+!req_actual_env.txt
+!requirements_entorno_training.txt
+!requirements_entorno_training.yml
+
+# =========================================================
+# BACKUPS DE ENTORNO
+# =========================================================
+!env_backup/
+!env_backup/**
+
+# =========================================================
+# ARCHIVOS IMPORTANTES ESPECÍFICOS
+# =========================================================
+
+# Ambiente
+!environment_requireimientos_que_sirven.yml
+!req_actual_env.txt
+!requirements_entorno_training.txt
+!requirements_entorno_training.yml
+
+# Metadata importantes
+!outputs/**/run_meta.json
+!outputs/**/test_metrics.json
+!outputs/**/test_metrics_filtered.json
+!outputs/**/ignored_test_samples.json
+
+# Resúmenes PointNet++
+!outputs/pointnetpp/grid_pro_runner_v2/best_experiment.json
+!outputs/pointnetpp/grid_pro_runner_v2/experiments_summary.csv
+!outputs/pointnetpp/grid_pro_runner_v2/experiments_summary.json
