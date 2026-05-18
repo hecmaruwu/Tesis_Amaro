@@ -1,0 +1,28 @@
+{
+  "data_dir": "data/UFRN/finetune_d21_8192",
+  "ckpt": "outputs/pointnet_classic/grid_pro_runner_v1/exp03_bs16_lr3e4_do05_bg003_amp/best.pt",
+  "out_dir": "outputs/ufrn_finetune/pointnet_binary_d21_from_teeth3ds_gpu1",
+  "device": "cuda",
+  "best_val_f1": 0.9022834807652746,
+  "test": {
+    "loss": 0.06668226793408394,
+    "acc": 0.9909820556640625,
+    "prec": 0.8270762229806599,
+    "rec": 0.9417098445595855,
+    "f1": 0.880678376741369,
+    "iou": 0.7867965367965368,
+    "tp": 2181,
+    "fp": 456,
+    "fn": 135,
+    "tn": 62764
+  },
+  "missing": [
+    "fconv3.weight",
+    "fconv3.bias"
+  ],
+  "unexpected": [],
+  "skipped": [
+    "fconv3.weight",
+    "fconv3.bias"
+  ]
+}

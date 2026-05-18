@@ -27,6 +27,7 @@
 *.pt
 *.pth
 *.ckpt
+*.safetensors
 
 # =========================================================
 # ARCHIVOS COMPRIMIDOS
@@ -92,7 +93,7 @@ outputs/**
 !outputs/**/
 
 # =========================================================
-# IGNORAR TODO inference pesado
+# IGNORAR INFERENCIA PESADA
 # =========================================================
 outputs/**/inference/**
 
@@ -108,12 +109,12 @@ outputs/**/inference/**
 outputs/**/plots/*
 
 # =========================================================
-# PERMITIR SOLO PNG DE PLOTS
+# PERMITIR PNG DE PLOTS
 # =========================================================
 !outputs/**/plots/*.png
 
 # =========================================================
-# IGNORAR JSON/CSV PESADOS
+# IGNORAR HISTORIES PESADAS
 # =========================================================
 outputs/**/history.json
 outputs/**/history_epoch.json
@@ -127,7 +128,7 @@ outputs/**/*.pth
 outputs/**/*.ckpt
 
 # =========================================================
-# PERMITIR JSON IMPORTANTES
+# PERMITIR METADATA IMPORTANTE
 # =========================================================
 !outputs/**/run_meta.json
 !outputs/**/test_metrics.json
@@ -135,11 +136,71 @@ outputs/**/*.ckpt
 !outputs/**/ignored_test_samples.json
 
 # =========================================================
+# PERMITIR METRICAS UFRN
+# =========================================================
+!outputs/ufrn_finetune/
+!outputs/ufrn_finetune/**/
+!outputs/ufrn_finetune/**/metrics_epoch.csv
+!outputs/ufrn_finetune/**/history.json
+!outputs/ufrn_finetune/**/summary.json
+!outputs/ufrn_finetune/**/results_summary.json
+!outputs/ufrn_finetune/**/plots/*.png
+
+# =========================================================
+# UFRN VISUALIZATIONS
+# =========================================================
+!outputs/ufrn_visualizations/
+!outputs/ufrn_visualizations/**/
+!outputs/ufrn_visualizations/**/*.html
+!outputs/ufrn_visualizations/**/*.json
+!outputs/ufrn_visualizations/**/*.png
+
+# =========================================================
 # PERMITIR RESÚMENES IMPORTANTES POINTNET++
 # =========================================================
 !outputs/pointnetpp/grid_pro_runner_v2/best_experiment.json
 !outputs/pointnetpp/grid_pro_runner_v2/experiments_summary.csv
 !outputs/pointnetpp/grid_pro_runner_v2/experiments_summary.json
+
+# =========================================================
+# CSV IMPORTANTES GENERALES
+# =========================================================
+!outputs/**/metrics_summary.csv
+!outputs/**/experiments_summary.csv
+
+# =========================================================
+# AUDITORIA / TRAZABILIDAD
+# =========================================================
+!outputs/**/traceability_audit.json
+!outputs/**/dataset_audit.json
+
+# =========================================================
+# IGNORAR DATA POR DEFECTO
+# =========================================================
+data/**
+
+# =========================================================
+# PERMITIR ESTRUCTURA DATA
+# =========================================================
+!data/
+!data/**/
+
+# =========================================================
+# UFRN TRACEABILITY
+# =========================================================
+!data/UFRN/
+!data/UFRN/**/
+!data/UFRN/**/*.csv
+!data/UFRN/**/meta.json
+
+# =========================================================
+# IGNORAR DATASETS PESADOS EXPLICITAMENTE
+# =========================================================
+data/**/*.npz
+data/**/*.npy
+data/**/*.stl
+data/**/*.ply
+data/**/*.obj
 
 # =========================================================
 # SCRIPTS IMPORTANTES
@@ -167,8 +228,17 @@ outputs/**/*.ckpt
 # CONFIGS / DOCS
 # =========================================================
 !docs/
+!docs/**
 !configs/
+!configs/**
 !analysis_refine_report/
+!analysis_refine_report/**
+
+# =========================================================
+# REPORTES IMPORTANTES
+# =========================================================
+!reports/
+!reports/**
 
 # =========================================================
 # ARCHIVOS IMPORTANTES RAÍZ
@@ -178,6 +248,24 @@ outputs/**/*.ckpt
 !EXPERIMENTS.md
 !.gitattributes
 !.gitignore
+
+# =========================================================
+# DOCUMENTACION PAPER / TESIS
+# =========================================================
+!*.md
+!*.tex
+!*.bib
+
+# =========================================================
+# NOTEBOOKS IMPORTANTES
+# =========================================================
+!*.ipynb
+
+# =========================================================
+# YAML / CONFIGS
+# =========================================================
+!*.yaml
+!*.yml
 
 # =========================================================
 # ARCHIVOS DE ENTORNO IMPORTANTES

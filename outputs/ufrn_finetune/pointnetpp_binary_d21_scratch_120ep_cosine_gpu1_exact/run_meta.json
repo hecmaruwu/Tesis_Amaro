@@ -1,0 +1,33 @@
+{
+  "script_name": "train_ufrn_pointnetpp_binary_finetune.py",
+  "data_dir": "data/UFRN/finetune_d21_8192",
+  "ckpt": null,
+  "from_scratch": true,
+  "out_dir": "outputs/ufrn_finetune/pointnetpp_binary_d21_scratch_120ep_cosine_gpu1_exact",
+  "device": "cuda",
+  "epochs_requested": 120,
+  "epochs_ran": 95,
+  "best_epoch": 65,
+  "best_val_f1": 0.8192721257237386,
+  "test": {
+    "acc": 0.986968994140625,
+    "prec": 0.8063704945515507,
+    "rec": 0.8307426597582038,
+    "f1": 0.818375159506593,
+    "iou": 0.6925845932325414,
+    "specificity": 0.9926921860170832,
+    "loss": 0.2511120066046715,
+    "tp": 1924,
+    "fp": 462,
+    "fn": 392,
+    "tn": 62758
+  },
+  "missing": [],
+  "unexpected": [],
+  "skipped": [],
+  "scheduler": "CosineAnnealingLR",
+  "eta_min": 1e-06,
+  "pos_weight": 20.0,
+  "nsample": 32,
+  "architecture": "PointNetPPBinary_4SA_4FP_biasFalseBN_exact"
+}

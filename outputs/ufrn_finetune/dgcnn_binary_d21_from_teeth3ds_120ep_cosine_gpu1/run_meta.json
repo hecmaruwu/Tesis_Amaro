@@ -1,0 +1,40 @@
+{
+  "script_name": "train_ufrn_dgcnn_binary_finetune.py",
+  "data_dir": "data/UFRN/finetune_d21_8192",
+  "ckpt": "outputs/dgcnn/grid_pro_runner_v2_gpu1/exp06_bs8_lr2e4_k20_emb768_bg003/best.pt",
+  "from_scratch": false,
+  "out_dir": "outputs/ufrn_finetune/dgcnn_binary_d21_from_teeth3ds_120ep_cosine_gpu1",
+  "device": "cuda",
+  "epochs_requested": 120,
+  "epochs_ran": 108,
+  "best_epoch": 78,
+  "best_val_f1": 0.9073836961160905,
+  "test": {
+    "acc": 0.994598388671875,
+    "prec": 0.8793503480278422,
+    "rec": 0.9818652849740933,
+    "f1": 0.9277845777233783,
+    "iou": 0.865296803652968,
+    "specificity": 0.9950648528946536,
+    "loss": 0.03215594869107008,
+    "tp": 2274,
+    "fp": 312,
+    "fn": 42,
+    "tn": 62908
+  },
+  "missing": [
+    "head.8.weight",
+    "head.8.bias"
+  ],
+  "unexpected": [],
+  "skipped": [
+    "head.8.weight",
+    "head.8.bias"
+  ],
+  "scheduler": "CosineAnnealingLR",
+  "eta_min": 1e-06,
+  "pos_weight": 20.0,
+  "k": 20,
+  "emb_dims": 768,
+  "architecture": "DGCNNBinary_EdgeConv_k20_emb768"
+}

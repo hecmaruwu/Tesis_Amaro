@@ -1,0 +1,30 @@
+{
+  "data_dir": "data/UFRN/finetune_d21_8192",
+  "ckpt": null,
+  "from_scratch": true,
+  "out_dir": "outputs/ufrn_finetune/pointnet_binary_d21_scratch_120ep_cosine_gpu1",
+  "device": "cuda",
+  "epochs_requested": 120,
+  "epochs_ran": 99,
+  "best_epoch": 69,
+  "best_val_f1": 0.89213336238832,
+  "test": {
+    "acc": 0.989288330078125,
+    "prec": 0.888354186717998,
+    "rec": 0.7970639032815199,
+    "f1": 0.8402366863905325,
+    "iou": 0.7244897959183674,
+    "specificity": 0.9963302752293578,
+    "loss": 0.1856612116098404,
+    "tp": 1846,
+    "fp": 232,
+    "fn": 470,
+    "tn": 62988
+  },
+  "missing": [],
+  "unexpected": [],
+  "skipped": [],
+  "scheduler": "CosineAnnealingLR",
+  "eta_min": 1e-06,
+  "pos_weight": 20.0
+}

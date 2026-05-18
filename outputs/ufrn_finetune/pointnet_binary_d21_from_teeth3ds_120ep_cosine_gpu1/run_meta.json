@@ -1,0 +1,35 @@
+{
+  "data_dir": "data/UFRN/finetune_d21_8192",
+  "ckpt": "outputs/pointnet_classic/grid_pro_runner_v1/exp03_bs16_lr3e4_do05_bg003_amp/best.pt",
+  "out_dir": "outputs/ufrn_finetune/pointnet_binary_d21_from_teeth3ds_120ep_cosine_gpu1",
+  "device": "cuda",
+  "epochs_requested": 120,
+  "epochs_ran": 100,
+  "best_epoch": 70,
+  "best_val_f1": 0.8874664464175098,
+  "test": {
+    "acc": 0.9923858642578125,
+    "prec": 0.8536395484624367,
+    "rec": 0.9468911917098446,
+    "f1": 0.8978505629477993,
+    "iou": 0.8146359583952452,
+    "specificity": 0.9940525150268902,
+    "loss": 0.06864910572767258,
+    "tp": 2193,
+    "fp": 376,
+    "fn": 123,
+    "tn": 62844
+  },
+  "missing": [
+    "fconv3.weight",
+    "fconv3.bias"
+  ],
+  "unexpected": [],
+  "skipped": [
+    "fconv3.weight",
+    "fconv3.bias"
+  ],
+  "scheduler": "CosineAnnealingLR",
+  "eta_min": 1e-06,
+  "pos_weight": 20.0
+}

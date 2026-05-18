@@ -1,0 +1,50 @@
+{
+  "script_name": "train_ufrn_pointnettransformer_binary_finetune.py",
+  "data_dir": "data/UFRN/finetune_d21_8192",
+  "ckpt": "outputs/pointnettransformer/grid_pro_runner_v2_gpu0/exp13_bs4_lr2e4_dm256_dep4_h8_ff512_do005/best.pt",
+  "from_scratch": false,
+  "out_dir": "outputs/ufrn_finetune/pointnettransformer_binary_d21_from_teeth3ds_120ep_cosine_gpu1",
+  "device": "cuda",
+  "epochs_requested": 120,
+  "epochs_ran": 86,
+  "best_epoch": 56,
+  "best_val_f1": 0.829304299686289,
+  "test": {
+    "acc": 0.9871368408203125,
+    "prec": 0.7370453813968458,
+    "rec": 0.9887737478411054,
+    "f1": 0.8445509865388161,
+    "iou": 0.7309288222151292,
+    "specificity": 0.9870768744068332,
+    "loss": 0.037647971883416176,
+    "tp": 2290,
+    "fp": 817,
+    "fn": 26,
+    "tn": 62403
+  },
+  "missing": [
+    "head.3.weight",
+    "head.3.bias"
+  ],
+  "unexpected": [],
+  "skipped": [
+    "head.3.weight",
+    "head.3.bias"
+  ],
+  "scheduler": "CosineAnnealingLR",
+  "eta_min": 1e-06,
+  "pos_weight": 20.0,
+  "d_model": 256,
+  "hidden_dim": 128,
+  "depth": 4,
+  "nhead": 8,
+  "dim_feedforward": 512,
+  "dropout": 0.05,
+  "activation": "gelu",
+  "norm_first": false,
+  "token_subsample": 2048,
+  "token_random": true,
+  "prop_k": 3,
+  "prop_chunk": 2048,
+  "architecture": "PointNetTransformerBinary_dm256_depth4_h8_ff512"
+}
