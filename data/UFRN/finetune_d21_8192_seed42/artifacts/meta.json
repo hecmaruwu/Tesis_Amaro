@@ -1,0 +1,101 @@
+{
+  "ufrn_root": "data/UFRN/targets_export",
+  "pseudolabel_root": "data/UFRN/pseudolabels_dbscan_all",
+  "out_dir": "data/UFRN/finetune_d21_8192_seed42",
+  "n_points": 8192,
+  "label_radius": 1.25,
+  "seed_sampling_base": 42,
+  "split_info": {
+    "split_seed": 42,
+    "n_train_requested": 35,
+    "n_val_requested": 8,
+    "n_test_requested": 8,
+    "train_ids": [
+      "paciente_4",
+      "paciente_5",
+      "paciente_6",
+      "paciente_8",
+      "paciente_10",
+      "paciente_11",
+      "paciente_16",
+      "paciente_17",
+      "paciente_18",
+      "paciente_19",
+      "paciente_21",
+      "paciente_22",
+      "paciente_24",
+      "paciente_25",
+      "paciente_26",
+      "paciente_27",
+      "paciente_28",
+      "paciente_29",
+      "paciente_30",
+      "paciente_31",
+      "paciente_32",
+      "paciente_33",
+      "paciente_35",
+      "paciente_38",
+      "paciente_39",
+      "paciente_40",
+      "paciente_41",
+      "paciente_42",
+      "paciente_43",
+      "paciente_44",
+      "paciente_46",
+      "paciente_47",
+      "paciente_48",
+      "paciente_49",
+      "paciente_51"
+    ],
+    "val_ids": [
+      "paciente_1",
+      "paciente_7",
+      "paciente_12",
+      "paciente_13",
+      "paciente_20",
+      "paciente_23",
+      "paciente_36",
+      "paciente_45"
+    ],
+    "test_ids": [
+      "paciente_2",
+      "paciente_3",
+      "paciente_9",
+      "paciente_14",
+      "paciente_15",
+      "paciente_34",
+      "paciente_37",
+      "paciente_50"
+    ],
+    "excluded_ids": [],
+    "split_mode": "random"
+  },
+  "n_train": 35,
+  "n_val": 8,
+  "n_test": 8,
+  "n_failed": 0,
+  "failed": [],
+  "positive_summary": {
+    "train": {
+      "mean_positive_frac": 0.03489467075892857,
+      "std_positive_frac": 0.003394488322581264,
+      "min_positive_frac": 0.0267333984375,
+      "max_positive_frac": 0.0416259765625,
+      "mean_positive_points": 285.85714285714283
+    },
+    "val": {
+      "mean_positive_frac": 0.0357208251953125,
+      "std_positive_frac": 0.0018228346374765797,
+      "min_positive_frac": 0.03173828125,
+      "max_positive_frac": 0.037841796875,
+      "mean_positive_points": 292.625
+    },
+    "test": {
+      "mean_positive_frac": 0.0347900390625,
+      "std_positive_frac": 0.002179390999921524,
+      "min_positive_frac": 0.031982421875,
+      "max_positive_frac": 0.03955078125,
+      "mean_positive_points": 285.0
+    }
+  }
+}

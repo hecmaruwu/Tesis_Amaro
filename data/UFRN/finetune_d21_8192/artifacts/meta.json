@@ -1,0 +1,21 @@
+{
+  "ufrn_root": "data/UFRN/targets_export",
+  "pseudolabel_root": "data/UFRN/pseudolabels_dbscan_all",
+  "out_dir": "data/UFRN/finetune_d21_8192",
+  "n_points": 8192,
+  "label_radius": 1.25,
+  "seed": 42,
+  "train_rule": "paciente_1..paciente_35",
+  "val_rule": "paciente_36..paciente_43",
+  "test_rule": "paciente_44..end",
+  "n_train": 35,
+  "n_val": 8,
+  "n_test": 8,
+  "n_failed": 0,
+  "failed": [],
+  "positive_summary": {
+    "train_mean_positive_frac": 0.034946986607142856,
+    "val_mean_positive_frac": 0.034942626953125,
+    "test_mean_positive_frac": 0.03533935546875
+  }
+}

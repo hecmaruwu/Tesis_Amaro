@@ -1,0 +1,367 @@
+{
+  "ufrn_root": "data/UFRN/targets_export",
+  "out_root": "data/UFRN/pseudolabels_dbscan_all",
+  "n_patients_found": 51,
+  "n_ok": 51,
+  "n_failed": 0,
+  "failed": [],
+  "ok_patients": [
+    {
+      "patient_id": "paciente_1",
+      "raw_removed_points": 5000,
+      "dbscan_points": 5000,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_2",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4417,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_3",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4289,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_4",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4470,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_5",
+      "raw_removed_points": 5000,
+      "dbscan_points": 5000,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_6",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4998,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_7",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4483,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_8",
+      "raw_removed_points": 5000,
+      "dbscan_points": 3806,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_9",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4179,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_10",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4240,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_11",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4999,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_12",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4738,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_13",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4921,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_14",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4791,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_15",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4926,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_16",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4555,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_17",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4488,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_18",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4741,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_19",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4820,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_20",
+      "raw_removed_points": 5000,
+      "dbscan_points": 5000,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_21",
+      "raw_removed_points": 5000,
+      "dbscan_points": 5000,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_22",
+      "raw_removed_points": 5000,
+      "dbscan_points": 5000,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_23",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4542,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_24",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4951,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_25",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4060,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_26",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4986,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_27",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4262,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_28",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4800,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_29",
+      "raw_removed_points": 5000,
+      "dbscan_points": 5000,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_30",
+      "raw_removed_points": 5000,
+      "dbscan_points": 5000,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_31",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4987,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_32",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4575,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_33",
+      "raw_removed_points": 5000,
+      "dbscan_points": 5000,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_34",
+      "raw_removed_points": 5000,
+      "dbscan_points": 5000,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_35",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4813,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_36",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4706,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_37",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4583,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_38",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4787,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_39",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4469,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_40",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4826,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_41",
+      "raw_removed_points": 5000,
+      "dbscan_points": 5000,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_42",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4414,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_43",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4998,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_44",
+      "raw_removed_points": 5000,
+      "dbscan_points": 5000,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_45",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4993,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_46",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4687,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_47",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4628,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_48",
+      "raw_removed_points": 5000,
+      "dbscan_points": 5000,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_49",
+      "raw_removed_points": 5000,
+      "dbscan_points": 5000,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_50",
+      "raw_removed_points": 5000,
+      "dbscan_points": 5000,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    },
+    {
+      "patient_id": "paciente_51",
+      "raw_removed_points": 5000,
+      "dbscan_points": 4649,
+      "dbscan_num_clusters": 1,
+      "dbscan_selected_label": 0
+    }
+  ]
+}

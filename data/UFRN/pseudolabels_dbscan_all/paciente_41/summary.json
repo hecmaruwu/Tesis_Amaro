@@ -1,0 +1,23 @@
+{
+  "patient_id": "paciente_41",
+  "full_stl": "data/UFRN/targets_export/paciente_41/stl/upper_full.stl",
+  "rec_stl": "data/UFRN/targets_export/paciente_41/stl/upper_rec_21.stl",
+  "n_full": 200000,
+  "n_rec": 200000,
+  "percentile": 97.5,
+  "distance_threshold": 0.8263084771516966,
+  "eps": 1.25,
+  "min_samples": 20,
+  "min_cluster_size": 100,
+  "raw_removed_points": 5000,
+  "dbscan_points": 5000,
+  "dbscan_num_clusters": 1,
+  "dbscan_noise_points": 0,
+  "dbscan_selected_label": 0,
+  "dbscan_clusters": [
+    {
+      "label": 0,
+      "size": 5000
+    }
+  ]
+}

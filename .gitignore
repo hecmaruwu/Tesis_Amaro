@@ -2,9 +2,7 @@
 # TESIS_AMARO - GITIGNORE
 # =========================================================
 
-# =========================================================
 # DATASETS PESADOS
-# =========================================================
 *.npz
 *.npy
 *.h5
@@ -13,54 +11,40 @@
 *.onnx
 *.pkl
 
-# =========================================================
 # MALLAS / GEOMETRÍA
-# =========================================================
 *.stl
 *.ply
 *.obj
 *.off
 
-# =========================================================
 # PESOS DE MODELOS
-# =========================================================
 *.pt
 *.pth
 *.ckpt
 *.safetensors
 
-# =========================================================
 # ARCHIVOS COMPRIMIDOS
-# =========================================================
 *.zip
 *.tar
 *.gz
 *.bz2
 *.7z
 
-# =========================================================
 # LOGS
-# =========================================================
 *.log
 
-# =========================================================
 # CACHE PYTHON
-# =========================================================
 __pycache__/
 *.pyc
 *.pyo
 *.so
 
-# =========================================================
 # SISTEMA / IDE
-# =========================================================
 .DS_Store
 .idea/
 .vscode/
 
-# =========================================================
 # ENTORNOS LOCALES
-# =========================================================
 .env/
 .envs/
 venv/
@@ -70,9 +54,7 @@ envs/
 *.egg-info
 *.sqlite3
 
-# =========================================================
 # OUTPUTS GENERALES PESADOS
-# =========================================================
 results/
 runs/
 runs_grid/
@@ -81,130 +63,141 @@ logs/
 out/
 models/
 
-# =========================================================
 # IGNORAR TODO outputs POR DEFECTO
-# =========================================================
 outputs/**
 
-# =========================================================
 # PERMITIR ESTRUCTURA outputs
-# =========================================================
 !outputs/
 !outputs/**/
 
-# =========================================================
 # IGNORAR INFERENCIA PESADA
-# =========================================================
 outputs/**/inference/**
 
-# =========================================================
 # PERMITIR SOLO METADATA DE INFERENCIA
-# =========================================================
 !outputs/**/inference/ignored_inference_samples.json
 !outputs/**/inference/inference_manifest.csv
 
-# =========================================================
-# IGNORAR TODOS LOS PLOTS POR DEFECTO
-# =========================================================
-outputs/**/plots/*
-
-# =========================================================
-# PERMITIR PNG DE PLOTS
-# =========================================================
-!outputs/**/plots/*.png
-
-# =========================================================
-# IGNORAR HISTORIES PESADAS
-# =========================================================
-outputs/**/history.json
-outputs/**/history_epoch.json
-outputs/**/metrics_epoch.csv
-
-# =========================================================
-# IGNORAR PESOS
-# =========================================================
+# IGNORAR PESOS EN outputs
 outputs/**/*.pt
 outputs/**/*.pth
 outputs/**/*.ckpt
+outputs/**/*.safetensors
 
-# =========================================================
-# PERMITIR METADATA IMPORTANTE
-# =========================================================
+# PERMITIR METADATA GENERAL IMPORTANTE
 !outputs/**/run_meta.json
 !outputs/**/test_metrics.json
 !outputs/**/test_metrics_filtered.json
 !outputs/**/ignored_test_samples.json
+!outputs/**/metrics_summary.csv
+!outputs/**/experiments_summary.csv
+!outputs/**/experiments_summary.json
+!outputs/**/best_experiment.json
+!outputs/**/traceability_audit.json
+!outputs/**/dataset_audit.json
 
-# =========================================================
-# PERMITIR METRICAS UFRN
-# =========================================================
+# PERMITIR PLOTS IMPORTANTES
+!outputs/**/plots/
+!outputs/**/plots/*.png
+!outputs/**/plots/*.pdf
+!outputs/**/plots/*.svg
+
+# PERMITIR HISTORIA/METRICAS DE RUNS IMPORTANTES
+!outputs/**/metrics_epoch.csv
+!outputs/**/history.json
+!outputs/**/history_epoch.json
+!outputs/**/history_epoch.jsonl
+
+# UFRN FINETUNE
 !outputs/ufrn_finetune/
 !outputs/ufrn_finetune/**/
+!outputs/ufrn_finetune/**/run_meta.json
+!outputs/ufrn_finetune/**/test_metrics.json
 !outputs/ufrn_finetune/**/metrics_epoch.csv
 !outputs/ufrn_finetune/**/history.json
 !outputs/ufrn_finetune/**/summary.json
 !outputs/ufrn_finetune/**/results_summary.json
 !outputs/ufrn_finetune/**/plots/*.png
+outputs/ufrn_finetune/**/test_predictions/**
+!outputs/ufrn_finetune/**/test_predictions/**/summary*.json
+!outputs/ufrn_finetune/**/test_predictions/**/manifest*.csv
 
-# =========================================================
 # UFRN VISUALIZATIONS
-# =========================================================
 !outputs/ufrn_visualizations/
 !outputs/ufrn_visualizations/**/
 !outputs/ufrn_visualizations/**/*.html
 !outputs/ufrn_visualizations/**/*.json
 !outputs/ufrn_visualizations/**/*.png
 
-# =========================================================
-# PERMITIR RESÚMENES IMPORTANTES POINTNET++
-# =========================================================
+# ABLATION OUTPUTS IMPORTANTES
+!outputs/dgcnn/ablation_noaugmentation/
+!outputs/dgcnn/ablation_noaugmentation/**/
+!outputs/dgcnn/ablation_sampling/
+!outputs/dgcnn/ablation_sampling/**/
+!outputs/pointnetpp/ablation_noaugmentation/
+!outputs/pointnetpp/ablation_noaugmentation/**/
+!outputs/pointnetpp/ablation_sampling/
+!outputs/pointnetpp/ablation_sampling/**/
+!outputs/pointnettransformer/ablation_noaugmentation/
+!outputs/pointnettransformer/ablation_noaugmentation/**/
+!outputs/pointnettransformer/ablation_sampling/
+!outputs/pointnettransformer/ablation_sampling/**/
+
+# Mantener solo artefactos livianos dentro de ablations
+!outputs/**/ablation_*/**/run_meta.json
+!outputs/**/ablation_*/**/test_metrics.json
+!outputs/**/ablation_*/**/test_metrics_filtered.json
+!outputs/**/ablation_*/**/metrics_epoch.csv
+!outputs/**/ablation_*/**/history.json
+!outputs/**/ablation_*/**/plots/*.png
+!outputs/**/ablation_*/**/plots/*.pdf
+!outputs/**/ablation_*/**/plots/*.svg
+!outputs/**/ablation_*/**/experiments_summary.csv
+!outputs/**/ablation_*/**/experiments_summary.json
+!outputs/**/ablation_*/**/best_experiment.json
+
+# POINTNET++ RESÚMENES IMPORTANTES
 !outputs/pointnetpp/grid_pro_runner_v2/best_experiment.json
 !outputs/pointnetpp/grid_pro_runner_v2/experiments_summary.csv
 !outputs/pointnetpp/grid_pro_runner_v2/experiments_summary.json
 
-# =========================================================
-# CSV IMPORTANTES GENERALES
-# =========================================================
-!outputs/**/metrics_summary.csv
-!outputs/**/experiments_summary.csv
-
-# =========================================================
-# AUDITORIA / TRAZABILIDAD
-# =========================================================
-!outputs/**/traceability_audit.json
-!outputs/**/dataset_audit.json
-
-# =========================================================
 # IGNORAR DATA POR DEFECTO
-# =========================================================
 data/**
 
-# =========================================================
 # PERMITIR ESTRUCTURA DATA
-# =========================================================
 !data/
 !data/**/
 
-# =========================================================
 # UFRN TRACEABILITY
-# =========================================================
 !data/UFRN/
 !data/UFRN/**/
 !data/UFRN/**/*.csv
 !data/UFRN/**/meta.json
+!data/UFRN/**/global_summary.json
+!data/UFRN/**/summary.json
 
-# =========================================================
+# TEETH3DS TRACEABILITY
+!data/Teeth_3ds/
+!data/Teeth_3ds/**/
+!data/Teeth_3ds/**/index_train.csv
+!data/Teeth_3ds/**/index_val.csv
+!data/Teeth_3ds/**/index_test.csv
+!data/Teeth_3ds/**/index_all.csv
+!data/Teeth_3ds/**/all_index.csv
+!data/Teeth_3ds/**/meta.json
+!data/Teeth_3ds/**/summary.json
+
 # IGNORAR DATASETS PESADOS EXPLICITAMENTE
-# =========================================================
 data/**/*.npz
 data/**/*.npy
 data/**/*.stl
 data/**/*.ply
 data/**/*.obj
+data/**/*.off
+data/**/*.pt
+data/**/*.pth
+data/**/*.ckpt
 
-# =========================================================
 # SCRIPTS IMPORTANTES
-# =========================================================
 !scripts/**/*.py
 !scripts_v2/**/*.py
 !scripts_v3/**/*.py
@@ -214,19 +207,13 @@ data/**/*.obj
 !scripts_finales_verdaderos/**/*.py
 !scripts_last_version/**/*.py
 
-# =========================================================
 # RUN_EXPERIMENTS
-# =========================================================
 !run_experiments/**
 
-# =========================================================
 # TRAINING
-# =========================================================
 !training/**
 
-# =========================================================
 # CONFIGS / DOCS
-# =========================================================
 !docs/
 !docs/**
 !configs/
@@ -234,49 +221,45 @@ data/**/*.obj
 !analysis_refine_report/
 !analysis_refine_report/**
 
-# =========================================================
 # REPORTES IMPORTANTES
-# =========================================================
 !reports/
 !reports/**
 
-# =========================================================
+# PAPER VISUAL COMPARISONS
+!case_comparisons/
+!case_comparisons/**/
+!case_comparisons/**/*.html
+!case_comparisons/**/*.png
+!case_comparisons/**/*.summary.json
+!case_comparisons/**/*.json
+!case_comparisons/**/*.pdf
+!case_comparisons/**/*.svg
+
 # ARCHIVOS IMPORTANTES RAÍZ
-# =========================================================
 !README.md
 !LICENSE
 !EXPERIMENTS.md
 !.gitattributes
 !.gitignore
 
-# =========================================================
 # DOCUMENTACION PAPER / TESIS
-# =========================================================
 !*.md
 !*.tex
 !*.bib
 
-# =========================================================
 # NOTEBOOKS IMPORTANTES
-# =========================================================
 !*.ipynb
 
-# =========================================================
 # YAML / CONFIGS
-# =========================================================
 !*.yaml
 !*.yml
 
-# =========================================================
 # ARCHIVOS DE ENTORNO IMPORTANTES
-# =========================================================
 !environment_requireimientos_que_sirven.yml
 !req_actual_env.txt
 !requirements_entorno_training.txt
 !requirements_entorno_training.yml
 
-# =========================================================
 # BACKUPS DE ENTORNO
-# =========================================================
 !env_backup/
 !env_backup/**
