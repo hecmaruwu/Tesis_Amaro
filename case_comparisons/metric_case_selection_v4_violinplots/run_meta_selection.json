@@ -1,0 +1,15 @@
+{
+  "rank_metric": "score_composite",
+  "num_classes": 15,
+  "bg": 0,
+  "d21": 8,
+  "n_total_rows": 356,
+  "n_models": 4,
+  "models": {
+    "PointNet": "/home/htaucare/Tesis_Amaro/outputs/pointnet_classic/grid_pro_runner_v1/exp03_bs16_lr3e4_do05_bg003_amp/inference",
+    "PointNetPP": "/home/htaucare/Tesis_Amaro/outputs/pointnetpp/grid_pro_runner_v2/exp04_bs8_lr3e4_r010_020_040_ns32/inference",
+    "DGCNN": "/home/htaucare/Tesis_Amaro/outputs/dgcnn/grid_pro_runner_v2_gpu1/exp06_bs8_lr2e4_k20_emb768_bg003/inference",
+    "PointNetTransformer": "/home/htaucare/Tesis_Amaro/outputs/pointnettransformer/grid_pro_runner_v2_gpu0/exp13_bs4_lr2e4_dm256_dep4_h8_ff512_do005/inference"
+  },
+  "description": "Se seleccionan mejor, peor, más cercano al promedio y más cercano a la mediana por modelo y también globalmente promediando los modelos por row_i. Las distribuciones z-score usan transformación lineal z=(x-media)/sd para comparar formas."
+}

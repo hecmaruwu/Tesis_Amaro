@@ -1,0 +1,18 @@
+{
+  "selection_type": "closest_to_median",
+  "row_i": 89,
+  "sample_name": "015RHV4X",
+  "jaw": "upper",
+  "source_path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/015RHV4X",
+  "score_composite": 0.927618271372348,
+  "d21_f1": 0.9582785742182086,
+  "d21_iou": 0.9205237852728564,
+  "f1_macro": 0.9211814114265542,
+  "iou_macro": 0.8727345256264203,
+  "models_available": "PointNet,PointNetPP,DGCNN,PointNetTransformer",
+  "n_candidates_found": 2,
+  "copied_files": [
+    "/home/htaucare/Tesis_Amaro/case_comparisons/metric_case_selection_v5_global_meshes/selected_global_meshes/closest_to_median/closest_to_median__row89__015RHV4X_upper.obj",
+    "/home/htaucare/Tesis_Amaro/case_comparisons/metric_case_selection_v5_global_meshes/selected_global_meshes/closest_to_median/closest_to_median__row89__015RHV4X_lower.obj"
+  ]
+}

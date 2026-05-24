@@ -1,0 +1,76 @@
+{
+  "script": "vista_tesis_inferencia_ajustada_v4_visual_v17.py",
+  "case_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/best_row091_01MAVT6A_upper",
+  "case_name": "best_row091_01MAVT6A_upper",
+  "case_tag": "best",
+  "case_role": "Mejor caso",
+  "patient_id": "01MAVT6A",
+  "model": "pointnetpp",
+  "model_display": "PointNet++",
+  "view_name": "oclusal_paper",
+  "view_display": "oclusal superior",
+  "title": "PointNet++ - ID: 01MAVT6A - Mejor caso - Vista oclusal superior",
+  "subtitle": "F1 diente 21 = 0.877 | IoU diente 21 = 0.781 | F1 macro sin fondo = 0.890",
+  "camera": {
+    "up": {
+      "x": 0.0,
+      "y": 1.0,
+      "z": 0.0
+    },
+    "center": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "eye": {
+      "x": 0.1950066638410309,
+      "y": 0.195006663841031,
+      "z": 1.1978980778806192
+    },
+    "projection": {
+      "type": "perspective"
+    }
+  },
+  "n_points_original": 8192,
+  "n_points_plot": 8192,
+  "d21_class": 8,
+  "neighbor_teeth": [
+    [
+      "d11",
+      1
+    ],
+    [
+      "d22",
+      9
+    ]
+  ],
+  "metrics": {
+    "acc_no_bg": 0.9914529914529915,
+    "d21_f1": 0.8767908304481243,
+    "d21_iou": 0.7806122448939765,
+    "d21_precision": 0.7806122448939765,
+    "d21_recall": 0.9999999999934641,
+    "f1_macro_no_bg": 0.8902208556227539
+  },
+  "mesh_source": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_4/upper/01MAVT6A/01MAVT6A_upper.obj",
+  "mesh_loaded": true,
+  "mesh_bbox_align": true,
+  "visual_layer": "v17_layered_points_mesh_background",
+  "mesh_color": "#9E9E9E",
+  "focus_bg_opacity": 0.075,
+  "other_teeth_opacity": 1.0,
+  "target_opacity": 1.0,
+  "error_opacity": 1.0,
+  "error_bg_context_opacity": 0.065,
+  "error_other_teeth_opacity": 0.68,
+  "data_sources": {
+    "xyz": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/best_row091_01MAVT6A_upper/pointnetpp/xyz_labels.npy",
+    "gt": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/best_row091_01MAVT6A_upper/pointnetpp/gt_labels.npy",
+    "pred": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/best_row091_01MAVT6A_upper/pointnetpp/pred_labels.npy"
+  },
+  "outputs": {
+    "html": "/home/htaucare/Tesis_Amaro/case_comparisons/VISTA_TESIS_V17_REVIEW/best_row091_01MAVT6A_upper/pointnetpp/vista_tesis_best_pointnetpp_oclusal_paper.html",
+    "png": "",
+    "summary": "/home/htaucare/Tesis_Amaro/case_comparisons/VISTA_TESIS_V17_REVIEW/best_row091_01MAVT6A_upper/pointnetpp/vista_tesis_best_pointnetpp_oclusal_paper.summary.json"
+  }
+}

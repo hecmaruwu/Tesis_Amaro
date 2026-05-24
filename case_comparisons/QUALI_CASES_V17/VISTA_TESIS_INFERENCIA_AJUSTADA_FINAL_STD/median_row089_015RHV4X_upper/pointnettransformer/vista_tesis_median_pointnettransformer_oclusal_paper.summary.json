@@ -1,0 +1,76 @@
+{
+  "script": "vista_tesis_inferencia_ajustada.py",
+  "case_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/median_row089_015RHV4X_upper",
+  "case_name": "median_row089_015RHV4X_upper",
+  "case_tag": "median",
+  "case_role": "Caso mediano",
+  "patient_id": "015RHV4X",
+  "model": "pointnettransformer",
+  "model_display": "Transformer",
+  "view_name": "oclusal_paper",
+  "view_display": "oclusal superior",
+  "title": "Transformer - ID: 015RHV4X - Caso mediano - Vista oclusal superior",
+  "subtitle": "F1 diente 21 = 0.944 | IoU diente 21 = 0.893 | F1 macro sin fondo = 0.728",
+  "camera": {
+    "up": {
+      "x": 0.0,
+      "y": 1.0,
+      "z": 0.0
+    },
+    "center": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "eye": {
+      "x": 0.1950066638410309,
+      "y": 0.195006663841031,
+      "z": 1.1978980778806192
+    },
+    "projection": {
+      "type": "perspective"
+    }
+  },
+  "n_points_original": 8192,
+  "n_points_plot": 8192,
+  "d21_class": 8,
+  "neighbor_teeth": [
+    [
+      "d11",
+      1
+    ],
+    [
+      "d22",
+      9
+    ]
+  ],
+  "metrics": {
+    "acc_no_bg": 0.8797313797313797,
+    "d21_f1": 0.94369973140001,
+    "d21_iou": 0.8934010152238914,
+    "d21_precision": 0.8934010152238914,
+    "d21_recall": 0.9999999999943182,
+    "f1_macro_no_bg": 0.7276752545916777
+  },
+  "mesh_source": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_3/upper/015RHV4X/015RHV4X_upper.obj",
+  "mesh_loaded": true,
+  "mesh_bbox_align": true,
+  "visual_layer": "v17_layered_points_mesh_background",
+  "mesh_color": "#9E9E9E",
+  "focus_bg_opacity": 0.075,
+  "other_teeth_opacity": 1.0,
+  "target_opacity": 1.0,
+  "error_opacity": 1.0,
+  "error_bg_context_opacity": 0.065,
+  "error_other_teeth_opacity": 0.68,
+  "data_sources": {
+    "xyz": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/median_row089_015RHV4X_upper/pointnettransformer/xyz_labels.npy",
+    "gt": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/median_row089_015RHV4X_upper/pointnettransformer/gt_labels.npy",
+    "pred": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/median_row089_015RHV4X_upper/pointnettransformer/pred_labels.npy"
+  },
+  "outputs": {
+    "html": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/VISTA_TESIS_INFERENCIA_AJUSTADA_FINAL_STD/median_row089_015RHV4X_upper/pointnettransformer/vista_tesis_median_pointnettransformer_oclusal_paper.html",
+    "png": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/VISTA_TESIS_INFERENCIA_AJUSTADA_FINAL_STD/median_row089_015RHV4X_upper/pointnettransformer/vista_tesis_median_pointnettransformer_oclusal_paper.png",
+    "summary": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/VISTA_TESIS_INFERENCIA_AJUSTADA_FINAL_STD/median_row089_015RHV4X_upper/pointnettransformer/vista_tesis_median_pointnettransformer_oclusal_paper.summary.json"
+  }
+}

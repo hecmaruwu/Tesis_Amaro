@@ -1,0 +1,18 @@
+{
+  "selection_type": "closest_to_mean",
+  "row_i": 46,
+  "sample_name": "WQOGLZY4",
+  "jaw": "upper",
+  "source_path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/WQOGLZY4",
+  "score_composite": 0.9002082413830554,
+  "d21_f1": 0.9262643794506539,
+  "d21_iou": 0.8708311761902161,
+  "f1_macro": 0.9050110707853167,
+  "iou_macro": 0.8432931358455977,
+  "models_available": "PointNet,PointNetPP,DGCNN,PointNetTransformer",
+  "n_candidates_found": 2,
+  "copied_files": [
+    "/home/htaucare/Tesis_Amaro/case_comparisons/metric_case_selection_v5_global_meshes/selected_global_meshes/closest_to_mean/closest_to_mean__row46__WQOGLZY4_lower.obj",
+    "/home/htaucare/Tesis_Amaro/case_comparisons/metric_case_selection_v5_global_meshes/selected_global_meshes/closest_to_mean/closest_to_mean__row46__WQOGLZY4_upper.obj"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "selection_type": "worst",
+  "row_i": 71,
+  "sample_name": "3EU06ZN9",
+  "jaw": "upper",
+  "source_path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/processed_struct_safe/200000/upper/3EU06ZN9",
+  "score_composite": 0.31210786822202363,
+  "d21_f1": 0.26262006060563203,
+  "d21_iou": 0.15684858828155876,
+  "f1_macro": 0.4007660699422414,
+  "iou_macro": 0.3224252817345892,
+  "models_available": "PointNet,PointNetPP,DGCNN,PointNetTransformer",
+  "n_candidates_found": 2,
+  "copied_files": [
+    "/home/htaucare/Tesis_Amaro/case_comparisons/metric_case_selection_v5_global_meshes/selected_global_meshes/worst/worst__row71__3EU06ZN9_lower.obj",
+    "/home/htaucare/Tesis_Amaro/case_comparisons/metric_case_selection_v5_global_meshes/selected_global_meshes/worst/worst__row71__3EU06ZN9_upper.obj"
+  ]
+}
