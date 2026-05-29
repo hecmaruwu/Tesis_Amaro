@@ -1,0 +1,7 @@
+[
+  {
+    "case_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/best_row091_01MAVT6A_upper",
+    "model": "dgcnn",
+    "error": "TypeError: dict() got multiple values for keyword argument 'range'"
+  }
+]

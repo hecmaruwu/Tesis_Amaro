@@ -1,0 +1,94 @@
+{
+  "script": "vista_tesis_inferencia_ajustada.py",
+  "base_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17",
+  "out_root": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/VISTA_TESIS_FINAL_BEIGE_CLARO_TEST",
+  "models": [
+    "dgcnn"
+  ],
+  "cases": [
+    "best_row091_01MAVT6A_upper"
+  ],
+  "views": {
+    "oclusal_paper": {
+      "up": {
+        "x": 0.0,
+        "y": 1.0,
+        "z": 0.0
+      },
+      "center": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "eye": {
+        "x": 0.1950066638410309,
+        "y": 0.195006663841031,
+        "z": 1.1978980778806192
+      },
+      "projection": {
+        "type": "perspective"
+      }
+    },
+    "isometrica_ajustada": {
+      "up": {
+        "x": -0.3290923907481538,
+        "y": -0.3739973520385337,
+        "z": 0.8670779544076933
+      },
+      "center": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "eye": {
+        "x": 0.6146153334439807,
+        "y": 0.7761467722695654,
+        "z": 0.5680481951961102
+      },
+      "projection": {
+        "type": "perspective"
+      }
+    },
+    "lateral_derecha_extra": {
+      "up": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 1.0
+      },
+      "center": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "eye": {
+        "x": 1.0947373729242973,
+        "y": 5.462293827280975e-17,
+        "z": 0.07464118451756574
+      },
+      "projection": {
+        "type": "perspective"
+      }
+    }
+  },
+  "d21_class": 8,
+  "neighbor_teeth": [
+    [
+      "d11",
+      1
+    ],
+    [
+      "d22",
+      9
+    ]
+  ],
+  "write_html": true,
+  "write_png": true,
+  "width": 2200,
+  "height": 1350,
+  "point_size": 4.2,
+  "point_opacity": 0.92,
+  "mesh_opacity": 0.05,
+  "max_points_plot": 12000,
+  "sync_camera": true,
+  "manifest": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/VISTA_TESIS_FINAL_BEIGE_CLARO_TEST/manifest_vista_tesis_inferencia_ajustada.csv"
+}

@@ -1,0 +1,88 @@
+{
+  "src_html": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/median_row089_015RHV4X_upper/paper_dgcnn_median_v17.html",
+  "out_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/median_row089_015RHV4X_upper/camera_test_views_from_html",
+  "prefix": "dgcnn_median",
+  "cameras": {
+    "isometrica": {
+      "up": {
+        "x": 0,
+        "y": 0,
+        "z": 1
+      },
+      "center": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "eye": {
+        "x": 1.35,
+        "y": 1.35,
+        "z": 0.85
+      },
+      "projection": {
+        "type": "perspective"
+      }
+    },
+    "oclusal_oblicua": {
+      "up": {
+        "x": 0,
+        "y": 1,
+        "z": 0
+      },
+      "center": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "eye": {
+        "x": 0.35,
+        "y": 0.35,
+        "z": 2.15
+      },
+      "projection": {
+        "type": "perspective"
+      }
+    },
+    "frontal_oblicua": {
+      "up": {
+        "x": 0,
+        "y": 0,
+        "z": 1
+      },
+      "center": {
+        "x": 0,
+        "y": 0,
+        "z": 0.08
+      },
+      "eye": {
+        "x": 0.15,
+        "y": 2.05,
+        "z": 0.45
+      },
+      "projection": {
+        "type": "perspective"
+      }
+    },
+    "lateral_derecha": {
+      "up": {
+        "x": 0,
+        "y": 0,
+        "z": 1
+      },
+      "center": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "eye": {
+        "x": 2.1,
+        "y": 0.1,
+        "z": 0.35
+      },
+      "projection": {
+        "type": "perspective"
+      }
+    }
+  },
+  "note": "Abrir cada HTML, revisar la vista y usar el botón Download plot as png si se quiere exportar."
+}

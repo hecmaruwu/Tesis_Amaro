@@ -1,0 +1,47 @@
+{
+  "script": "vista_tesis_inferencia_ajustada_v4_visual_v17.py",
+  "base_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17",
+  "out_root": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/VISTA_TESIS_INFERENCIA_AJUSTADA_V4_VISUAL_TEST",
+  "selected_mesh_root": "/home/htaucare/Tesis_Amaro/case_comparisons/metric_case_selection_v5_global_meshes/selected_global_meshes",
+  "models": [
+    "dgcnn"
+  ],
+  "cases": [
+    "best_row091_01MAVT6A_upper"
+  ],
+  "views": [
+    "oclusal_paper",
+    "isometrica_ajustada"
+  ],
+  "d21_class": 8,
+  "neighbor_teeth": [
+    [
+      "d11",
+      1
+    ],
+    [
+      "d22",
+      9
+    ]
+  ],
+  "write_html": true,
+  "write_png": true,
+  "width": 2200,
+  "height": 1350,
+  "point_size": 4.2,
+  "point_opacity": 1.0,
+  "mesh_opacity": 0.05,
+  "mesh_color": "#9E9E9E",
+  "focus_bg_opacity": 0.075,
+  "other_teeth_opacity": 1.0,
+  "target_opacity": 1.0,
+  "error_opacity": 1.0,
+  "error_bg_context_opacity": 0.065,
+  "error_other_teeth_opacity": 0.68,
+  "visual_layer": "v17_layered_points_mesh_background",
+  "max_points_plot": 12000,
+  "sync_camera": false,
+  "multiclass_bg_opacity": 0.56,
+  "multiclass_bg_mode": "black",
+  "manifest": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/VISTA_TESIS_INFERENCIA_AJUSTADA_V4_VISUAL_TEST/manifest_vista_tesis_inferencia_ajustada_v2.csv"
+}

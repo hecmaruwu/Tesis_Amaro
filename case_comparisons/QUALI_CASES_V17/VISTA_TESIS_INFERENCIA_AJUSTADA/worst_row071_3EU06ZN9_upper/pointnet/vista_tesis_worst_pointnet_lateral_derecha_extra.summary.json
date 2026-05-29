@@ -1,0 +1,51 @@
+{
+  "case_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/worst_row071_3EU06ZN9_upper",
+  "case_name": "worst_row071_3EU06ZN9_upper",
+  "case_tag": "worst",
+  "model": "pointnet",
+  "model_display": "PointNet",
+  "view_name": "lateral_derecha_extra",
+  "camera": {
+    "up": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 1.0
+    },
+    "center": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "eye": {
+      "x": 1.0947373729242973,
+      "y": 5.462293827280975e-17,
+      "z": 0.07464118451756574
+    },
+    "projection": {
+      "type": "perspective"
+    }
+  },
+  "n_points_original": 8192,
+  "n_points_plot": 8192,
+  "d21_class": 8,
+  "neighbor_teeth": [
+    [
+      "d11",
+      1
+    ],
+    [
+      "d22",
+      9
+    ]
+  ],
+  "metrics": {
+    "acc_no_bg": 0.3412698412698413,
+    "d21_f1": 0.2241887861028011,
+    "d21_iou": 0.12624584717188553
+  },
+  "mesh_source": null,
+  "outputs": {
+    "html": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/VISTA_TESIS_INFERENCIA_AJUSTADA/worst_row071_3EU06ZN9_upper/pointnet/vista_tesis_worst_pointnet_lateral_derecha_extra.html",
+    "png": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/VISTA_TESIS_INFERENCIA_AJUSTADA/worst_row071_3EU06ZN9_upper/pointnet/vista_tesis_worst_pointnet_lateral_derecha_extra.png"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "case_name": "best",
+  "row_i": 91,
+  "sample_name": "01MAVT6A",
+  "jaw": "upper",
+  "raw_mesh_path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_4/upper/01MAVT6A/01MAVT6A_upper.obj",
+  "source": "built_from_standardized_inference_manifest",
+  "records": [
+    {
+      "model": "pointnet",
+      "manifest": "/home/htaucare/Tesis_Amaro/outputs/pointnet_classic/grid_pro_runner_v1/exp03_bs16_lr3e4_do05_bg003_amp/inference/inference_manifest.csv",
+      "row_i": "91",
+      "sample_name": "01MAVT6A",
+      "tag": "test_row91_01MAVT6A",
+      "xyz_src": "/home/htaucare/Tesis_Amaro/outputs/pointnet_classic/grid_pro_runner_v1/exp03_bs16_lr3e4_do05_bg003_amp/inference/predictions/test_row91_01MAVT6A_xyz.npy",
+      "gt_src": "/home/htaucare/Tesis_Amaro/outputs/pointnet_classic/grid_pro_runner_v1/exp03_bs16_lr3e4_do05_bg003_amp/inference/predictions/test_row91_01MAVT6A_gt.npy",
+      "pred_src": "/home/htaucare/Tesis_Amaro/outputs/pointnet_classic/grid_pro_runner_v1/exp03_bs16_lr3e4_do05_bg003_amp/inference/predictions/test_row91_01MAVT6A_pred.npy",
+      "model_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/best_row091_01MAVT6A_upper/pointnet"
+    },
+    {
+      "model": "pointnetpp",
+      "manifest": "/home/htaucare/Tesis_Amaro/outputs/pointnetpp/grid_pro_runner_v2/exp04_bs8_lr3e4_r010_020_040_ns32/inference/inference_manifest.csv",
+      "row_i": "91",
+      "sample_name": "01MAVT6A",
+      "tag": "test_row91_01MAVT6A",
+      "xyz_src": "/home/htaucare/Tesis_Amaro/outputs/pointnetpp/grid_pro_runner_v2/exp04_bs8_lr3e4_r010_020_040_ns32/inference/predictions/test_row91_01MAVT6A_xyz.npy",
+      "gt_src": "/home/htaucare/Tesis_Amaro/outputs/pointnetpp/grid_pro_runner_v2/exp04_bs8_lr3e4_r010_020_040_ns32/inference/predictions/test_row91_01MAVT6A_gt.npy",
+      "pred_src": "/home/htaucare/Tesis_Amaro/outputs/pointnetpp/grid_pro_runner_v2/exp04_bs8_lr3e4_r010_020_040_ns32/inference/predictions/test_row91_01MAVT6A_pred.npy",
+      "model_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/best_row091_01MAVT6A_upper/pointnetpp"
+    },
+    {
+      "model": "dgcnn",
+      "manifest": "/home/htaucare/Tesis_Amaro/outputs/dgcnn/grid_pro_runner_v2_gpu1/exp06_bs8_lr2e4_k20_emb768_bg003/inference/inference_manifest.csv",
+      "row_i": "91",
+      "sample_name": "01MAVT6A",
+      "tag": "test_row91_01MAVT6A",
+      "xyz_src": "/home/htaucare/Tesis_Amaro/outputs/dgcnn/grid_pro_runner_v2_gpu1/exp06_bs8_lr2e4_k20_emb768_bg003/inference/predictions/test_row91_01MAVT6A_xyz.npy",
+      "gt_src": "/home/htaucare/Tesis_Amaro/outputs/dgcnn/grid_pro_runner_v2_gpu1/exp06_bs8_lr2e4_k20_emb768_bg003/inference/predictions/test_row91_01MAVT6A_gt.npy",
+      "pred_src": "/home/htaucare/Tesis_Amaro/outputs/dgcnn/grid_pro_runner_v2_gpu1/exp06_bs8_lr2e4_k20_emb768_bg003/inference/predictions/test_row91_01MAVT6A_pred.npy",
+      "model_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/best_row091_01MAVT6A_upper/dgcnn"
+    },
+    {
+      "model": "pointnettransformer",
+      "manifest": "/home/htaucare/Tesis_Amaro/outputs/pointnettransformer/grid_pro_runner_v2_gpu0/exp13_bs4_lr2e4_dm256_dep4_h8_ff512_do005/inference/inference_manifest.csv",
+      "row_i": "91",
+      "sample_name": "01MAVT6A",
+      "tag": "test_row91_01MAVT6A",
+      "xyz_src": "/home/htaucare/Tesis_Amaro/outputs/pointnettransformer/grid_pro_runner_v2_gpu0/exp13_bs4_lr2e4_dm256_dep4_h8_ff512_do005/inference/predictions/test_row91_01MAVT6A_xyz.npy",
+      "gt_src": "/home/htaucare/Tesis_Amaro/outputs/pointnettransformer/grid_pro_runner_v2_gpu0/exp13_bs4_lr2e4_dm256_dep4_h8_ff512_do005/inference/predictions/test_row91_01MAVT6A_gt.npy",
+      "pred_src": "/home/htaucare/Tesis_Amaro/outputs/pointnettransformer/grid_pro_runner_v2_gpu0/exp13_bs4_lr2e4_dm256_dep4_h8_ff512_do005/inference/predictions/test_row91_01MAVT6A_pred.npy",
+      "model_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/best_row091_01MAVT6A_upper/pointnettransformer"
+    }
+  ]
+}

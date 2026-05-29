@@ -1,0 +1,64 @@
+{
+  "case_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/best_row091_01MAVT6A_upper",
+  "case_key": "best",
+  "sample_id": "01MAVT6A",
+  "model": "dgcnn",
+  "view_key": "isometrica_ajustada",
+  "camera": {
+    "up": {
+      "x": -0.3290923907481538,
+      "y": -0.3739973520385337,
+      "z": 0.8670779544076933
+    },
+    "center": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "eye": {
+      "x": 0.6146153334439807,
+      "y": 0.7761467722695654,
+      "z": 0.5680481951961102
+    },
+    "projection": {
+      "type": "perspective"
+    }
+  },
+  "mesh_path": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/best_row091_01MAVT6A_upper/common/raw_mesh.obj",
+  "mesh_align": "unit",
+  "n_points_original": 8192,
+  "n_points_plot": 8192,
+  "d21_class": 8,
+  "neighbors": {
+    "d11": 1,
+    "d22": 9
+  },
+  "metrics": {
+    "d21_f1": 0.9134328308038316,
+    "d21_iou": 0.8406593406131505,
+    "f1_macro_no_bg": 0.8003796913339319,
+    "iou_macro_no_bg": 0.7123181955398733
+  },
+  "colors": {
+    "COLOR_BG": "#000000",
+    "COLOR_BG_LIGHT": "#787878",
+    "COLOR_MESH": "#B4B4B4",
+    "COLOR_OTHER_TEETH": "#F2D1A9",
+    "COLOR_D21": "#FF8C00",
+    "COLOR_LEFT_NEIGH": "#0070C0",
+    "COLOR_RIGHT_NEIGH": "#FF69B4",
+    "COLOR_ERROR": "#FF0000",
+    "COLOR_TP": "#00B050"
+  },
+  "alpha": {
+    "bg_main_opacity": 0.56,
+    "tooth_main_opacity": 1.0,
+    "mesh_opacity": 0.05,
+    "ALPHA_BG_FOCUS": 0.07,
+    "ALPHA_OTHER_FOCUS": 0.92,
+    "ALPHA_BG_ERROR": 0.08,
+    "ALPHA_OTHER_ERROR": 0.9
+  },
+  "html_path": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/VISTA_TESIS_V5_OLDCOLOR_TEST_DGCNN_BEST/dgcnn_best_01MAVT6A_isometrica_ajustada.html",
+  "png_path": null
+}

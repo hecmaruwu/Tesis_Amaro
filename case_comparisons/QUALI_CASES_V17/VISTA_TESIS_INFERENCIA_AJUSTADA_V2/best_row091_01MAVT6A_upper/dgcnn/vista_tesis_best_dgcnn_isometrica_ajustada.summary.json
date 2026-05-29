@@ -1,0 +1,68 @@
+{
+  "script": "vista_tesis_inferencia_ajustada_v2.py",
+  "case_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/best_row091_01MAVT6A_upper",
+  "case_name": "best_row091_01MAVT6A_upper",
+  "case_tag": "best",
+  "case_role": "Mejor caso",
+  "patient_id": "01MAVT6A",
+  "model": "dgcnn",
+  "model_display": "DGCNN",
+  "view_name": "isometrica_ajustada",
+  "view_display": "cuasi-isométrica",
+  "title": "DGCNN - ID: 01MAVT6A - Mejor caso - Vista cuasi-isométrica",
+  "subtitle": "F1 diente 21 = 0.913 | IoU diente 21 = 0.841 | F1 macro sin fondo = 0.800",
+  "camera": {
+    "up": {
+      "x": -0.3290923907481538,
+      "y": -0.3739973520385337,
+      "z": 0.8670779544076933
+    },
+    "center": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "eye": {
+      "x": 0.6146153334439807,
+      "y": 0.7761467722695654,
+      "z": 0.5680481951961102
+    },
+    "projection": {
+      "type": "perspective"
+    }
+  },
+  "n_points_original": 8192,
+  "n_points_plot": 8192,
+  "d21_class": 8,
+  "neighbor_teeth": [
+    [
+      "d11",
+      1
+    ],
+    [
+      "d22",
+      9
+    ]
+  ],
+  "metrics": {
+    "acc_no_bg": 0.9822954822954822,
+    "d21_f1": 0.9134328353191892,
+    "d21_iou": 0.8406593406547217,
+    "d21_precision": 0.8406593406547217,
+    "d21_recall": 0.9999999999934641,
+    "f1_macro_no_bg": 0.8003796954768002
+  },
+  "mesh_source": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_4/upper/01MAVT6A/01MAVT6A_upper.obj",
+  "mesh_loaded": true,
+  "mesh_bbox_align": true,
+  "data_sources": {
+    "xyz": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/best_row091_01MAVT6A_upper/dgcnn/xyz_labels.npy",
+    "gt": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/best_row091_01MAVT6A_upper/dgcnn/gt_labels.npy",
+    "pred": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/best_row091_01MAVT6A_upper/dgcnn/pred_labels.npy"
+  },
+  "outputs": {
+    "html": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/VISTA_TESIS_INFERENCIA_AJUSTADA_V2/best_row091_01MAVT6A_upper/dgcnn/vista_tesis_best_dgcnn_isometrica_ajustada.html",
+    "png": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/VISTA_TESIS_INFERENCIA_AJUSTADA_V2/best_row091_01MAVT6A_upper/dgcnn/vista_tesis_best_dgcnn_isometrica_ajustada.png",
+    "summary": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/VISTA_TESIS_INFERENCIA_AJUSTADA_V2/best_row091_01MAVT6A_upper/dgcnn/vista_tesis_best_dgcnn_isometrica_ajustada.summary.json"
+  }
+}

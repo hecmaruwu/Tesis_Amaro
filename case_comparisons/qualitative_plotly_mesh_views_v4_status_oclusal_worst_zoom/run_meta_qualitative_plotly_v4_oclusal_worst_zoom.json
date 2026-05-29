@@ -1,0 +1,360 @@
+{
+  "script": "plot_selected_qualitative_meshes_v4_oclusal_worst_zoom.py",
+  "intermediate": "median",
+  "views": [
+    "isometrica",
+    "frontal",
+    "lateral_derecha",
+    "oclusal_superior"
+  ],
+  "out_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/qualitative_plotly_mesh_views_v4_status_oclusal_worst_zoom",
+  "color_mode": "status",
+  "zoom": 1.0,
+  "zoom_by_view": {},
+  "base_ranges": {
+    "x": [
+      -45.08774334,
+      47.07183945
+    ],
+    "y": [
+      -33.51950178,
+      42.51539672
+    ],
+    "z": [
+      -124.71548646,
+      -77.73214714
+    ]
+  },
+  "write_html": true,
+  "write_png_mpl": false,
+  "width": 1400,
+  "height": 2300,
+  "static_dpi": 250,
+  "max_faces_static": 150000,
+  "sync_cameras": false,
+  "cases": [
+    {
+      "label": "Mejor caso",
+      "path": "/home/htaucare/Tesis_Amaro/case_comparisons/metric_case_selection_v5_global_meshes/selected_global_meshes/best/best__row91__01MAVT6A_upper.obj",
+      "stem": "best__row91__01MAVT6A_upper"
+    },
+    {
+      "label": "Caso intermedio (mediana)",
+      "path": "/home/htaucare/Tesis_Amaro/case_comparisons/metric_case_selection_v5_global_meshes/selected_global_meshes/closest_to_median/closest_to_median__row89__015RHV4X_upper.obj",
+      "stem": "closest_to_median__row89__015RHV4X_upper"
+    },
+    {
+      "label": "Peor caso",
+      "path": "/home/htaucare/Tesis_Amaro/case_comparisons/metric_case_selection_v5_global_meshes/selected_global_meshes/worst/worst__row71__3EU06ZN9_upper.obj",
+      "stem": "worst__row71__3EU06ZN9_upper"
+    }
+  ],
+  "cameras_used": {
+    "isometrica": {
+      "scene": {
+        "up": {
+          "x": 0,
+          "y": 0,
+          "z": 1
+        },
+        "center": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "eye": {
+          "x": 0.790344773730721,
+          "y": 0.790344773730721,
+          "z": 0.54336203196897
+        },
+        "projection": {
+          "type": "perspective"
+        }
+      },
+      "scene2": {
+        "up": {
+          "x": 0,
+          "y": 0,
+          "z": 1
+        },
+        "center": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "eye": {
+          "x": 0.790344773730721,
+          "y": 0.790344773730721,
+          "z": 0.54336203196897
+        },
+        "projection": {
+          "type": "perspective"
+        }
+      },
+      "scene3": {
+        "up": {
+          "x": 0,
+          "y": 0,
+          "z": 1
+        },
+        "center": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "eye": {
+          "x": 0.790344773730721,
+          "y": 0.790344773730721,
+          "z": 0.54336203196897
+        },
+        "projection": {
+          "type": "perspective"
+        }
+      }
+    },
+    "frontal": {
+      "scene": {
+        "up": {
+          "x": 0,
+          "y": 0,
+          "z": 1
+        },
+        "center": {
+          "x": 0.009610785552464467,
+          "y": -0.010284915074534523,
+          "z": 0.1508454210913731
+        },
+        "eye": {
+          "x": 0.009610785552464534,
+          "y": 1.833944900934298,
+          "z": 0.2254520048546252
+        },
+        "projection": {
+          "type": "perspective"
+        }
+      },
+      "scene2": {
+        "up": {
+          "x": 0,
+          "y": 0,
+          "z": 1
+        },
+        "center": {
+          "x": 0.009610785552464467,
+          "y": -0.010284915074534523,
+          "z": 0.1508454210913731
+        },
+        "eye": {
+          "x": 0.009610785552464534,
+          "y": 1.833944900934298,
+          "z": 0.2254520048546252
+        },
+        "projection": {
+          "type": "perspective"
+        }
+      },
+      "scene3": {
+        "up": {
+          "x": 0,
+          "y": 0,
+          "z": 1
+        },
+        "center": {
+          "x": 0.009610785552464467,
+          "y": -0.010284915074534523,
+          "z": 0.1508454210913731
+        },
+        "eye": {
+          "x": 0.009610785552464534,
+          "y": 1.833944900934298,
+          "z": 0.2254520048546252
+        },
+        "projection": {
+          "type": "perspective"
+        }
+      }
+    },
+    "lateral_derecha": {
+      "scene": {
+        "up": {
+          "x": 0,
+          "y": 0,
+          "z": 1
+        },
+        "center": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "eye": {
+          "x": 1.0947373729242973,
+          "y": 5.462293827280975e-17,
+          "z": 0.07464118451756574
+        },
+        "projection": {
+          "type": "perspective"
+        }
+      },
+      "scene2": {
+        "up": {
+          "x": 0,
+          "y": 0,
+          "z": 1
+        },
+        "center": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "eye": {
+          "x": 1.0947373729242973,
+          "y": 5.462293827280975e-17,
+          "z": 0.07464118451756574
+        },
+        "projection": {
+          "type": "perspective"
+        }
+      },
+      "scene3": {
+        "up": {
+          "x": 0,
+          "y": 0,
+          "z": 1
+        },
+        "center": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "eye": {
+          "x": 1.0947373729242973,
+          "y": 5.462293827280975e-17,
+          "z": 0.07464118451756574
+        },
+        "projection": {
+          "type": "perspective"
+        }
+      }
+    },
+    "oclusal_superior": {
+      "scene": {
+        "up": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "center": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "eye": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 1.0500316697772247
+        },
+        "projection": {
+          "type": "perspective"
+        }
+      },
+      "scene2": {
+        "up": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "center": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "eye": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 1.0500316697772247
+        },
+        "projection": {
+          "type": "perspective"
+        }
+      },
+      "scene3": {
+        "up": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "center": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "eye": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 5.231829859691704
+        },
+        "projection": {
+          "type": "perspective"
+        }
+      }
+    }
+  },
+  "ranges_used_for_static": {
+    "isometrica": {
+      "x": [
+        -45.08774334,
+        47.07183945
+      ],
+      "y": [
+        -33.51950178,
+        42.51539672
+      ],
+      "z": [
+        -124.71548646,
+        -77.73214714
+      ]
+    },
+    "frontal": {
+      "x": [
+        -45.08774334,
+        47.07183945
+      ],
+      "y": [
+        -33.51950178,
+        42.51539672
+      ],
+      "z": [
+        -124.71548646,
+        -77.73214714
+      ]
+    },
+    "lateral_derecha": {
+      "x": [
+        -45.08774334,
+        47.07183945
+      ],
+      "y": [
+        -33.51950178,
+        42.51539672
+      ],
+      "z": [
+        -124.71548646,
+        -77.73214714
+      ]
+    },
+    "oclusal_superior": {
+      "x": [
+        -45.08774334,
+        47.07183945
+      ],
+      "y": [
+        -33.51950178,
+        42.51539672
+      ],
+      "z": [
+        -124.71548646,
+        -77.73214714
+      ]
+    }
+  }
+}

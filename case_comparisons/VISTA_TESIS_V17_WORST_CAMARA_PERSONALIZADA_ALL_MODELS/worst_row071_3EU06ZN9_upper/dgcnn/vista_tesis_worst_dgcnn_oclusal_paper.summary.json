@@ -1,0 +1,77 @@
+{
+  "script": "vista_tesis_inferencia_ajustada_v4_visual_v17.py",
+  "case_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/worst_row071_3EU06ZN9_upper",
+  "case_name": "worst_row071_3EU06ZN9_upper",
+  "case_tag": "worst",
+  "case_role": "Peor caso",
+  "patient_id": "3EU06ZN9",
+  "model": "dgcnn",
+  "model_display": "DGCNN",
+  "view_name": "oclusal_paper",
+  "view_display": "oclusal superior",
+  "title": "DGCNN - ID: 3EU06ZN9 - Peor caso - Vista oclusal superior",
+  "subtitle": "F1 diente 21 = 0.169 | IoU diente 21 = 0.093 | F1 macro sin fondo = 0.269",
+  "camera": {
+    "up": {
+      "x": -0.02548971620697424,
+      "y": 0.9873363543028241,
+      "z": -0.15657968527141758
+    },
+    "center": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "eye": {
+      "x": 0.29942526767062777,
+      "y": 0.29942526767062905,
+      "z": 1.839326644262434
+    },
+    "projection": {
+      "type": "perspective"
+    }
+  },
+  "n_points_original": 8192,
+  "n_points_plot": 8192,
+  "d21_class": 8,
+  "neighbor_teeth": [
+    [
+      "d11",
+      1
+    ],
+    [
+      "d22",
+      9
+    ]
+  ],
+  "metrics": {
+    "acc_no_bg": 0.3266178266178266,
+    "d21_f1": 0.16935483821224637,
+    "d21_iou": 0.09251101321545149,
+    "d21_precision": 0.1555555555544033,
+    "d21_recall": 0.18584070796295715,
+    "f1_macro_no_bg": 0.26921649077370424
+  },
+  "mesh_source": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_5/upper/3EU06ZN9/3EU06ZN9_upper.obj",
+  "mesh_loaded": true,
+  "mesh_bbox_align": true,
+  "visual_layer": "v17_layered_points_mesh_background",
+  "mesh_color": "#9E9E9E",
+  "focus_bg_opacity": 0.075,
+  "other_teeth_opacity": 1.0,
+  "target_opacity": 1.0,
+  "error_opacity": 1.0,
+  "error_bg_context_opacity": 0.065,
+  "error_other_teeth_opacity": 0.68,
+  "data_sources": {
+    "xyz": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/worst_row071_3EU06ZN9_upper/dgcnn/xyz_labels.npy",
+    "gt": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/worst_row071_3EU06ZN9_upper/dgcnn/gt_labels.npy",
+    "pred": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/worst_row071_3EU06ZN9_upper/dgcnn/pred_labels.npy"
+  },
+  "outputs": {
+    "html": "/home/htaucare/Tesis_Amaro/case_comparisons/VISTA_TESIS_V17_WORST_CAMARA_PERSONALIZADA_ALL_MODELS/worst_row071_3EU06ZN9_upper/dgcnn/vista_tesis_worst_dgcnn_oclusal_paper.html",
+    "png": "",
+    "summary": "/home/htaucare/Tesis_Amaro/case_comparisons/VISTA_TESIS_V17_WORST_CAMARA_PERSONALIZADA_ALL_MODELS/worst_row071_3EU06ZN9_upper/dgcnn/vista_tesis_worst_dgcnn_oclusal_paper.summary.json"
+  },
+  "camera_source": "worst_case_personalizada"
+}

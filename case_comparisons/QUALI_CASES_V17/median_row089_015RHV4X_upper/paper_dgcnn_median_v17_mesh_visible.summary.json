@@ -1,0 +1,162 @@
+{
+  "case_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/median_row089_015RHV4X_upper",
+  "out_png": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/median_row089_015RHV4X_upper/paper_dgcnn_median_v17_mesh_visible.png",
+  "out_html": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/median_row089_015RHV4X_upper/paper_dgcnn_median_v17_mesh_visible.html",
+  "individual_panels": [
+    "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/median_row089_015RHV4X_upper/v17_individual_dgcnn_median_mesh_visible/01_gt_multiclase.png",
+    "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/median_row089_015RHV4X_upper/v17_individual_dgcnn_median_mesh_visible/02_pred_multiclase.png",
+    "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/median_row089_015RHV4X_upper/v17_individual_dgcnn_median_mesh_visible/03_errores_multiclase.png",
+    "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/median_row089_015RHV4X_upper/v17_individual_dgcnn_median_mesh_visible/04_gt_d21_vecinos.png",
+    "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/median_row089_015RHV4X_upper/v17_individual_dgcnn_median_mesh_visible/05_pred_d21_vecinos.png",
+    "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/median_row089_015RHV4X_upper/v17_individual_dgcnn_median_mesh_visible/06_error_d21.png"
+  ],
+  "model": "dgcnn",
+  "d21_class": 8,
+  "neighbors": [
+    [
+      "d11",
+      1
+    ],
+    [
+      "d22",
+      9
+    ]
+  ],
+  "align_mode": "dental_pca_icp",
+  "mesh_top_q": 0.45,
+  "icp_iter": 45,
+  "icp_max_corr": 0.08,
+  "icp_trim_q": 0.85,
+  "icp_allow_scaling": false,
+  "icp_focus": "foreground",
+  "point_size": 8.8,
+  "plotly_point_size": 4.2,
+  "mesh_alpha": 0.14,
+  "plotly_mesh_opacity": 0.12,
+  "show_classes": "all",
+  "raw_mesh_path": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_3/upper/015RHV4X/015RHV4X_upper.obj",
+  "align_meta": {
+    "align_mode": "dental_pca_icp",
+    "mesh_anchor_n": 62308,
+    "target_anchor_n": 1638,
+    "target_anchor_kind": "foreground",
+    "mesh_top_axis": 2,
+    "mesh_top_q": 0.45,
+    "icp_iter": 45,
+    "icp_max_corr": 0.08,
+    "icp_trim_q": 0.85,
+    "icp_allow_scaling": false,
+    "icp_focus": "foreground",
+    "method": "dental_pca",
+    "source_center": [
+      1.9046629667282104,
+      -5.317978858947754,
+      -87.49824523925781
+    ],
+    "target_center": [
+      -0.032810989767313004,
+      -0.14215856790542603,
+      0.23008666932582855
+    ],
+    "scale": 0.02326420009877091,
+    "score": 0.025343592845240813,
+    "sign_matrix": [
+      [
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "refine": {
+      "enabled": true,
+      "method": "internal_trimmed_icp",
+      "has_scipy": true,
+      "n_iter_requested": 45,
+      "max_corr": 0.08,
+      "trim_q": 0.85,
+      "allow_scaling": false,
+      "n_iter_done": 36,
+      "history_tail": [
+        {
+          "iter": 28,
+          "n_corr": 6684,
+          "median_dist_before": 0.020718589425086975,
+          "mean_dist_before": 0.025195971131324768,
+          "scale_step": 1.0
+        },
+        {
+          "iter": 29,
+          "n_corr": 6686,
+          "median_dist_before": 0.020723719149827957,
+          "mean_dist_before": 0.025175174698233604,
+          "scale_step": 1.0
+        },
+        {
+          "iter": 30,
+          "n_corr": 6687,
+          "median_dist_before": 0.020655907690525055,
+          "mean_dist_before": 0.025161582976579666,
+          "scale_step": 1.0
+        },
+        {
+          "iter": 31,
+          "n_corr": 6688,
+          "median_dist_before": 0.020653320476412773,
+          "mean_dist_before": 0.02514340914785862,
+          "scale_step": 1.0
+        },
+        {
+          "iter": 32,
+          "n_corr": 6688,
+          "median_dist_before": 0.020663797855377197,
+          "mean_dist_before": 0.02511686645448208,
+          "scale_step": 1.0
+        },
+        {
+          "iter": 33,
+          "n_corr": 6690,
+          "median_dist_before": 0.020608052611351013,
+          "mean_dist_before": 0.02510397881269455,
+          "scale_step": 1.0
+        },
+        {
+          "iter": 34,
+          "n_corr": 6690,
+          "median_dist_before": 0.02062489278614521,
+          "mean_dist_before": 0.025076204910874367,
+          "scale_step": 1.0
+        },
+        {
+          "iter": 35,
+          "n_corr": 6688,
+          "median_dist_before": 0.020663287490606308,
+          "mean_dist_before": 0.025029968470335007,
+          "scale_step": 1.0
+        }
+      ],
+      "median_before_first": 0.02522195503115654,
+      "median_before_last": 0.020663287490606308,
+      "total_scale": 1.0,
+      "source_sample_n": 8000,
+      "target_sample_n": 1638
+    }
+  },
+  "metrics": {
+    "acc_no_bg": 0.9755799755799756,
+    "d21_precision": 0.9265536723111495,
+    "d21_recall": 0.9318181818128874,
+    "d21_f1": 0.9291784697496971,
+    "d21_iou": 0.8677248677202767,
+    "n_points": 8192
+  }
+}

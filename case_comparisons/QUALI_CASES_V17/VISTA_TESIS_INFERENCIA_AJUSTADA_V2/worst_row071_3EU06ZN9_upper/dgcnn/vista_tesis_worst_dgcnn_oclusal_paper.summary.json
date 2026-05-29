@@ -1,0 +1,68 @@
+{
+  "script": "vista_tesis_inferencia_ajustada_v2.py",
+  "case_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/worst_row071_3EU06ZN9_upper",
+  "case_name": "worst_row071_3EU06ZN9_upper",
+  "case_tag": "worst",
+  "case_role": "Peor caso",
+  "patient_id": "3EU06ZN9",
+  "model": "dgcnn",
+  "model_display": "DGCNN",
+  "view_name": "oclusal_paper",
+  "view_display": "oclusal superior",
+  "title": "DGCNN - ID: 3EU06ZN9 - Peor caso - Vista oclusal superior",
+  "subtitle": "F1 diente 21 = 0.169 | IoU diente 21 = 0.093 | F1 macro sin fondo = 0.269",
+  "camera": {
+    "up": {
+      "x": 0.0,
+      "y": 1.0,
+      "z": 0.0
+    },
+    "center": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "eye": {
+      "x": 0.1950066638410309,
+      "y": 0.195006663841031,
+      "z": 1.1978980778806192
+    },
+    "projection": {
+      "type": "perspective"
+    }
+  },
+  "n_points_original": 8192,
+  "n_points_plot": 8192,
+  "d21_class": 8,
+  "neighbor_teeth": [
+    [
+      "d11",
+      1
+    ],
+    [
+      "d22",
+      9
+    ]
+  ],
+  "metrics": {
+    "acc_no_bg": 0.3266178266178266,
+    "d21_f1": 0.16935483821224637,
+    "d21_iou": 0.09251101321545149,
+    "d21_precision": 0.1555555555544033,
+    "d21_recall": 0.18584070796295715,
+    "f1_macro_no_bg": 0.26921649077370424
+  },
+  "mesh_source": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw/data_part_5/upper/3EU06ZN9/3EU06ZN9_upper.obj",
+  "mesh_loaded": true,
+  "mesh_bbox_align": true,
+  "data_sources": {
+    "xyz": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/worst_row071_3EU06ZN9_upper/dgcnn/xyz_labels.npy",
+    "gt": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/worst_row071_3EU06ZN9_upper/dgcnn/gt_labels.npy",
+    "pred": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/worst_row071_3EU06ZN9_upper/dgcnn/pred_labels.npy"
+  },
+  "outputs": {
+    "html": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/VISTA_TESIS_INFERENCIA_AJUSTADA_V2/worst_row071_3EU06ZN9_upper/dgcnn/vista_tesis_worst_dgcnn_oclusal_paper.html",
+    "png": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/VISTA_TESIS_INFERENCIA_AJUSTADA_V2/worst_row071_3EU06ZN9_upper/dgcnn/vista_tesis_worst_dgcnn_oclusal_paper.png",
+    "summary": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/VISTA_TESIS_INFERENCIA_AJUSTADA_V2/worst_row071_3EU06ZN9_upper/dgcnn/vista_tesis_worst_dgcnn_oclusal_paper.summary.json"
+  }
+}

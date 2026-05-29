@@ -1,0 +1,64 @@
+{
+  "case_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/best_row091_01MAVT6A_upper",
+  "case_key": "best",
+  "sample_id": "01MAVT6A",
+  "model": "dgcnn",
+  "view_key": "oclusal_paper",
+  "camera": {
+    "up": {
+      "x": 0,
+      "y": 1,
+      "z": 0
+    },
+    "center": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "eye": {
+      "x": 0.1950066638410309,
+      "y": 0.195006663841031,
+      "z": 1.1978980778806192
+    },
+    "projection": {
+      "type": "perspective"
+    }
+  },
+  "mesh_path": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/best_row091_01MAVT6A_upper/common/raw_mesh.obj",
+  "mesh_align": "unit",
+  "n_points_original": 8192,
+  "n_points_plot": 8192,
+  "d21_class": 8,
+  "neighbors": {
+    "d11": 1,
+    "d22": 9
+  },
+  "metrics": {
+    "d21_f1": 0.9134328308038316,
+    "d21_iou": 0.8406593406131505,
+    "f1_macro_no_bg": 0.8003796913339319,
+    "iou_macro_no_bg": 0.7123181955398733
+  },
+  "colors": {
+    "COLOR_BG": "#000000",
+    "COLOR_BG_LIGHT": "#787878",
+    "COLOR_MESH": "#B4B4B4",
+    "COLOR_OTHER_TEETH": "#F2D1A9",
+    "COLOR_D21": "#FF8C00",
+    "COLOR_LEFT_NEIGH": "#0070C0",
+    "COLOR_RIGHT_NEIGH": "#FF69B4",
+    "COLOR_ERROR": "#FF0000",
+    "COLOR_TP": "#00B050"
+  },
+  "alpha": {
+    "bg_main_opacity": 0.56,
+    "tooth_main_opacity": 1.0,
+    "mesh_opacity": 0.15,
+    "ALPHA_BG_FOCUS": 0.07,
+    "ALPHA_OTHER_FOCUS": 0.92,
+    "ALPHA_BG_ERROR": 0.08,
+    "ALPHA_OTHER_ERROR": 0.9
+  },
+  "html_path": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/VISTA_TESIS_V5_OLDCOLOR_TEST_DGCNN_BEST_MESH015/dgcnn_best_01MAVT6A_oclusal_paper.html",
+  "png_path": null
+}

@@ -1,0 +1,16 @@
+class_idx,label,display_label,hex_color
+0,background,0 - background,#1f77b4
+1,d11,1 - d11,#aec7e8
+2,d12,2 - d12,#ff7f0e
+3,d13,3 - d13,#2ca02c
+4,d14,4 - d14,#98df8a
+5,d15,5 - d15,#ff9896
+6,d16,6 - d16,#9467bd
+7,d17,7 - d17,#8c564b
+8,d21,8 - d21,#c49c94
+9,d22,9 - d22,#e377c2
+10,d23,10 - d23,#7f7f7f
+11,d24,11 - d24,#c7c7c7
+12,d25,12 - d25,#dbdb8d
+13,d26,13 - d26,#17becf
+14,d27,14 - d27,#9edae5

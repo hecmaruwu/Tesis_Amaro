@@ -1,0 +1,51 @@
+{
+  "case_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/median_row089_015RHV4X_upper",
+  "case_name": "median_row089_015RHV4X_upper",
+  "case_tag": "median",
+  "model": "dgcnn",
+  "model_display": "DGCNN",
+  "view_name": "isometrica_ajustada",
+  "camera": {
+    "up": {
+      "x": -0.3290923907481538,
+      "y": -0.3739973520385337,
+      "z": 0.8670779544076933
+    },
+    "center": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "eye": {
+      "x": 0.6146153334439807,
+      "y": 0.7761467722695654,
+      "z": 0.5680481951961102
+    },
+    "projection": {
+      "type": "perspective"
+    }
+  },
+  "n_points_original": 8192,
+  "n_points_plot": 8192,
+  "d21_class": 8,
+  "neighbor_teeth": [
+    [
+      "d11",
+      1
+    ],
+    [
+      "d22",
+      9
+    ]
+  ],
+  "metrics": {
+    "acc_no_bg": 0.9755799755799756,
+    "d21_f1": 0.929178465202353,
+    "d21_iou": 0.8677248676789563
+  },
+  "mesh_source": null,
+  "outputs": {
+    "html": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/VISTA_TESIS_INFERENCIA_AJUSTADA/median_row089_015RHV4X_upper/dgcnn/vista_tesis_median_dgcnn_isometrica_ajustada.html",
+    "png": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/VISTA_TESIS_INFERENCIA_AJUSTADA/median_row089_015RHV4X_upper/dgcnn/vista_tesis_median_dgcnn_isometrica_ajustada.png"
+  }
+}

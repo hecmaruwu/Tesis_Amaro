@@ -1,0 +1,51 @@
+{
+  "case_dir": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/median_row089_015RHV4X_upper",
+  "case_name": "median_row089_015RHV4X_upper",
+  "case_tag": "median",
+  "model": "pointnettransformer",
+  "model_display": "Transformer",
+  "view_name": "oclusal_paper",
+  "camera": {
+    "up": {
+      "x": 0.0,
+      "y": 1.0,
+      "z": 0.0
+    },
+    "center": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "eye": {
+      "x": 0.1950066638410309,
+      "y": 0.195006663841031,
+      "z": 1.1978980778806192
+    },
+    "projection": {
+      "type": "perspective"
+    }
+  },
+  "n_points_original": 8192,
+  "n_points_plot": 8192,
+  "d21_class": 8,
+  "neighbor_teeth": [
+    [
+      "d11",
+      1
+    ],
+    [
+      "d22",
+      9
+    ]
+  ],
+  "metrics": {
+    "acc_no_bg": 0.8797313797313797,
+    "d21_f1": 0.9436997268687333,
+    "d21_iou": 0.893401015183076
+  },
+  "mesh_source": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/median_row089_015RHV4X_upper/common/raw_mesh.obj",
+  "outputs": {
+    "html": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/VISTA_TESIS_INFERENCIA_AJUSTADA_RECHECK/median_row089_015RHV4X_upper/pointnettransformer/vista_tesis_median_pointnettransformer_oclusal_paper.html",
+    "png": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/VISTA_TESIS_INFERENCIA_AJUSTADA_RECHECK/median_row089_015RHV4X_upper/pointnettransformer/vista_tesis_median_pointnettransformer_oclusal_paper.png"
+  }
+}

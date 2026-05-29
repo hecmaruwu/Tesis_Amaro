@@ -1,0 +1,32 @@
+{
+  "out_root": "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17",
+  "raw_root": "/home/htaucare/Tesis_Amaro/data/Teeth_3ds/raw",
+  "cases_built": [
+    "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/best_row091_01MAVT6A_upper",
+    "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/median_row089_015RHV4X_upper",
+    "/home/htaucare/Tesis_Amaro/case_comparisons/QUALI_CASES_V17/worst_row071_3EU06ZN9_upper"
+  ],
+  "selected_cases": {
+    "best": {
+      "row_i": 91,
+      "sample_name": "01MAVT6A",
+      "jaw": "upper"
+    },
+    "median": {
+      "row_i": 89,
+      "sample_name": "015RHV4X",
+      "jaw": "upper"
+    },
+    "worst": {
+      "row_i": 71,
+      "sample_name": "3EU06ZN9",
+      "jaw": "upper"
+    }
+  },
+  "model_inference_dirs": {
+    "pointnet": "/home/htaucare/Tesis_Amaro/outputs/pointnet_classic/grid_pro_runner_v1/exp03_bs16_lr3e4_do05_bg003_amp/inference",
+    "pointnetpp": "/home/htaucare/Tesis_Amaro/outputs/pointnetpp/grid_pro_runner_v2/exp04_bs8_lr3e4_r010_020_040_ns32/inference",
+    "dgcnn": "/home/htaucare/Tesis_Amaro/outputs/dgcnn/grid_pro_runner_v2_gpu1/exp06_bs8_lr2e4_k20_emb768_bg003/inference",
+    "pointnettransformer": "/home/htaucare/Tesis_Amaro/outputs/pointnettransformer/grid_pro_runner_v2_gpu0/exp13_bs4_lr2e4_dm256_dep4_h8_ff512_do005/inference"
+  }
+}
